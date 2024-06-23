@@ -26,6 +26,30 @@
   - Create links to navigate between pages.
   - Formulate tables and forms for data entry.
 
+## How HTML works with browser?
+- HTML uses **tags**, which are words surrounded by angle brackets (< >). These tags tell the browser what kind of content to display. For example, the tag `<h1>` defines a heading, and `<strong>` makes text bold.
+
+### Tags and Elements
+- HTML uses tags to create elements. Tags are enclosed in angle brackets like `<tagname>`. An element usually consists of an opening tag `<tagname>`, content, and a closing tag `</tagname>`. Some tags, like `<img>`, are self-closing and don’t need a closing tag.
+- The file extension for HTML files is .html. Sometimes you might also see the .htm extension, but .html is more commonly used today.
+- A simple example of HTML
+``` 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My First Web Page</title>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <p>This is my first paragraph.</p>
+    <a href="https://www.example.com">Click here to visit Example.com</a>
+</body>
+</html>
+```
+- Click [here](https://htmlpreview.github.io/?https://github.com/codophilic/Learn-HTML-And-CSS/blob/main/HTML/simple.html) to preview this sample html content.
+
+
+
 
 
 
