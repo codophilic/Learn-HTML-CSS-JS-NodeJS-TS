@@ -78,7 +78,7 @@
 - **`<body>`**: This element contains all the content that is displayed to the user on the web page. This includes text, images, links, videos, etc. Everything inside the **`<body>`** tag is rendered by the browser and shown on the web page. This is where you place all the visible content of your web page.
 - **`<h1>`**: This is a heading tag. It represents the main heading of the page. It is typically used for the most important heading. There are six levels of headings (**`<h1> to <h6>`**), with **`<h1>`** being the most important and **`<h6>`** the least.
 - **`<p>`**: This is a paragraph tag. The **`<p>`** tag is used to define a block of text as a paragraph. It adds a space above and below the text, creating a clear separation between different blocks of content.
-
+- Learn different types of HTML [tags](https://github.com/codophilic/Learn-HTML-CSS-JS/blob/main/HTML/HtmlTagsInfo.html).
 
 
 
