@@ -80,9 +80,33 @@
 - **`<p>`**: This is a paragraph tag. The **`<p>`** tag is used to define a block of text as a paragraph. It adds a space above and below the text, creating a clear separation between different blocks of content.
 - Learn different types of HTML [tags](https://github.com/codophilic/Learn-HTML-CSS-JS/blob/main/HTML/HtmlTagsInfo.html).
 
+# SVG (Scalable Vector Graphics)
+- SVG defines vector-based graphics in XML format.
+- SVG stands for Scalable Vector Graphics. It is a markup language for describing two-dimensional vector graphics. Unlike raster graphics formats like JPEG or PNG, which store images as a grid of pixels, SVG uses mathematical descriptions to define shapes, paths, and colors. This allows SVG images to be scaled to any size without losing quality, making them ideal for responsive web design and high-resolution displays.
+- SVG is supported by all major browsers.
+- There are several reasons why you might want to use SVG:
+  - Scalability: As the name suggests, SVG graphics are scalable without losing quality. This means they look crisp and clear at any size, making them perfect for responsive web design where images need to adapt to different screen sizes and resolutions.
+  - Small file size: SVG files are typically smaller in size compared to raster image formats like JPEG or PNG, especially for simple graphics. This can lead to faster loading times for web pages, which is crucial for improving user experience and SEO.
+  - Editability: SVG files are text-based and can be easily edited with a text editor or graphic design software. This makes it simple to customize and manipulate SVG images, such as changing colors, shapes, or adding animations.
+  - Accessibility: SVG images can be made accessible to users with disabilities by adding descriptive text or metadata. This is important for ensuring that all users can access and understand the content of your website.
+  - Interactivity: SVG supports interactivity through JavaScript, allowing you to create dynamic and engaging graphics. You can add animations, hover effects, and interactive elements to SVG images to enhance user engagement.
+- SVG is a W3C (The World Wide Web Consortium (W3C) develops standards and guidelines to help everyone build a web based on the principles of accessibility, internationalization, privacy and security.) standard, ensuring that it is consistently supported across all modern web browsers.
+- A Scalable Vector Graphic (SVG) is a unique type of image format. Unlike other varieties, SVGs don’t rely on unique pixels to make up the images you see. Instead, they use ‘vector’ data. By using SVGs, you get images that can scale up to any resolution, which comes in handy for web design among plenty of other use cases.
+- SVG is a vector-based format, meaning it uses geometrical primitives such as points, lines, curves, and shapes (polygons) to represent images. Whereas JPEG and PNG are raster-based formats, meaning they use a grid of individual pixels to represent images.
 
-
-
-
-
+| Feature                     | SVG (Scalable Vector Graphics)                                         | JPEG (.jpg)                                                   | PNG (.png)                                                             |
+| --------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Format Type                 | Vector-based                                                           | Raster-based                                                  | Raster-based                                                           |
+| Scalability                 | Infinite scalability without loss of quality                           | Limited scalability; can become pixelated                     | Limited scalability; can become pixelated                              |
+| File Size                   | Typically small for simple images; can increase with complexity        | Compressed, generally smaller size but with lossy compression | Larger due to lossless compression                                     |
+| Editability                 | Editable with text editors and graphic software                        | Requires graphic software; edits involve pixels               | Requires graphic software; edits involve pixels                        |
+| Interactivity and Animation | Supports interactivity and animation through CSS, JavaScript, and SMIL | Does not support interactivity or animation natively          | Does not support interactivity or animation natively                   |
+| Transparency                | Fully supports transparency                                            | Does not support transparency                                 | Fully supports transparency                                            |
+| Color Support               | Unlimited colors                                                       | Limited to 16.7 million colors (24-bit)                       | Unlimited colors (supports 24-bit and 32-bit color)                    |
+| Use Cases                   | Icons, logos, charts, maps, illustrations                              | Photographic images, web images where compression is key      | Web graphics, images requiring transparency and detailed illustrations |
+| Compression                 | Can be compressed with gzip                                            | Lossy compression                                             | Lossless compression                                                   |
+| Search Engine Friendly      | Text-based and searchable                                              | Not searchable                                                | Not searchable                                                         |
+| Resolution Independence     | Yes                                                                    | No                                                            | No                                                                     |
+| Accessibility               | Can be made accessible with attributes and descriptions                | Limited accessibility                                         | Limited accessibility                                                  |
+| Browser Compatibility       | Supported by all modern browsers                                       | Supported by all modern browsers                              | Supported by all modern browsers                                       |
 
