@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    /**
+    Attribute Selector:
+    - In HTML, an attribute provides additional information about an element. 
+    - Attributes are always included in the opening tag of an element and usually come in name/value pairs, such as name="value". 
+    - Common attributes include class="abc", id="idElement", src="linkofsomething", href, alt, and type.
+    - So 'class' is name and 'abc' is value (name="value")
+    - <element attribute="value"></element>
+
+    Types of CSS Attribute Selectors
+
+    **/
+    /**
+    1. CSS [attribute] Selector 
+    - The [attribute] Selector is used to select all the elements that have the specified attribute and applies the CSS property to that attribute. For example, the selector [class] will select all the elements with the style attribute. 
+    **/
+    [class] {
+            text-align: center;
+            Color: green;
+        }
+
+        .txt {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: -20px;
+        }
+    /**
+    - CSS [attribute] selector can be used to restrict some particular elements, then it needs to specify that element before the attribute selector.
+    **/
+    div[style] {
+            text-align: center;
+            color: green;
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: -20px;
+        }
+    /**
+    2. CSS [attribute = “value”] Selector
+    - The [attribute = “value”] Selector selector is used to select all the elements whose attribute has the value exactly the same as the specified value. 
+    **/
+    [title="specificVal"] {
+            color: rgb(128, 0, 0);
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+        }
+    /**
+    3. CSS [attribute Expression ”value”] Selector
+    - The [attribute~=”value”] Selector selector is used to select all the elements whose attribute value is a list of space-separated values, one of which is exactly equal to the specified value.
+    - The [attribute|=”value”] Selector This selector is used to select all the elements whose attribute has a hyphen-separated list of values beginning with the specified value. The value has to be a whole word either alone or followed by a hyphen. 
+    - The [attribute^=”value”] Selector This selector is used to select all the elements whose attribute value begins with the specified value. The value doesn’t need to be a whole word. 
+    - The [attribute$=”value”] Selector This selector is used to select all the elements whose attribute value ends with the specified value. The value doesn’t need to be a whole word. 
+    - The [attribute*=”value”] Selector This selector selects all the elements whose attribute value contains the specified value present anywhere. The value doesn’t need to be a whole word.
+    - The value specified in the selector is case sensitive
+    **/
+    [class~="wherever"] {
+            font-size: 17px;
+            text-align: center;
+            margin-top: 0px;
+            color: black;
+        }
+    [class*="for"] {
+            font-size: 17px;
+            text-align: center;
+            margin-top: 0px;
+            color: brown;
+        }
+</style>
+<title>My First Web Page</title>
+</head>
+<body>
+    <div class="txt">Text Css Selector</div>
+    <p class="txt">
+        Text Css Selector
+    </p>
+    <div style="color:green">green style only</div>
+    <p title="specificVal">
+       Specific Element attribute which has value "specificVal"
+    </p>
+    <div class="wherever found apply">Text Css Selector wherever</div>
+    <p class="found apply wherever">
+        Text Css Selector wherever
+    </p>
+
+    <div class="apply for class">Text Css Selector for</div>
+    <p class="possiblefor">
+        Text Css Selector for
+    </p>
+</body>
+</html>

@@ -22,3 +22,15 @@
 
 ## Is CSS a scripting language?
 - CSS is not considered a scripting language. Unlike JavaScript or PHP, CSS does not have programming logic, variables, or the ability to perform calculations or manipulate data. Instead, CSS is purely declarative, meaning it describes how elements should be styled without executing commands or operations.
+
+## CSS Selectors
+- CSS selectors target the HTML elements on your pages, allowing you to add styles based on their ID, class, type, attribute, and more.
+- CSS (Cascading Style Sheets) selectors are patterns used to select and style elements on a web page. They tell the browser which HTML elements to apply the CSS rules to. Think of selectors as a way to target specific parts of a web page to change their appearance or layout.
+
+### Why Selectors are required?
+- If multiple elements have the same class, the styles defined for that class will be applied to all of those elements. This is one of the key advantages of using class selectors: you can apply the same style rules to multiple elements without needing to repeat the CSS code.
+- Selectors are essential because they allow you to apply styles to specific HTML elements without needing to add inline styles to each element. This keeps your HTML clean and your styles organized in a separate CSS file, making your code easier to maintain.
+
+- Types of selectors
+    1. Simple Selector
+    2. 
