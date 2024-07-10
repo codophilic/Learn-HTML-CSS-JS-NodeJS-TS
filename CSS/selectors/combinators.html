@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/**
+Combinators: 
+- CSS combinators describe the relationship between selectors. 
+- They allow you to target elements based on their relationship to other elements, 
+- providing more precise and flexible ways to style your HTML.
+**/
+
+/* Child combinator: styles only direct <p> children of <div> */
+div > h2 {
+    color: green; /* Only direct child paragraphs of <div> will be green */
+}
+/* Descendant combinator: styles <p> elements inside <div> */
+div p {
+    color: blue; /* All paragraphs inside any <div> will be blue */
+}
+
+/* Adjacent sibling combinator: styles the first <p> after <h1> */
+h1 + p {
+    color: red; /* The first paragraph following a heading <h1> will be red */
+}
+
+/* General sibling combinator: styles all <p> siblings of <h1> */
+h3 ~ p {
+    color: purple; /* All paragraphs that are siblings of an <h1> will be purple */
+}
+</style>
+<title>My First Web Page</title>
+</head>
+<body>
+
+
+    <!-- Additional HTML for combinator examples -->
+    <div>
+        <p>Descendant paragraph inside a div. (This will be blue)</p>
+    </div>
+    <div>
+        <h2>Child Combinator which will be green </h2>
+        <div>
+            <p>Another descendant paragraph inside a nested div. (This will be blue)</p>
+        </div>
+    </div>
+    <h1>Heading</h1>
+    <p>Adjacent sibling paragraph. (This will be red)</p>   
+    <h1>Heading</h1>
+    <p>Adjacent sibling paragraph. (This will be red)</p>
+    <h3>Heading3</h3>
+    <p>General sibling paragraph. (This will be purple)</p>
+    <p>General sibling paragraph. (This will be purple)</p>
+    <p>General sibling paragraph. (This will be purple)</p>
+</body>
+</html>

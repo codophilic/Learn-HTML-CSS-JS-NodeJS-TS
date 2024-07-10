@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+   /**
+   Pseudo Element: 
+   - CSS pseudo-element selectors are used to style specified parts of an element. 
+   - Unlike pseudo-classes, which apply styles based on the state of an element, pseudo-elements target specific portions
+   - of content within an element. They allow you to style parts of an element that are not directly available in the 
+   - document tree, such as the first letter, first line, or content before and after an element.
+   **/
+h1::before {
+    content: "★ ";
+    color: gold;
+}
+p::after {
+    content: " ✿";
+    color: pink;
+}
+p::first-line {
+    font-weight: bold;
+    color: blue;
+}
+
+</style>
+    <title>My First Web Page</title>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <p>This is my first paragraph.</p>
+    <div id="div-container">
+        This is a div with id div-container
+    </div>
+    <p class="paragraph-class">
+        This is a paragraph with class paragraph-class
+    </p>
+    <a href="https://www.example.com">Click here to visit Example.com</a>
+</body>
+</html>

@@ -32,5 +32,10 @@
 - Selectors are essential because they allow you to apply styles to specific HTML elements without needing to add inline styles to each element. This keeps your HTML clean and your styles organized in a separate CSS file, making your code easier to maintain.
 
 - Types of selectors
-    1. Simple Selector
-    2. 
+    1. Simple Selector (Element , Class and ID selector)
+    2. Universal Selector
+    3. Group Selector
+    4. Attribute Selector
+    5. Pseudo Class Selector
+    6. Pseudo Element Selector
+    7. Combinators
