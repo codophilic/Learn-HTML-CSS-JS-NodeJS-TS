@@ -1496,7 +1496,7 @@ console.log(typeof tester) //function
 ![alt text](image-31.png)
 
 
-## Defer
+## Defer Attribute
 
 - Consider below code of **index.html** file and **app1.js**, **acceptDisplay.js** remains the same.
 
@@ -1564,336 +1564,355 @@ console.log("Hi")
 
 <video controls src="20241002-0828-03.6197769.mp4" title="Title"></video>
 
+- Initially the network request was sent to load html file and it receive the response.
+
+![alt text](image-33.png)
+
+- Since our HTML files consist of external files like CSS and JS, those request was also sent by network.
+
+![alt text](image-34.png)
+
+- Moving further, the parsing of HTML code got started from line (0-34)
+
+![alt text](image-35.png)
+
+- Also the parsing of css got started.
+- The browser stopped the parsing of HTML code and started compilation of JS file **app1.js**
+
+![alt text](image-36.png)
+
+- Moving further, the browser executed **app1.js**, now again started parsing HTML file and **acceptDisplay.js**.
+
+![alt text](image-37.png)
+
+- Since there's not much time difference between but still we request the Javascript files only after the parsing is done or when it's almost done entirely because we do that at the bottom of the HTML file. So that's why we only request the files once we're almost done parsing the HTML document.
+- Now what we effectively see that the **acceptDisplay.js** script evaluation was started around `1302.4ms` whereas those evaluation could be done earlier when the parsing of HTML was happening. Post evaluation we can execute the JS scripts.
+- We don't want to execute the scripts earlier but loading them earlier, downloading them from the server earlier, so there is no latency. (Here the time frame is much in smaller scale but it could be larger when you built enterprise web applications)
+- The solution is an extra attribute `defer` in the script.
+
+```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Basics</title>
+    <!-- <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    /> -->
+    <link rel="stylesheet" href="assets/styles/app.css" />
 
+    <script src="assets/scripts/app1.js" defer></script>
+    <!-- <script src="assets/scripts/app.js"></script> -->
+    <script src="assets/scripts/acceptDisplay.js" defer></script>
 
-there are many things you can do with it but it's a great tool for understanding how the scripts are
+  </head>
+  <body>
+    <header>
+      <h1>The Unconventional Calculator</h1>
+    </header>
 
-loaded, parsed and executed and what might be the issue here.
+    <section id="calculator">
+      <input type="number" id="input-number" />
+      <div id="calc-actions">
+        <button type="button" id="btn-add">+</button>
+        <button type="button" id="btn-subtract">-</button>
+        <button type="button" id="btn-multiply">*</button>
+        <button type="button" id="btn-divide">/</button>
+      </div>
+    </section>
 
-So with the page being used here, press this record button here and then reload the page by using a
+    <section id="results">
+      <h2 id="current-calculation">0</h2>
+      <h2>Result: <span id="current-result">0</span></h2>
+    </section>
 
-shortcut for it or using the reload button and then stop recording this.
+    
 
-Now you get this profile and this might look confusing at first,
+  </body>
+</html>
+```
 
-I'm only interested in a short part of this timeline.
+- **When you use `defer`, the browser downloads the script as soon as possible (in parallel with HTML parsing) but waits to execute it until the HTML document is completely parsed. This way, the script is ready to execute as soon as the HTML is fully loaded, but it doesn't block the rendering or parsing of the page**
+- If you see the parsing is done and post that the script got executed
 
-Now in this topmost window, you can select the part by holding the mouse button and dragging and I'm
+<video controls src="20241002-0901-38.3162379.mp4" title="Title"></video>
 
-interested in this part where we have these little hills down there you could say, where you have these
+## Async Attribute
 
-vertical lines.
+- The `async` attribute in JavaScript is used in `<script>` tags to load and execute a script asynchronously, meaning the script is downloaded and executed independently of the HTML parsing.
 
-Now if you select this, it gets zoomed in here in the middle and bottommost window and there, you see
+```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Basics</title>
+    <!-- <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    /> -->
+    <link rel="stylesheet" href="assets/styles/app.css" />
 
-which network requests were sent and what the browser did,
+    <script src="assets/scripts/app1.js" async></script>
+    <!-- <script src="assets/scripts/app.js"></script> -->
+    <script src="assets/scripts/acceptDisplay.js" defer></script>
 
-so what it parsed, what it executed and so on.
+  </head>
+  <body>
+    <header>
+      <h1>The Unconventional Calculator</h1>
+    </header>
 
-Now what we can see relatively quickly is that we have one long going network request which downloads
+    <section id="calculator">
+      <input type="number" id="input-number" />
+      <div id="calc-actions">
+        <button type="button" id="btn-add">+</button>
+        <button type="button" id="btn-subtract">-</button>
+        <button type="button" id="btn-multiply">*</button>
+        <button type="button" id="btn-divide">/</button>
+      </div>
+    </section>
 
-the fonts, this kind of distorts everything here
+    <section id="results">
+      <h2 id="current-calculation">0</h2>
+      <h2>Result: <span id="current-result">0</span></h2>
+    </section>
 
-so let me comment out this link here which does load the fonts to not have this distraction in here
+    
 
-so that we can focus entirely on the scripts.
+  </body>
+</html>
+```
 
-So comment this out in the HTML file so that this is no longer getting used, save the file thereafter
+- In performance tool, we can see the **app1.js** got executed before the parsing of CSS stylesheet.
 
-and then let's repeat it,
+![alt text](image-38.png)
 
-let's clear this, press the record button, reload this page,
+- `defer`: Scripts are executed after the HTML is fully parsed.
+- `async`: Scripts are executed as soon as they are downloaded, which might happen before or after the HTML is parsed, depending on the download speed.
 
-stop recording this,
 
-zoom in here. Now we have a clearer picture of what happened.
+![alt text](image-39.png)
 
-What happened is that here in that work tab, we first download the index.html file,
+## Debugging using Developer Tools
 
-that's the blue part and thereafter the CSS file and the script files.
+- Lets say there is some syntax error in your JS code. You forgot `{` after your function like below.
 
-Now let's go to the bottommost window,
+```
+function double(num1)
+    return num1*2
+}
+```
 
-there we see what the browser did in detail and if we zoom in here, which you can do with the mouse
+- This can be caught within the editor, but this can be also caught on the developer tool of chrome.
 
-wheel, you see that in the end here we receive a data, that's the downloaded HTML file, if you see, this
+![alt text](image-40.png)
 
-roughly lines up, here in network tab it's done downloading the file, that's when this receive, data event
+- So under `Sources` go to the file **app1.js** which is throwing the error.
 
-is triggered when it finished loading it and then it starts parsing the HTML code. Now it starts parsing
+![alt text](image-41.png)
 
-the HTML code and what you can see is that pretty much at the end of that when it's done parsing
+- So after fixing **app1.js**, lets open **acceptDisplay.js** file and perform some debugging on it.
 
-this, it sends off requests to the Javascript files, the CSS file is sent off relatively early, if you
+<video controls src="20241002-0953-18.3016412.mp4" title="Title"></video>
 
-would draw a vertical line down there, that happens early when that gets parsed which makes sense because
+- Using **Watch Expression**, we can access variables name and its value and perform any required expression.
+- Here we have button click event, we can also debug based on events
 
-we request the CSS files here in the head section but the Javascript files get requested a bit
 
-later because we request them at the bottom of our HTML file.
+<video controls src="20241002-1004-10.3502495.mp4" title="Title"></video>
 
-Now obviously that's not a huge file, so there's not much time difference between but still we request
+- We can control the debugging by using the `Step in function` or `Step to next break point` any many more.
+- We can also see the local and global scope of the variable even the Call Stack (show which method is calling other methods)
 
-the Javascript files only after the parsing is done or when it's almost done entirely because we do
+![alt text](image-42.png)
 
-that at the bottom of the HTML file.
+## Boolean Operator
 
-So that's why we only request the files once we're almost done parsing the HTML document as you can
+- Lets say you wanna compare two value, you can do it using below, it will return `true` or `false`.
 
-see with this vertical line. Now what's the implication of that?
+```
+console.log(2==2) //true
+console.log(2!=2) //false
+```
 
-Of course the benefit is that the scripts only execute after parsing is done but we also see that we
+- The `==` and `!=` (Not equals) operators are loosely comparator operators, what does this mean? now lets see below example
 
-start parsing and only when we're done, we download the scripts and only once the scripts are downloaded
+```
+console.log(2=="2") //true
+```
 
-way over here,
+- So here on right hand side the data type is number whereas on left hand side the data type is string, the comparison is comparing the content and not the data type. Compares values after performing type coercion. It tries to convert both values to the same type before comparing.
 
-of course that's not that long if we have a look at the milliseconds, I'm only talking about a few milliseconds
+```
+5 == '5'  // true (type coercion: '5' is converted to 5)
+null == undefined  // true (both are considered "empty" values)
 
-here but still, only after this is done, we actually execute the scripts,
+5 != '5'  // false (type coercion makes '5' become 5)
+null != undefined  // false (they are considered "equivalent empty" values)
+```
 
-these are these yellow blocks you find down there,
+- Now consider below code
 
-these are the two scripts which are getting executed.
+```
+console.log(2==="2") //false
+```
 
-The other parts are the stylesheet being parsed and the styles being rendered,
+- The operator `===` and `!==` compares content as well as data type strictly.
 
-we can ignore that.
+```
+5 === 5  // true (same value, same type)
+5 === '5'  // false (same value, different types)
 
-So here we execute the scripts,
+5 !== 5  // false (same value, same type)
+5 !== '5'  // true (same value, different types)
+```
 
-now what we effectively see is that we start executing the first script at around 930ms and
+- Strict equality (`===`) and inequality (`!==`) are usually preferred for clarity and to avoid unexpected type coercion.
+- Below are other operators 
 
-we're done passing at around 906, 907,
+![alt text](image-43.png)
 
-so there are roughly around 20 milliseconds of pause between us being done with parsing the HTML
+- Lets compare two arrays and two objects
 
-file and executing the script.
+```
+//Arrays
+let arr1 = [1, 2, 3];
+let arr2 = [1, 2, 3];
 
-Now these are all very small numbers which we can't even feel when we load the page because we have
+console.log(arr1 === arr2);  // false (different memory locations)
+console.log(arr1 == arr2);   // false (different memory locations)
 
-small scripts and we have a small, short HTML file
+let arr3 = arr1;
+console.log(arr1 === arr3);  // true (same memory reference)
 
-but imagine that our scripts would be longer, that they would take longer to load and execute and that
+//Object
+let obj1 = { name: 'John' };
+let obj2 = { name: 'John' };
 
-we have way more HTML code that needs to be parsed. Then it's not that great that we wait for all
+console.log(obj1 === obj2);  // false (different memory locations)
+console.log(obj1 == obj2);   // false (different memory locations)
 
-this code to be parsed just to start loading the scripts.
+let obj3 = obj1;
+console.log(obj1 === obj3);  // true (same memory reference)
+```
 
-We certainly want to execute them after this was parsed because we rely on the parsed content, so that's
+- Even though `arr1` and `arr2` or `obj1` and `obj2` have identical content, they are different objects in memory. JavaScript treats each instance as unique unless they are explicitly assigned to the same reference, like `arr3 = arr1`.
 
-fine,
+- To compare arrays or objects by their contents, you need to manually iterate through the properties or use utility functions like `JSON.stringify()`
 
-we don't want to execute the scripts earlier but loading them earlier, downloading them from the server
+```
+console.log(JSON.stringify(arr1) === JSON.stringify(arr2));  // true (compares their content)
+```
 
-earlier,
+## If-else Statement
 
-that would be a good idea.
+- When we want to execute some block of statements based on a true condition, we can use `if-else` statement
+- Lets see an example
 
-Also keep in mind that all the loading is very fast here of course because we're doing this all locally,
+```
+if(3>2){
+  console.log("3 is greater than 2") //This gets printed in the console.
+}
+else{
+  console.log("2 is not greater than 3")
+}
+```
 
-we're just accessing the file here,
+- So the `if(condition True)` checks if the condition is true then only executes the statement related to it `{...}`. 
 
-there is no web server involved,
+```
+if(2>3){
+  console.log("3 is greater than 2") 
+}
+else{
+  console.log("2 is not greater than 3") //This gets printed in the console.
+}
+```
 
-there is no latency, so this would be slower if we were really serving this webpage and hence we have the
+- Lets say you wanna also check whether `2===2`? you can do it using `else if` and pass this condition.
 
-ideal scenario here
+```
+if(2>3){
+  console.log("3 is greater than 2") 
+}
+else if(2==2){
+  console.log("2 is equal to 2") //This gets printed in the console.
+}
+else{
+  console.log("2 is not greater than 3")
+}
+```
 
-and yet we have this unnecessary delay and we certainly want to shrink that delay if we think about
+- You can also have multiple `else if` blocks, nested `if-else`, something like below
 
-really hosting this on a web server.
+```
+if(){
+  if(){
 
-We don't want to start loading the scripts once everything was parsed,
+  }
+  else{
 
-we want to load the scripts as early as possible and then still only execute them after everything was
+  }
+}
+else{
+  if(){
 
-parsed
+  }else if(){
 
-so we want to get the best of both worlds.
 
-Now of course we can grab the scripts and move them into head section, maybe here below the stylesheet.
+  }
+  else{
 
-Now if we do that and I clear here, this start recording and reload and stop, we get a better picture here.
+  }
+}
+```
 
-If I zoom in, here we download the HTML file and now what we see is that we start parsing HTML.
+## Logical Operators
 
-Now we then fetch the styles and the scripts and we pause parsing here as you can see, we pause that,
+- Lets say you wanna combine multiple conditions you can use `&&` (AND) operator or `||` (OR) operator.
 
-we only pick it up back here when basically downloading the scripts finished,
+```
+let age = 25;
+let hasID = true;
 
-we also executed the scripts here.
+if (age >= 18 && hasID) {
+  console.log("Allowed to enter."); // This gets printed as both condition is satisfied
+} else {
+  console.log("Not allowed to enter.");
+}
 
-Now this looks a bit strange, looks like downloaded app.js for longer than it actually took because
+let age = 16;
+let hasPermission = true;
 
-we do execute it here
+if (age >= 18 || hasPermission) {
+  console.log("Allowed to enter."); //This gets printed since hasPermission condition value is true
+} else {
+  console.log("Not allowed to enter.");
+}
+```
 
-so this is a bit distorted.
+## Operator Precedence
 
-The main takeaway here is that we start parsing HTML, then we encounter the script imports, we then
+- Consider below code.
 
-download the scripts and pause parsing therefore, this blocks parsing and then we execute the scripts and
+```
+console.log((3+3)*3) // Prints 18
+```
 
-only thereafter we continue parsing.
+- Here the preference is first given to `()` for computing and then `*`.
 
-Now that's of course bad and this also causes an error because now we try to interact with the buttons
+```
+console.log(3+2 < 9-3) //Prints 6 (5<6)
+console.log(5 + 2 === 7 && 4 > 5 || 'Hi' === 'Hi') //Prints true (7==7-> true AND 4>5-> false OR "Hi"="Hi" -> true)
+```
 
-on the webpage without those being ready,
-
-so that's also not ideal.
-
-We download the scripts earlier which is great but we now also execute them too early. The solution is
-
-an extra attribute which we can add to the script and that's the defer attribute.
-
-You add it like this, without a special value, just like this to both script tags and defer tells the
-
-browser that it should download these scripts right away but that it should not block parsing HTML
-
-so that it instead should continue with parsing HTML and only execute the scripts after everything
-
-has been parsed.
-
-So it starts downloading early but it doesn't execute the scripts right away once they've finished downloading,
-
-instead it guarantees us that it only executes the scripts once they were downloaded and once parsing
-
-HTML finished.
-
-So if we now save this and we go back, clear this again and create a new snapshot, reload, stop,
-
-if we now zoom in here, we see HTML file is downloaded,
-
-we start parsing it and then here what happens is that I download all the scripts and I execute the
-
-scripts over there,
-
-the two yellow blocks here but parsing HTML did finish before that.
-
-This is the entire HTML document being parsed, this blue block here is the stylesheet, this is not HTML
-
-and these are just some events in between these small blue blocks.
-
-So now, the script downloading and execution doesn't block the HTML code from being parsed and rendered
-
-and instead, that continues and the only thing that does change is that we download the scripts earlier
-
-which is great.
-
-Now again in this scenario here, that's all a bit hard to really see because it's all so super fast
-
-because I serve it locally and we have very small files but the general concept and the difference should
-
-be clear
-
-and of course this matters way more if you really serve this on a server and if you have bigger files
-
-and you can see that all this parsing and script execution is done roughly 20 milliseconds after we
-
-started parsing the HTML document, so that is faster than what we saw previously when we started loading
-
-and then executing the scripts at the bottom of the body tag.
-
-So therefore what you should do when working with Javascript is you should import it like this in your
-
-head section with the defer attribute because this ensures that it gets loaded early but executed
-
-only once parsing HTML finished, so you have the best of both worlds. Now sometimes, you also have scripts
-
-which you want to load early but which you then also want to execute early because maybe they don't
-
-rely on the HTML code, you don't establish a connection to it and therefore you don't care whether
-
-parsing HTML finished or not.
-
-This can also be achieved by using the async keyword instead of the defer keyword. Async works a bit like
-
-defer, it tells the browser to start loading the scripts as early as possible and then the browser is
-
-not blocked but instead continues parsing HTML
-
-but the difference to defer is that with async, the script then executes right away once it was downloaded.
-
-So it does not wait for all the HTML code to be parsed,
-
-instead it executes as early as possible. So then parsing of HTML will be paused until it is executed
-
-and only thereafter it will pick up again. Here
-
-therefore this is not the correct solution because that could lead to the script being executed before
-
-all HTML code has been parsed but in other scenarios where your scripts don't interact with the web
-
-page because you maybe just send some data to some background server, well in such cases, you could use
-
-async.
-
-One other important difference to be aware of is that with async, a script really executes as early as
-
-possible, so as soon as it was downloaded. The order of the script execution is therefore not guaranteed,
-
-the app.js script could execute before the vendor.js script if it is loaded earlier. With defer
-
-on the other side,
-
-the browser guarantees the order.
-
-So even if app.js would be downloaded faster, vendor.js would still execute before app.js,
-
-so the order is guaranteed with defer,
-
-it's not with async, so async is really just a solution if you have a standalone script that doesn't
-
-rely on your HTML content. Also note that defer and async are only available if you have an external
-
-script,
-
-if you have an inline script, so a script which you write right in here, in your HTML file, if you have something
-
-like this, defer and async is ignored because what would that do,
-
-there is no file to download,
-
-this is embedded in the HTML file so this is available once the HTML file was downloaded,
-
-so therefore defer and async doesn't make sense here because there is nothing that would need to be downloaded.
-
-Such scripts are always executed immediately and therefore if those scripts which you embed here rely
-
-on the HTML code, you'll always have to move them to the end of the body section
-
-but in general it's not a good idea to have important or longer scripts here in your HTML file,
-
-you should always use external files for that to keep your HTML files small and focused and don't
-
-bloat it with a lot of scripts.
-
-Also important,
-
-you can't combine an inline script like this and then an import with the source attribute.
-
-If you do that, then the inline script will be ignored and just the external file will be imported, so
-
-you can't combine that. Now with that,
-
-let me remove that and turn this back to defer because that's now our final setup
-
-and if I now save this and I close the developer tools and I reload here and I also comment back in
-
-my font because now I want to have it back, if I do that, you see this still works as before but now
-
-it does so with the help of scripts that are loaded in a more efficient way which does not make a big
-
-difference for this simple application, for this simple demo here but which does matter or could matter
-
-a lot for bigger applications which you really host on a web server.
-
-
-
-
-
-
-
+- Each operator has a precedence you can find out [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence#table)
 
 
 
