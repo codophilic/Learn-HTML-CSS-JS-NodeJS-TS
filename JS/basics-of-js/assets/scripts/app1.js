@@ -327,9 +327,97 @@ console.log("first" && "second" && "third");
 // Explanation: All values are truthy, so `&&` evaluates all of them and returns the last value.
 // It returns "third" because both "first" and "second" are truthy and there’s no falsy value.
 
+let fruit = "appe";
+
+switch (fruit) {
+  case "banana":
+    console.log("Banana is yellow.");
+    break;
+  case "apple":
+    console.log("Apple is red or green.");
+    break;
+  case "orange":
+    console.log("Orange is orange.");
+    break;
+  default:
+    console.log("Unknown fruit.");
+}
 
 
+for (let i = 0; i < 5; i++) {
+  console.log(i); 
+}
+
+let i = 0;
+while (i < 5) {
+    console.log(i); 
+    i++;
+}
 
 
+i = 0;
+do {
+    console.log(i); 
+    i++;
+} while (i < 5);
+
+
+const Allfruits = ["apple", "banana", "orange"];
+for (const i of Allfruits) {
+    console.log(i); 
+}
+
+
+const person1 = { name: "Alice", age: 25, city: "Wonderland" };
+for (const key in person1) {
+    console.log(key + ": " + person1[key]);
+}
+// Outputs:
+// name: Alice
+// age: 25
+// city: Wonderland
+
+for(const k in Allfruits){
+  console.log("Index - "+k+" , fruit name - "+Allfruits[k])
+}
+
+outerLoop: // This is the label
+for (let i = 0; i < 3; i++) {
+    console.log("Outer loop iteration: " + i);
+    
+    innerLoop: // Another label
+    for (let j = 0; j < 3; j++) {
+        if (j === 1) {
+            break outerLoop; // Breaks out of the outer loop
+        }
+        console.log("  Inner loop iteration: " + j);
+    }
+}
+console.log("Program Executed")
+
+try {
+  myFunctionWhichIsNotDefined() // No such method is defined
+} catch (catchError) {
+  console.log("An error occurred: " + catchError.message);
+}
+
+try {
+  let result = JSON.parse('{"key": "value"}');
+  console.log(result);
+} catch (error) {
+  console.log("An error occurred: " + error.message);
+} finally {
+  console.log("This block always runs, error or not.");
+}
+
+let numerator=10
+let denominator=0
+try{
+  if(denominator===0)
+    throw new Error("Denominator cannot be 0 Exception")
+  console.log("Division Result - " +numerator/denominator)
+}catch(e){
+  console.log("Error Caught "+e.message)
+}
 
 

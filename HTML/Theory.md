@@ -1,3 +1,7 @@
+
+
+<img align="center" alt="image" width=1000px height=400px src="image.png"/>
+
 # About HTML
 - **HTML stands for HyperText Markup Language**.
 - It is the standard language used to create and design web pages on the internet.

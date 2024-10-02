@@ -1,3 +1,7 @@
+
+<img align="center" alt="image" width=1000px height=400px src="image.jpg"/>
+
+
 # About CSS
 - CSS stands for Cascading Style Sheets, and it's a computer language that controls how web pages are structured and presented to users.
 - CSS is a rule-based language that defines styles to apply to specific elements or groups of elements on a web page. For example, you can use CSS to make a page's main heading appear as large red text.

@@ -2072,7 +2072,316 @@ condition ? expressionIfTrue : expressionIfFalse;
 
 - If the `condition` is true, the first expression (`expressionIfTrue`) is executed. If the `condition` is false, the second expression (`expressionIfFalse`) is executed.
 
+## Switch-Case
 
+- The switch statement is a control flow statement that allows you to evaluate an expression against multiple possible cases. It can be used as an alternative to multiple `if...else` statements when you have a variable that you want to compare against several different values.
+- Syntax
+
+```
+switch (expression) {
+  case value1:
+    // Code to execute if expression === value1
+    break; // Optional
+  case value2:
+    // Code to execute if expression === value2
+    break; // Optional
+  // Add more cases as needed
+  default:
+    // Code to execute if none of the cases match
+}
+```
+
+- Here the expression is matched based on content as well as data type (`===`)
+- Lets see an example
+
+```
+let fruit = "apple";
+
+switch (fruit) {
+  case "banana":
+    console.log("Banana is yellow.");
+    break;
+  case "apple":
+    console.log("Apple is red or green."); //Prints out
+    break;
+  case "orange":
+    console.log("Orange is orange.");
+    break;
+  default:
+    console.log("Unknown fruit.");
+}
+```
+
+- The switch statement evaluates the expression once and compares its value to each case clause. Each case represents a potential match for the value of the expression. If a match is found, the corresponding block of code executes. The **`break`** statement exits the switch block. If removed, the program will continue executing the next case (this is called "fall-through").
+
+```
+If break keyword is removed , all the cases (which don't matched) below the case which got matched will be executed
+Apple is red or green.
+Orange is orange.
+Unknown fruit.
+```
+
+- Consider below code
+
+```
+let fruit = "appe";
+
+switch (fruit) {
+  case "banana":
+    console.log("Banana is yellow.");
+    break;
+  case "apple":
+    console.log("Apple is red or green.");
+    break;
+  case "orange":
+    console.log("Orange is orange.");
+    break;
+  default:
+    console.log("Unknown fruit."); //Prints out
+}
+```
+- The default case is optional and executes if none of the cases match.
+
+## Loops
+
+- Loops are used to execute a block of code repeatedly as long as a specified condition is true. There are several types of loops in JavaScript, each serving different use cases.
+
+### For Loop
+
+- The for loop is used when you know in advance how many times you want to execute a statement or a block of statements.
+
+```
+for (let i = 0; i < 5; i++) {
+    console.log(i); 
+}
+
+Outputs:
+0
+1
+2
+3
+4
+```
+
+### While Loop
+
+- The while loop executes a block of code as long as the specified condition is `true`. It checks the condition before executing the loop body.
+
+```
+let i = 0;
+while (i < 5) {
+    console.log(i); 
+    i++;
+}
+
+Outputs:
+0
+1
+2
+3
+4
+```
+
+### Do While Loop
+
+- The `do...while` loop is similar to the `while` loop, but it guarantees that the loop body will execute at least once since it checks the condition after the loop body.
+
+```
+let i = 0;
+do {
+    console.log(i); 
+    i++;
+} while (i < 5);
+
+
+Outputs:
+0
+1
+2
+3
+4
+```
+
+### For of Loop
+
+- The `for...of` loop is used to iterate over iterable objects, such as arrays, strings, or other collections.
+
+
+```
+const Allfruits = ["apple", "banana", "orange"];
+for (const i of Allfruits) {
+    console.log(i); 
+}
+
+Output:
+apple
+banana
+orange
+```
+
+### For in Loop
+
+- The `for...in` loop is used to iterate over the enumerable properties of an object. It is primarily used with objects, but it can also iterate over array indices.
+
+```
+Objects
+const person1 = { name: "Alice", age: 25, city: "Wonderland" };
+for (const key in person1) {
+    console.log(key + ": " + person1[key]);
+}
+
+// Outputs:
+// name: Alice
+// age: 25
+// city: Wonderland
+
+Arrays
+for(const k in Allfruits){
+  console.log("Index - "+k+" , fruit name - "+Allfruits[k])+
+}
+
+Output:
+Index - 0 , fruit name - apple
+Index - 1 , fruit name - banana
+Index - 2 , fruit name - orange
+```
+
+>[!NOTE]
+> - The difference between `for..of` and `for..in` is, the iterator variable holds the actual value of the elements in the iterable incase of `for..of` whereas in `for..in`, the iterator variable holds the property names (keys) or indexes of the enumerable properties of the object (for arrays, it will be the index).
+> - `for..of` is used when you want to work directly with the values in an array or other iterable. `for..in` used for objects where you want to access the keys and their corresponding values.
+
+
+![alt text](image-48.png)
+
+
+## Break & Continue Keyword
+
+- You can use the `break` statement to exit a loop before it has completed all its iterations.
+
+```
+for (let i = 0; i < 10; i++) {
+    if (i === 5) {
+        break; // Exit the loop when i is 5
+    }
+    console.log(i); // Outputs: 0, 1, 2, 3, 4
+}
+```
+
+- You can also use the `continue` statement to skip the current iteration and continue with the next one.
+
+```
+for (let i = 0; i < 10; i++) {
+    if (i % 2 === 0) {
+        continue; // Skip even numbers
+    }
+    console.log(i); // Outputs: 1, 3, 5, 7, 9
+}
+```
+
+## Label Statement
+
+- Label statement is used to label a block of code. A labeled statement can be used with loops and control flow statements to provide a target for the break and continue statements. You can use labels with loops to control the flow of your program more precisely.
+- Lets see an example
+
+```
+outerLoop: // This is the label
+for (let i = 0; i < 3; i++) {
+    console.log("Outer loop iteration: " + i);
+    
+    innerLoop: // Another label
+    for (let j = 0; j < 3; j++) {
+        if (j === 1) {
+            break outerLoop; // Breaks out of the outer loop
+        }
+        console.log("  Inner loop iteration: " + j);
+    }
+}
+console.log("Program Executed")
+
+
+Output:
+Outer loop iteration: 0
+  Inner loop iteration: 0
+Program Executed
+```
+
+- Labels are optional and should be used sparingly, as they can make code harder to read. Labels can help you manage complex nested loops where you need to control which loop to break out of or continue.
+
+## Error Handling
+
+- Error handling in JavaScript allows you to manage exceptions (errors) that occur during code execution. Instead of the script stopping abruptly when an error occurs, you can catch and handle the error gracefully. This helps ensure that your code behaves more predictably, even in the presence of errors.
+- Some Error can be handle by showing some alert or executing other block whereas some erros can't be handle like connectivity erros etc..
+
+![alt text](image-49.png)
+
+### try-catch
+
+- The `try...catch` block is the most common way to handle errors in JavaScript. It allows you to "try" to execute some code and "catch" any errors that occur during the execution.
+
+```
+try {
+  myFunctionWhichIsNotDefined() // No such method is defined
+} catch (catchError) {
+  console.log("An error occurred: " + catchError.message);
+}
+```
+
+![alt text](image-50.png)
+
+### Finally
+
+- The `finally` block is an optional block that can be added after `catch`. It is executed regardless of whether an error occurred in the `try` block or not. It’s often used for cleanup tasks, like closing resources (e.g., closing files or connections).
+
+```
+try {
+    let result = JSON.parse('{"key": "value"}');
+    console.log(result);
+} catch (error) {
+    console.log("An error occurred: " + error.message);
+} finally {
+    console.log("This block always runs, error or not.");
+}
+```
+
+![alt text](image-51.png)
+
+### Throw
+
+- Consider below code
+
+```
+let numerator=10
+let denominator=0
+try{
+  console.log("Division Result - " +numerator/denominator)
+}catch(e){
+  console.log("Error Caught "+e.message)
+}
+```
+
+- The output is `Infinity`
+
+![alt text](image-52.png)
+
+- In such case you need to indicate your program or if the end user (incase of accepting input) that the `denominator` must not be 0. You can `throw` your own custom `Error`.
+
+```
+let numerator=10
+let denominator=0
+try{
+  if(denominator===0)
+    throw new Error("Denominator cannot be 0 Exception")
+  console.log("Division Result - " +numerator/denominator)
+}catch(e){
+  console.log("Error Caught "+e.message)
+}
+```
+
+- On console.
+
+![alt text](image-53.png)
+
+- JavaScript provides a built-in `Error` object, which you can use to throw standard errors with custom messages.
 
 
 
