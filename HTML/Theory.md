@@ -732,3 +732,6 @@ Play Youtube Video
 | Accessibility               | Can be made accessible with attributes and descriptions                | Limited accessibility                                         | Limited accessibility                                                  |
 | Browser Compatibility       | Supported by all modern browsers                                       | Supported by all modern browsers                              | Supported by all modern browsers                                       |
 
+
+
+- Lets learn about [CSS](https://github.com/codophilic/Learn-HTML-CSS-JS/blob/main/CSS/Theory.md)
