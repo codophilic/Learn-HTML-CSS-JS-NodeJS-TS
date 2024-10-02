@@ -43,3 +43,5 @@
     5. Pseudo Class Selector
     6. Pseudo Element Selector
     7. Combinators
+- Checkout about selectors [here](https://github.com/codophilic/Learn-HTML-CSS-JS/tree/main/CSS/selectors)
+- Learn about [JavaScript](https://github.com/codophilic/Learn-HTML-CSS-JS/blob/main/JS/BasicsOfJS.md)
