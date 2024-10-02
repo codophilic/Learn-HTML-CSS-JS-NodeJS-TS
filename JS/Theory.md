@@ -1376,9 +1376,9 @@ car.model = "Camry"; // This will not change the object
 console.log(car.model); // Still "Corolla"
 ```
 
-### Array
+#### Array
 
-- An array is a special type of object used to store multiple values in a single variable. Arrays can hold various types of data, including numbers, strings, and even other arrays. Each value in an array is stored at a specific index, starting from `0`.
+- **An array is a special type of object** used to store multiple values in a single variable. Arrays can hold various types of data, including numbers, strings, and even other arrays. Each value in an array is stored at a specific index, starting from `0`.
 - Elements in an array are stored in a specific order, starting with index `0`. You can access elements using their index (position) in the array. Arrays can grow or shrink dynamically in size, meaning you can add or remove elements as needed.
 - Array is declare using `[]`. Elements are comma separated.
 - Lets see example
@@ -1441,8 +1441,62 @@ console.log(MultipleDifferentElements)
 
 ![alt text](image-27.png)
 
+## typeof
+
+- In JavaScript, **typeof is an operator (not a function)** that returns a string indicating the type of the operand (the value you pass to it). The operand can be any value, variable, or expression.
+- The output of `typeof` will be a string. Lets see some example
+
+```
+console.log(typeof "Hi") //String
+let test1="Hello"
+console.log(typeof test1) //String
+
+console.log(typeof 123) //number
+test1=123
+console.log(typeof test1) //number
+
+test1=true 
+console.log(typeof test1) //boolean
+
+test1=NaN
+console.log(typeof test1) //number
+
+test1=null //null is an Object
+console.log(typeof test1) //Object
+
+let t;
+console.log(typeof t) //undefined
+
+t=[1,2,3]
+console.log(typeof t) //object (since array is special type of object)
+```
+
+- On browser console
+
+![alt text](image-30.png)
+
+- You can also execute your JS code on browser console.
+
+<video controls src="20241002-0646-46.7216350.mp4" title="Title"></video>
+
+- You can also access your JS scripts variable on the console.
+
+<video controls src="20241002-0648-12.3114200.mp4" title="Title"></video>
+
+- What will be `typeof` function?
+
+```
+function tester(){
+
+}
+console.log(typeof tester) //function
+```
 
 
+![alt text](image-31.png)
+
+
+## Defer
 
 
 

@@ -207,6 +207,34 @@ console.log(resultCombo2); // NaN
 let resultCombo3 = undefined + null + NaN;
 console.log(resultCombo3); // NaN
 
+console.log(typeof "Hi") //String
+let test1="Hello"
+console.log(typeof test1) //String
+
+console.log(typeof 123) //number
+test1=123
+console.log(typeof test1) //number
+
+test1=true 
+console.log(typeof test1) //boolean
+
+test1=NaN
+console.log(typeof test1) //number
+
+test1=null //null is an Object
+console.log(typeof test1) //Object
+
+let t;
+console.log(typeof t) //undefined
+
+t=[1,2,3]
+console.log(typeof t) //object (since array is special type of object)
+
+function tester(){
+
+}
+console.log(typeof tester) //function
+
 
 
 
