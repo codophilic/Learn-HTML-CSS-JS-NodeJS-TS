@@ -170,3 +170,44 @@ const fruits = ["apple", "banana", "orange"];
 
 const MultipleDifferentElements=["Rahul",2,3.45,true,car,fruits]
 console.log(MultipleDifferentElements) 
+
+function test(){
+
+}
+console.log(test()) //Output: undefined
+
+a=undefined+1+1
+console.log(a) //Output: NaN
+
+let b = null
+console.log(b+1) //Output:1 
+
+let c=NaN
+console.log(c+1) //Output:NaN
+console.log(isNaN(c))
+
+let resultString = undefined + 'string';
+console.log(resultString); // "undefinedstring"
+
+let resultString1 = null + 'string';
+console.log(resultString1); // "nullstring"
+
+let resultString2 = NaN + 'string';
+console.log(resultString2); // "NaNstring"
+
+let resultCombo = undefined + null;
+console.log(resultCombo); // NaN
+
+let resultCombo1 = undefined + NaN;
+console.log(resultCombo1); // NaN
+
+let resultCombo2 = null + NaN;
+console.log(resultCombo2); // NaN
+
+let resultCombo3 = undefined + null + NaN;
+console.log(resultCombo3); // NaN
+
+
+
+
+

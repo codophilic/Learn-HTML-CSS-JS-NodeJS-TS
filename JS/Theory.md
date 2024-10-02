@@ -256,13 +256,15 @@
 
     <!-- JavaScript code -->
     <script>
-      alert("Hello!!!");
+      alert("Sum is 660");
     </script>
   </body>
 </html>
 ```
 
-- This will load the HTML & CSS contents first then the JS features. 
+- This will load the HTML & CSS contents first then the JS features.
+
+![alt text](image-29.png)
 
 ## Import JavaScript Files
 
@@ -856,6 +858,128 @@ console.log(undefined + 1); // Output: NaN
 
 - Empty string behaves like 0 in numerical operations. `null` is coerced to **0** in number operations, but remains `null` in other cases. `undefined` becomes `NaN` (Not-a-Number) in number operations.
 
+
+## Undefined, null and NaN
+
+### undefined
+
+- A variable that has been declared but not assigned a value will have a default value called as `undefined`. It is the default value of variables that have been declared but not initialized.
+
+```
+//When you declare a variable without assigning a value
+let a;
+console.log(a); // undefined
+```
+
+- If a function doesn’t return any value, it returns `undefined` value by default.
+
+```
+function test(){
+
+}
+console.log(test()) //Output: undefined
+```
+
+- It's generally used by JavaScript itself, and you don't need to explicitly assign `undefined` to variables.
+
+### null
+
+- It represents the intentional absence of any object value. It's often used to indicate that a variable should have no value.
+
+```
+let a = null; // Variable explicitly holds "nothing"
+```
+
+-  Use `null` when you want to explicitly indicate that a variable has no value or is empty (especially for objects). It’s commonly used in programming to reset an object or reference.
+
+### NaN (Not-a-Number)
+
+- It indicates that a value is not a valid number, usually as a result of an invalid mathematical operation. **`NaN` is of type 'number'**, which is ironic given that it means "Not-a-Number".
+
+```
+let a = "abc" / 2;
+console.log(a); // NaN
+
+let num = parseInt("abc"); 
+console.log(num); // NaN
+```
+
+- `NaN` typically comes up automatically when there is an invalid number operation, so you don’t usually assign it directly. You can check for `NaN` using `isNaN()`
+
+```
+let c="abc"/2
+console.log(isNaN(c)) //Output: true
+```
+
+#### Miscellaneous 
+
+##### Adding Numbers to undefined, null and NaN
+
+- Consider below codes
+
+```
+a=undefined+1+1
+console.log(a) //Output: NaN
+
+let b = null
+console.log(b+1) //Output:1 
+
+let c=NaN
+console.log(c+1) //Output:NaN
+```
+
+- Here, 
+  - Since `undefined` cannot be coerced into a number, the result is `NaN` (Not-a-Number). 
+  - `null` is coerced into **0** when performing arithmetic, so the result is 1. 
+  - Any arithmetic operation involving `NaN` results in `NaN`.
+
+##### Concatenating String to undefined, null and NaN
+
+- Consider below code
+
+```
+let resultString = undefined + 'string';
+console.log(resultString); // "undefinedstring"
+
+let resultString1 = null + 'string';
+console.log(resultString1); // "nullstring"
+
+let resultString2 = NaN + 'string';
+console.log(resultString2); // "NaNstring"
+```
+
+- Simple concatenates. JavaScript turns them to string value and performs concatenation
+
+##### Operations between undefined, null and NaN
+
+- Consider below code
+
+```
+let resultCombo = undefined + null;
+console.log(resultCombo); // NaN
+
+let resultCombo1 = undefined + NaN;
+console.log(resultCombo1); // NaN
+
+let resultCombo2 = null + NaN;
+console.log(resultCombo2); // NaN
+
+let resultCombo3 = undefined + null + NaN;
+console.log(resultCombo3); // NaN
+```
+
+- Here,
+  - `undefined` cannot be coerced into a number, but `null` is coerced into **0**. The result is `NaN` because any operation with `undefined` results in `NaN`.
+  - Any operation with `NaN` results in `NaN`.
+  - `null` is coerced into **0**, but since `NaN` is involved, the result is `NaN`.
+  - `undefined + null + NaN` follows left-to-right evaluation. First, `undefined + null` results in `NaN`, then `NaN` + `NaN` results in `NaN`.
+
+
+
+
+
+![alt text](image-28.png)
+
 ## Completing Calculator Page
 
 - Until we have some basic knowledge of JS, now using this lets try to accept data from html page and display value. How to do this then? using `document.getElementById()`. `document.getElementById()` method is a way for JavaScript to interact with the **DOM (Document Object Model)**, which represents the structure of your HTML page.
@@ -1316,7 +1440,6 @@ console.log(MultipleDifferentElements)
 
 
 ![alt text](image-27.png)
-
 
 
 
