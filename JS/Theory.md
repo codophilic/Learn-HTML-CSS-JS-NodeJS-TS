@@ -1498,7 +1498,395 @@ console.log(typeof tester) //function
 
 ## Defer
 
+- Consider below code of **index.html** file and **app1.js**, **acceptDisplay.js** remains the same.
 
+```
+html file
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Basics</title>
+    <!-- <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    /> -->
+    <link rel="stylesheet" href="assets/styles/app.css" />
+
+  </head>
+  <body>
+    <header>
+      <h1>The Unconventional Calculator</h1>
+    </header>
+
+    <section id="calculator">
+      <input type="number" id="input-number" />
+      <div id="calc-actions">
+        <button type="button" id="btn-add">+</button>
+        <button type="button" id="btn-subtract">-</button>
+        <button type="button" id="btn-multiply">*</button>
+        <button type="button" id="btn-divide">/</button>
+      </div>
+    </section>
+
+    <section id="results">
+      <h2 id="current-calculation">0</h2>
+      <h2>Result: <span id="current-result">0</span></h2>
+    </section>
+
+    
+    <script src="assets/scripts/app1.js"></script>
+    <!-- <script src="assets/scripts/app.js"></script> -->
+    <script src="assets/scripts/acceptDisplay.js"></script>
+
+  </body>
+</html>
+
+
+app1.js
+alert("Hi")
+console.log("Hi")
+```
+
+- Lets open **Performance** window using developer tools of chrome (open the chrome tab in incognito mode)
+
+![alt text](image-32.png)
+
+- Click on **Record and Reload** button.
+
+<video controls src="20241002-0823-36.6870588.mp4" title="Title"></video>
+
+- You will get some time frame statistics which shows how much your web page took time to load the details. The performance tab allows us to get an idea of what the browser does in detail when it renders the pages.
+- Lets carefully observer these stats.
+
+<video controls src="20241002-0828-03.6197769.mp4" title="Title"></video>
+
+
+
+there are many things you can do with it but it's a great tool for understanding how the scripts are
+
+loaded, parsed and executed and what might be the issue here.
+
+So with the page being used here, press this record button here and then reload the page by using a
+
+shortcut for it or using the reload button and then stop recording this.
+
+Now you get this profile and this might look confusing at first,
+
+I'm only interested in a short part of this timeline.
+
+Now in this topmost window, you can select the part by holding the mouse button and dragging and I'm
+
+interested in this part where we have these little hills down there you could say, where you have these
+
+vertical lines.
+
+Now if you select this, it gets zoomed in here in the middle and bottommost window and there, you see
+
+which network requests were sent and what the browser did,
+
+so what it parsed, what it executed and so on.
+
+Now what we can see relatively quickly is that we have one long going network request which downloads
+
+the fonts, this kind of distorts everything here
+
+so let me comment out this link here which does load the fonts to not have this distraction in here
+
+so that we can focus entirely on the scripts.
+
+So comment this out in the HTML file so that this is no longer getting used, save the file thereafter
+
+and then let's repeat it,
+
+let's clear this, press the record button, reload this page,
+
+stop recording this,
+
+zoom in here. Now we have a clearer picture of what happened.
+
+What happened is that here in that work tab, we first download the index.html file,
+
+that's the blue part and thereafter the CSS file and the script files.
+
+Now let's go to the bottommost window,
+
+there we see what the browser did in detail and if we zoom in here, which you can do with the mouse
+
+wheel, you see that in the end here we receive a data, that's the downloaded HTML file, if you see, this
+
+roughly lines up, here in network tab it's done downloading the file, that's when this receive, data event
+
+is triggered when it finished loading it and then it starts parsing the HTML code. Now it starts parsing
+
+the HTML code and what you can see is that pretty much at the end of that when it's done parsing
+
+this, it sends off requests to the Javascript files, the CSS file is sent off relatively early, if you
+
+would draw a vertical line down there, that happens early when that gets parsed which makes sense because
+
+we request the CSS files here in the head section but the Javascript files get requested a bit
+
+later because we request them at the bottom of our HTML file.
+
+Now obviously that's not a huge file, so there's not much time difference between but still we request
+
+the Javascript files only after the parsing is done or when it's almost done entirely because we do
+
+that at the bottom of the HTML file.
+
+So that's why we only request the files once we're almost done parsing the HTML document as you can
+
+see with this vertical line. Now what's the implication of that?
+
+Of course the benefit is that the scripts only execute after parsing is done but we also see that we
+
+start parsing and only when we're done, we download the scripts and only once the scripts are downloaded
+
+way over here,
+
+of course that's not that long if we have a look at the milliseconds, I'm only talking about a few milliseconds
+
+here but still, only after this is done, we actually execute the scripts,
+
+these are these yellow blocks you find down there,
+
+these are the two scripts which are getting executed.
+
+The other parts are the stylesheet being parsed and the styles being rendered,
+
+we can ignore that.
+
+So here we execute the scripts,
+
+now what we effectively see is that we start executing the first script at around 930ms and
+
+we're done passing at around 906, 907,
+
+so there are roughly around 20 milliseconds of pause between us being done with parsing the HTML
+
+file and executing the script.
+
+Now these are all very small numbers which we can't even feel when we load the page because we have
+
+small scripts and we have a small, short HTML file
+
+but imagine that our scripts would be longer, that they would take longer to load and execute and that
+
+we have way more HTML code that needs to be parsed. Then it's not that great that we wait for all
+
+this code to be parsed just to start loading the scripts.
+
+We certainly want to execute them after this was parsed because we rely on the parsed content, so that's
+
+fine,
+
+we don't want to execute the scripts earlier but loading them earlier, downloading them from the server
+
+earlier,
+
+that would be a good idea.
+
+Also keep in mind that all the loading is very fast here of course because we're doing this all locally,
+
+we're just accessing the file here,
+
+there is no web server involved,
+
+there is no latency, so this would be slower if we were really serving this webpage and hence we have the
+
+ideal scenario here
+
+and yet we have this unnecessary delay and we certainly want to shrink that delay if we think about
+
+really hosting this on a web server.
+
+We don't want to start loading the scripts once everything was parsed,
+
+we want to load the scripts as early as possible and then still only execute them after everything was
+
+parsed
+
+so we want to get the best of both worlds.
+
+Now of course we can grab the scripts and move them into head section, maybe here below the stylesheet.
+
+Now if we do that and I clear here, this start recording and reload and stop, we get a better picture here.
+
+If I zoom in, here we download the HTML file and now what we see is that we start parsing HTML.
+
+Now we then fetch the styles and the scripts and we pause parsing here as you can see, we pause that,
+
+we only pick it up back here when basically downloading the scripts finished,
+
+we also executed the scripts here.
+
+Now this looks a bit strange, looks like downloaded app.js for longer than it actually took because
+
+we do execute it here
+
+so this is a bit distorted.
+
+The main takeaway here is that we start parsing HTML, then we encounter the script imports, we then
+
+download the scripts and pause parsing therefore, this blocks parsing and then we execute the scripts and
+
+only thereafter we continue parsing.
+
+Now that's of course bad and this also causes an error because now we try to interact with the buttons
+
+on the webpage without those being ready,
+
+so that's also not ideal.
+
+We download the scripts earlier which is great but we now also execute them too early. The solution is
+
+an extra attribute which we can add to the script and that's the defer attribute.
+
+You add it like this, without a special value, just like this to both script tags and defer tells the
+
+browser that it should download these scripts right away but that it should not block parsing HTML
+
+so that it instead should continue with parsing HTML and only execute the scripts after everything
+
+has been parsed.
+
+So it starts downloading early but it doesn't execute the scripts right away once they've finished downloading,
+
+instead it guarantees us that it only executes the scripts once they were downloaded and once parsing
+
+HTML finished.
+
+So if we now save this and we go back, clear this again and create a new snapshot, reload, stop,
+
+if we now zoom in here, we see HTML file is downloaded,
+
+we start parsing it and then here what happens is that I download all the scripts and I execute the
+
+scripts over there,
+
+the two yellow blocks here but parsing HTML did finish before that.
+
+This is the entire HTML document being parsed, this blue block here is the stylesheet, this is not HTML
+
+and these are just some events in between these small blue blocks.
+
+So now, the script downloading and execution doesn't block the HTML code from being parsed and rendered
+
+and instead, that continues and the only thing that does change is that we download the scripts earlier
+
+which is great.
+
+Now again in this scenario here, that's all a bit hard to really see because it's all so super fast
+
+because I serve it locally and we have very small files but the general concept and the difference should
+
+be clear
+
+and of course this matters way more if you really serve this on a server and if you have bigger files
+
+and you can see that all this parsing and script execution is done roughly 20 milliseconds after we
+
+started parsing the HTML document, so that is faster than what we saw previously when we started loading
+
+and then executing the scripts at the bottom of the body tag.
+
+So therefore what you should do when working with Javascript is you should import it like this in your
+
+head section with the defer attribute because this ensures that it gets loaded early but executed
+
+only once parsing HTML finished, so you have the best of both worlds. Now sometimes, you also have scripts
+
+which you want to load early but which you then also want to execute early because maybe they don't
+
+rely on the HTML code, you don't establish a connection to it and therefore you don't care whether
+
+parsing HTML finished or not.
+
+This can also be achieved by using the async keyword instead of the defer keyword. Async works a bit like
+
+defer, it tells the browser to start loading the scripts as early as possible and then the browser is
+
+not blocked but instead continues parsing HTML
+
+but the difference to defer is that with async, the script then executes right away once it was downloaded.
+
+So it does not wait for all the HTML code to be parsed,
+
+instead it executes as early as possible. So then parsing of HTML will be paused until it is executed
+
+and only thereafter it will pick up again. Here
+
+therefore this is not the correct solution because that could lead to the script being executed before
+
+all HTML code has been parsed but in other scenarios where your scripts don't interact with the web
+
+page because you maybe just send some data to some background server, well in such cases, you could use
+
+async.
+
+One other important difference to be aware of is that with async, a script really executes as early as
+
+possible, so as soon as it was downloaded. The order of the script execution is therefore not guaranteed,
+
+the app.js script could execute before the vendor.js script if it is loaded earlier. With defer
+
+on the other side,
+
+the browser guarantees the order.
+
+So even if app.js would be downloaded faster, vendor.js would still execute before app.js,
+
+so the order is guaranteed with defer,
+
+it's not with async, so async is really just a solution if you have a standalone script that doesn't
+
+rely on your HTML content. Also note that defer and async are only available if you have an external
+
+script,
+
+if you have an inline script, so a script which you write right in here, in your HTML file, if you have something
+
+like this, defer and async is ignored because what would that do,
+
+there is no file to download,
+
+this is embedded in the HTML file so this is available once the HTML file was downloaded,
+
+so therefore defer and async doesn't make sense here because there is nothing that would need to be downloaded.
+
+Such scripts are always executed immediately and therefore if those scripts which you embed here rely
+
+on the HTML code, you'll always have to move them to the end of the body section
+
+but in general it's not a good idea to have important or longer scripts here in your HTML file,
+
+you should always use external files for that to keep your HTML files small and focused and don't
+
+bloat it with a lot of scripts.
+
+Also important,
+
+you can't combine an inline script like this and then an import with the source attribute.
+
+If you do that, then the inline script will be ignored and just the external file will be imported, so
+
+you can't combine that. Now with that,
+
+let me remove that and turn this back to defer because that's now our final setup
+
+and if I now save this and I close the developer tools and I reload here and I also comment back in
+
+my font because now I want to have it back, if I do that, you see this still works as before but now
+
+it does so with the help of scripts that are loaded in a more efficient way which does not make a big
+
+difference for this simple application, for this simple demo here but which does matter or could matter
+
+a lot for bigger applications which you really host on a web server.
 
 
 
