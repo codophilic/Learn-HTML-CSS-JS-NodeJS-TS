@@ -275,7 +275,57 @@ console.log(obj1 === obj3);  // true (same memory reference)
 console.log(JSON.stringify(arr1) === JSON.stringify(arr2));  // true (compares their content)
 
 
+// let UserName = prompt("What is your name?", "defaultUserName because name not given");
+// console.log("User's name is: " + UserName); //If user enters name as Rahul -> User's name is: Rahul -> Gets print out on console
 
+
+function vote(age){
+  if(age<18){
+    return "You cannot vote"
+  }
+  return "You can vote"
+}
+
+console.log(vote(19)) //Prints "You can vote"
+
+console.log(!""); 
+// Explanation: The `!` (NOT) operator flips the truthiness of the value.
+// An empty string `""` is falsy, so `!""` becomes true.
+ 
+console.log(!!""); 
+// Explanation: The `!!` is like a double negation.
+// First, `!""` is `true` because `""` is falsy.
+// Then `!true` becomes `false`, so `!!""` results in `false`.
+
+console.log(!!!"");
+// Explanation: Triple negation. 
+// First, `!""` is `true` (because `""` is falsy).
+// Then `!!""` is `false` (double negation).
+// Finally, `!!!""` is `true` (because `!false` is `true`).
+
+// Using OR (`||`)
+
+console.log("first" || "second");
+// Explanation: The `||` (OR) operator returns the first truthy value it encounters.
+// "first" is truthy, so it stops evaluating and returns "first".
+
+console.log("first" || "second" || "third");
+// Explanation: Similar to the previous example, "first" is truthy.
+// It returns "first" without evaluating the other values.
+
+console.log("" || "second");
+// Explanation: The first value `""` is falsy, so it moves to the next value.
+// "second" is truthy, so it returns "second".
+
+// Using AND (`&&`)
+
+console.log("first" && "second");
+// Explanation: The `&&` (AND) operator returns the first falsy value or the last truthy value.
+// "first" is truthy, so it evaluates "second", which is also truthy, so it returns "second".
+
+console.log("first" && "second" && "third");
+// Explanation: All values are truthy, so `&&` evaluates all of them and returns the last value.
+// It returns "third" because both "first" and "second" are truthy and there’s no falsy value.
 
 
 

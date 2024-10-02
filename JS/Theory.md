@@ -1873,6 +1873,7 @@ else{
 }
 ```
 
+
 ## Logical Operators
 
 - Lets say you wanna combine multiple conditions you can use `&&` (AND) operator or `||` (OR) operator.
@@ -1897,6 +1898,117 @@ if (age >= 18 || hasPermission) {
 }
 ```
 
+## Truthy and Falsy
+
+- `true` and `false` are the actual Boolean values in JavaScript. They are of the Boolean data type and can only be one of the two: `true` or `false`. These are the exact representations of truth and falsehood in logical expressions.
+
+```
+let isTrue = true;  // This is literally true
+let isFalse = false; // This is literally false
+```
+
+- Consider below code
+
+```
+let aString="Hi"
+if(aString){
+  //Block executes
+}
+else{
+
+}
+```
+
+- Here in the `if()` block we are not performing any logical comparision which gonna return true or false. We are just passing a variable now since `if()` block requires boolean data type value in its `()` condition, JavaScript performs **type coercion** and evaluates the `aString` variable in form of boolean.
+
+![alt text](image-44.png)
+
+- **Truthy and falsy values are non-Boolean values that JavaScript treats as true or false when evaluated in a Boolean context (such as in an if statement or logical operations).**
+
+![alt text](image-45.png)
+
+- Consider below code
+
+
+```
+let age=0;
+if (age) {
+
+}else {
+  //Block executes
+}
+```
+
+- Here age is **0** which is consider as `false` or evaluated as **falsy** by JavaScript using **type coercion**.
+- In JavaScript, `null`, `undefined`, and `NaN` are all falsy values. This means they are treated as false when evaluated in a Boolean context.
+- Consider below code
+
+```
+console.log(!""); 
+// Explanation: The `!` (NOT) operator flips the truthiness of the value.
+// An empty string `""` is falsy, so `!""` becomes true.
+ 
+console.log(!!""); 
+// Explanation: The `!!` is like a double negation.
+// First, `!""` is `true` because `""` is falsy.
+// Then `!true` becomes `false`, so `!!""` results in `false`.
+
+console.log(!!!"");
+// Explanation: Triple negation. 
+// First, `!""` is `true` (because `""` is falsy).
+// Then `!!""` is `false` (double negation).
+// Finally, `!!!""` is `true` (because `!false` is `true`).
+
+// Using OR (`||`)
+
+console.log("first" || "second");
+// Explanation: The `||` (OR) operator returns the first truthy value it encounters.
+// "first" is truthy, so it stops evaluating and returns "first".
+
+console.log("first" || "second" || "third");
+// Explanation: Similar to the previous example, "first" is truthy.
+// It returns "first" without evaluating the other values.
+
+console.log("" || "second");
+// Explanation: The first value `""` is falsy, so it moves to the next value.
+// "second" is truthy, so it returns "second".
+
+// Using AND (`&&`)
+
+console.log("first" && "second");
+// Explanation: The `&&` (AND) operator returns the first falsy value or the last truthy value.
+// "first" is truthy, so it evaluates "second", which is also truthy, so it returns "second".
+
+console.log("first" && "second" && "third"); 
+// Explanation: All values are truthy, so `&&` evaluates all of them and returns the last value.
+// It returns "third" because both "first" and "second" are truthy and there’s no falsy value.
+```
+
+![alt text](image-47.png)
+
+
+- **||** (OR) logical operator when evalutes multiple falsy/truthy value it returns **first** truthy value within the evaluated expression (if there is no truthy value in the expression then it returns the **last falsy** value), whereas **&&** returns the **last** truthy value when all values are truthy, **else any falsy value is found it will return first falsy value**.
+- Consider below example
+
+```
+OR Operator
+const enteredValue = ''; // let's assume this is set based on some input provided by the user, therefore it might be an empty string
+ 
+const userName = enteredValue || 'PLACEHOLDER'; // will assign 'PLACEHOLDER' if enteredValue is an empty string
+              // False || True ----> || operator returns the first truthy value which is 'PLACEHOLDER'
+
+const enteredValue = '';
+const userName = undefined || NaN || null || enteredValue; // Assigns ''
+            // False || False || False || False ----> || operator returns last falsy which is '' because there is not truthy value found
+
+AND Operator
+const AndOperator= "Hello" && "Hi" && null // null gets assigned
+                  // True && True && False -----> && operator return falsy which is null
+const AndOperator1 = null && NaN && undefined // null gets assigned
+                  // False && False && False ------> && operator return first falsy which is null
+```
+
+
 ## Operator Precedence
 
 - Consider below code.
@@ -1913,6 +2025,128 @@ console.log(5 + 2 === 7 && 4 > 5 || 'Hi' === 'Hi') //Prints true (7==7-> true AN
 ```
 
 - Each operator has a precedence you can find out [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence#table)
+
+## prompt()
+
+- In JavaScript, the `prompt()` function is used to display a dialog box that prompts the user to input some text. It pauses the execution of the script until the user enters a value or cancels the input.
+- Consider below code
+
+```
+let UserName = prompt("What is your name?", "defaultUserName because name not given");
+console.log("User's name is: " + UserName);
+
+//If user enters name as Rahul -> User's name is: Rahul -> Gets print out on console
+```
+
+![alt text](image-46.png)
+
+## Ternary Operator
+
+- Consider below code.
+
+```
+function vote(age){
+  if(age<18){
+    return "You cannot vote"
+  }
+  return "You can vote"
+}
+
+console.log(vote(19)) //Prints "You can vote"
+```
+
+- We can simplify the code using **ternary operator** like below
+
+```
+let age = 18;
+let canIVote = (age >= 18) ? "You can vote" : "You cannot vote";
+console.log(canIVote); // Output: You can vote
+```
+
+- In JavaScript, the conditional (ternary) operator is a shorthand for the `if...else` statement. It allows you to perform conditional logic in a more concise manner, typically in a single line of code.
+- Syntax is
+
+```
+condition ? expressionIfTrue : expressionIfFalse;
+```
+
+- If the `condition` is true, the first expression (`expressionIfTrue`) is executed. If the `condition` is false, the second expression (`expressionIfFalse`) is executed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
