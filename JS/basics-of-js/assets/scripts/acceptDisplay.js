@@ -23,12 +23,13 @@ function getNumberValue(){
 }
 
 
-function add(){
-  const fetchInputNumber=getNumberValue()
-  let Expression=`${secondInput} + ${fetchInputNumber}`
-  secondInput+=fetchInputNumber
-  outputResult(secondInput,Expression) // Calling outputResult() method
-}
+// function add(){
+//   console.log(dummyVariableWhichNotExists)
+//   const fetchInputNumber=getNumberValue()
+//   let Expression=`${secondInput} + ${fetchInputNumber}`
+//   secondInput+=fetchInputNumber
+//   outputResult(secondInput,Expression) // Calling outputResult() method
+// }
 
 function subtract(){
   const fetchInputNumber=getNumberValue()
@@ -52,7 +53,16 @@ function division(){
 }
 
 // Indirect calling methods
-addBtn.addEventListener('click', add);
+// addBtn.addEventListener('click', add);
+addBtn.addEventListener('click', function (){
+  // console.log(dummyVariableWhichNotExists)
+  const fetchInputNumber=getNumberValue()
+  let Expression=`${secondInput} + ${fetchInputNumber}`
+  secondInput+=fetchInputNumber
+  outputResult(secondInput,Expression) // Calling outputResult() method
+});
 subtractBtn.addEventListener('click', subtract);
 multiplyBtn.addEventListener('click', multiply);
 divideBtn.addEventListener('click', division);
+
+

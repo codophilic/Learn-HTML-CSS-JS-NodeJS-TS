@@ -595,7 +595,7 @@ alert(finalAns)
 
 ![alt text](image-21.png)
 
-## Function or Method
+## Function
 
 ![alt text](image-16.png)
 
@@ -654,7 +654,7 @@ functionResult=additionOfNumbers(40,40)
 alert('Sum is '+functionResult)
 ```
 
-- We get the same 3 alerts as output. Here we have made our own function, in JavaScript there are some in-built functions as well like `alert("Any Alert Message")`. The `alert()` method displays an alert box with a message and an `OK` button. The `alert() ` method is used when you want information to come through to the user.
+- We get the same 3 alerts as output. Here we have made our own function, in JavaScript there are some in-built functions as well like `alert("Any Alert Message")`. The `alert()` function displays an alert box with a message and an `OK` button. The `alert() ` function is used when you want information to come through to the user.
 
 ## Global & Local Scope
 
@@ -821,7 +821,7 @@ console.log(3 * '3') //Prints 9
 - There are two main types of type coercion in JavaScript:
 
     **1. Implicit Coercion (Automatic)**: This happens automatically when you perform operations between values of different types, and JavaScript tries to convert one type to another to make the operation work.
-    **2. Explicit Coercion (Manual) or Type Conversion**: This happens when you intentionally convert a value from one type to another using methods or constructors like `Number()`, `String()`, etc.
+    **2. Explicit Coercion (Manual) or Type Conversion**: This happens when you intentionally convert a value from one type to another using functions or constructors like `Number()`, `String()`, etc.
 - **Explicit coercion** is synonymous with **type conversion**, while **implicit coercion** refers to **automatic type conversion** that JavaScript handles on its own
 
 #### Implicit Coercion
@@ -978,7 +978,6 @@ console.log(resultCombo3); // NaN
   - Any operation with `NaN` results in `NaN`.
   - `null` is coerced into **0**, but since `NaN` is involved, the result is `NaN`.
   - `undefined + null + NaN` follows left-to-right evaluation. First, `undefined + null` results in `NaN`, then `NaN` + `NaN` results in `NaN`.
-
 
 
 
@@ -1144,29 +1143,29 @@ let secondInput=0;
 function add(){
   let Expression=`${secondInput} + ${userInput}`
   secondInput+=userInput
-  outputResult(secondInput,Expression) // Calling outputResult() method
+  outputResult(secondInput,Expression) // Calling outputResult() function
 }
 
 function subtract(){
   let Expression=`${secondInput} - ${userInput}`
   secondInput-=userInput
-  outputResult(secondInput,Expression) // Calling outputResult() method
+  outputResult(secondInput,Expression) // Calling outputResult() function
 }
 
 function multiply(){
   let Expression=`${secondInput} * ${userInput}`
   secondInput*=userInput
-  outputResult(secondInput,Expression) // Calling outputResult() method
+  outputResult(secondInput,Expression) // Calling outputResult() function
 }
 
 function division(){
   let Expression=`${secondInput} / ${userInput}`
   secondInput/=userInput
-  outputResult(secondInput,Expression) // Calling outputResult() method
+  outputResult(secondInput,Expression) // Calling outputResult() function
 }
 ```
 
-- These `add()`, `subtract()`, `multiply()` and `division()` method must be called when users clicks on button (`addBtn`, `subtractBtn`, `multiplyBtn` and `divideBtn`)
+- These `add()`, `subtract()`, `multiply()` and `division()` function must be called when users clicks on button (`addBtn`, `subtractBtn`, `multiplyBtn` and `divideBtn`)
 - So to achieve this we will use `addEventListener`.
 
 *We will explore more about `addEventListener`*
@@ -1195,28 +1194,28 @@ function add(){
   const fetchInputNumber=getNumberValue()
   let Expression=`${secondInput} + ${fetchInputNumber}`
   secondInput+=fetchInputNumber
-  outputResult(secondInput,Expression) // Calling outputResult() method
+  outputResult(secondInput,Expression) // Calling outputResult() function
 }
 
 function subtract(){
   const fetchInputNumber=getNumberValue()
   let Expression=`${secondInput} - ${fetchInputNumber}`
   secondInput-=fetchInputNumber
-  outputResult(secondInput,Expression) // Calling outputResult() method
+  outputResult(secondInput,Expression) // Calling outputResult() function
 }
 
 function multiply(){
   const fetchInputNumber=getNumberValue()
   let Expression=`${secondInput} * ${fetchInputNumber}`
   secondInput*=fetchInputNumber
-  outputResult(secondInput,Expression) // Calling outputResult() method
+  outputResult(secondInput,Expression) // Calling outputResult() function
 }
 
 function division(){
   const fetchInputNumber=getNumberValue()
   let Expression=`${secondInput} / ${fetchInputNumber}`
   secondInput/=fetchInputNumber
-  outputResult(secondInput,Expression) // Calling outputResult() method
+  outputResult(secondInput,Expression) // Calling outputResult() function
 }
 ```
 
@@ -1500,6 +1499,490 @@ console.log(typeof tester) //function
 
 ![alt text](image-31.png)
 
+## Functions vs Methods
+
+- Consider below code.
+
+```
+// Function Declaration
+function greet() {
+  console.log("Hello!");
+}
+
+greet() //Hello!
+```
+
+- **A function is an independent block of code that can be called anywhere in your program.**
+
+- Now consider below code.
+
+```
+const p= {
+  name: "Alice",
+  greet: function() {
+    console.log("Hello, " + this.name + "!");
+  }
+};
+
+// Calling the method
+p.greet();  // Output: Hello, Alice!
+```
+
+- **A method is a function that is defined as a property of an object. It is essentially a function that is attached to an object and is invoked in the context of that object. Methods are called using the object's name, followed by a dot (`.`), and then the method name.**
+- In the `The Unconventional Calculator` page we have used event listeners
+
+```
+addBtn.addEventListener('click', add);
+subtractBtn.addEventListener('click', subtract);
+multiplyBtn.addEventListener('click', multiply);
+divideBtn.addEventListener('click', division);
+```
+
+- So **addEventListener()** is a method whereas the `addBtn`, `subtractBtn`, `multiplyBtn` and `divideBtn` are objects.
+
+>[!IMPORTANT]
+> - A function is standalone, while a method is associated with an object. Inside a method, the this keyword refers to the object to which the method belongs, allowing methods to access and modify object properties.
+> - A function is called directly by its name (`greet()`), while a method is called through an object (`p.greet()`).
+
+- Consider below code.
+
+```
+// Function Declaration
+function greet() {
+  console.log("Hello!");
+}
+
+console.log(typeof greet) //function
+```
+
+- When we check the type of `greet()` it returns function. Lets say we print the function name only
+
+```
+console.dir(greet)
+```
+
+- We get below output
+
+![alt text](image-67.png)
+
+- Now it looks similar to object, **functions are indeed objects!** In fact, almost everything in JavaScript is an object, including functions.
+
+>![NOTE]
+> - `console.dir()` is a method that allows you to display an interactive list of an object's properties in the browser's console.
+
+- We can add properties to the function like below
+
+```
+function greet() {
+  console.log("Hello!");
+}
+
+// Adding a property to the function
+greet.language = "English";
+
+console.log(greet.language);  // Output: English
+console.dir(greet)
+```
+
+- On browser console
+
+![alt text](image-68.png)
+
+- We can also store function in a variable or constants and call it using that variable name.
+
+```
+let funt=function greet() {
+  console.log("Hello!");
+}
+
+// Adding a property to the function
+funt.language = "English";
+funt() //  calling the variable name instead of function name because we cannot directly access the function name and call it
+console.log(funt.language);  // Output: English
+console.dir(funt)
+```
+
+- Here the function is an expression instead of as a declaration. The variable becomes the global scope which can be access throughout the code.
+- On browser console we get below output for the above code.
+
+![alt text](image-69.png)
+
+- **The difference between function declaration and function expression is that the function expression returns an object (even though it does not have `return` keyword) which needs to be stored using variable or constants.**
+
+- You can assign functions to variables, store them in arrays, objects, etc.
+
+```
+const greet = function() {
+  console.log("Hello!");
+};
+
+const actions = [greet, anotherFunction];
+actions[0]();  // Calls greet function
+```
+
+- Functions can be passed as arguments to other functions. Since functions are objects, you can pass them around like variables and even pass them as arguments to other functions (also called higher-order functions). This is also called as **Callbacks functions**
+
+```
+function testfunct1() {
+  console.log("test1");
+}
+
+function testfunct2() {
+  console.log("test2");
+}
+
+// Passing greet function as an argument
+executeFunction(testfunct1);  // Output: test1
+executeFunction(testfunct2);  // Output: test2
+```
+
+## Default Argument Function
+
+- Consider below code
+
+```
+function addNumbers(num1,num2){
+  console.log("Num1 - "+num1) 
+  console.log("Num2 - "+num2) 
+  console.log(num1+num2)
+}
+
+addNumbers(0)
+
+Output:
+Num1 - 0 
+Num2 - undefined
+NaN
+```
+
+- Here we passed only 1 parameter into the argument for `num1` the other parameter `num2` was not passed so JS considered it as `undefined` and we got `NaN`. In such case you can define some default value for your parameter if the caller does not provides arguments. Like below
+
+```
+function addNumbers(num1,num2=0){
+  console.log("Num1 - "+num1)  
+  console.log("Num2 - "+num2)
+  console.log(num1+num2)
+}
+
+addNumbers(0)
+Num1 - 0 
+Num2 - 0
+0
+```
+
+- Default arguments in JavaScript are a powerful feature that allows you to define default values for function parameters. Default parameters make it clear what the expected behavior is when certain arguments are not provided.
+
+## Anonymous Function
+
+- In `The Unconventional Calculator` we had `addEventListener` method which works on click event. So the `add` function get executed when the user clicks on add button. Below is the short snip of it.
+
+```
+function add(){
+  const fetchInputNumber=getNumberValue()
+  let Expression=`${secondInput} + ${fetchInputNumber}`
+  secondInput+=fetchInputNumber
+  outputResult(secondInput,Expression) // Calling outputResult() method
+}
+
+//Subtract , multiply and division functions
+
+// Indirect calling methods
+addBtn.addEventListener('click', add);
+subtractBtn.addEventListener('click', subtract);
+multiplyBtn.addEventListener('click', multiply);
+divideBtn.addEventListener('click', division);
+```
+
+- Lets add a random variable which is not initialize or declare under `add()` function, this will lead to error on browser console.
+
+```
+function add(){
+  console.log(dummyVariableWhichNotExists) // Not initialized
+  const fetchInputNumber=getNumberValue()
+  let Expression=`${secondInput} + ${fetchInputNumber}`
+  secondInput+=fetchInputNumber
+  outputResult(secondInput,Expression) // Calling outputResult() method
+}
+```
+
+- On console the error details are precisely mentioned, which function is giving out the error and what is the error.
+
+![alt text](image-70.png)
+
+- Now consider below code where the actual `add()` function is commented out and the function details are written directly like below
+
+```
+// function add(){
+//   console.log(dummyVariableWhichNotExists)
+//   const fetchInputNumber=getNumberValue()
+//   let Expression=`${secondInput} + ${fetchInputNumber}`
+//   secondInput+=fetchInputNumber
+//   outputResult(secondInput,Expression) // Calling outputResult() method
+// }
+
+//Subtract , multiply and division functions
+
+// Indirect calling methods
+// addBtn.addEventListener('click', add);
+addBtn.addEventListener('click', function (){
+  const fetchInputNumber=getNumberValue()
+  let Expression=`${secondInput} + ${fetchInputNumber}`
+  secondInput+=fetchInputNumber
+  outputResult(secondInput,Expression) // Calling outputResult() method
+});
+subtractBtn.addEventListener('click', subtract);
+multiplyBtn.addEventListener('click', multiply);
+divideBtn.addEventListener('click', division);
+```
+
+- We still get proper output.
+
+![alt text](image-71.png)
+
+- Now lets add a dummy variable just like previously we did for `add()` function.
+
+```
+addBtn.addEventListener('click', function (){
+  console.log(dummyVariableWhichNotExists)
+  const fetchInputNumber=getNumberValue()
+  let Expression=`${secondInput} + ${fetchInputNumber}`
+  secondInput+=fetchInputNumber
+  outputResult(secondInput,Expression) // Calling outputResult() method
+});
+```
+
+- We are still expecting error, but since here we have not specified any function name , what will the browser console give in the error for such undefined named function? **anonymous**.
+
+![alt text](image-72.png)
+
+- **An anonymous function in JavaScript is simply a function without a name. It's often used when you need a function temporarily and don’t plan to reuse it elsewhere.**
+
+```
+// Anonymous function assigned to a variable
+const g = function() {
+  console.log("Hello!");
+};
+
+g();  // Output: Hello!
+```
+
+- If the function is only needed once or in a limited context, you don’t need to name it you can use anonymous function.
+- Consider below code.
+
+```
+(function() {
+	// IIFE code block
+	var localVar = 'This is a local variable';
+	console.log(localVar); // Output: This is a local variable
+})();
+```
+
+- Sometimes, you might need a function to execute immediately. Anonymous functions are often used in this case. This is called **Immediately Invoked Function Expressions (IIFE)**. They are typically used to create a local scope for variables to prevent them from polluting the global scope.
+
+## Arrow Function
+
+- An arrow function in JavaScript is a shorter and more concise way to write anonymous functions. It provides a simpler syntax compared to regular function expressions.
+
+```
+// Regular function expression
+const greet = function() {
+  console.log("Hello!");
+};
+
+// Arrow function equivalent
+const greet1=()=>console.log("Hi")
+greet1()
+
+greet1();  // Output: Hi
+```
+
+- Arrow functions are more concise and easier to write, especially for shorter functions.
+
+```
+// Regular anonymous function
+const add = function(a, b) {
+  return a + b;
+};
+
+// Arrow function equivalent
+const add = (a, b) => a + b;
+
+console.log(add(2, 3));  // Output: 5
+```
+
+![alt text](image-73.png)
+
+- **Use regular anonymous functions if you need to create methods for an object or else for simpler code prefer arrow function.**
+
+## Rest Operator (...)
+
+- In JavaScript, the rest operator (...) allows you to represent an indefinite number of arguments as an array for a function.
+- Consider below code.
+
+```
+function sumOfNumbers(...AllArguments){
+  let sum=0
+  for(const i of AllArguments){
+    sum+=i
+  }
+  console.log(sum)
+}
+
+sumOfNumbers(1,2,3,4,5,6)
+
+Output:
+21
+```
+
+- `...AllArguments` collects all the arguments passed to the `sumOfNumbers` function into an array called `AllArguments`.
+- Consider below code
+
+```
+function display(firstElement,secondElement, ...restElements) {
+  console.log(firstElement);  // Output: 1
+  console.log(secondElement) // Output: 2
+  console.log(restElements);   // Output: [3, 4, 5]
+}
+
+display(1, 2, 3, 4, 5);
+```
+
+- Here, the elements `1` and `2` goes into argument `firstElement` and `secondElement` respectively , rest all elements are taken up by the rest operator (`...`) into array `restElements`.
+- **In a function definition, the rest operator must be the last parameter because it gathers the remaining arguments.**
+- Below code will give your error because the rest operator is at the first in argument.
+
+```
+function display(...restElements, firstElement,secondElement) {
+  console.log(firstElement);  // Output: 1
+  console.log(secondElement) // Output: 2
+  console.log(restElements);   // Output: [3, 4, 5]
+}
+
+display(1, 2, 3, 4, 5);
+```
+
+- On browser console
+
+![alt text](image-74.png)
+
+- **We cannot define multiple rest operators**.
+
+```
+Not allowed
+function display(...restElements, ...restElements1) {
+
+}
+
+display(1, 2, 3, 4, 5);
+```
+
+- Example of Arrow function with rest operator.
+
+```
+let sumofnumbers=(...restElements)=>{
+  let sum=0
+  for(const i of restElements){
+    sum+=i
+  }
+  return sum
+}
+
+console.log(sumofnumbers(1,2,3,4))
+
+Output:
+10
+```
+
+- Now the function has will consume only one argument, you don't need to declare parameter for it because JS provides `arguments` keyword.
+
+```
+let sumofnumbers=function (){
+  let sum=0
+  for(const i of arguments){ // don't use this.
+    sum+=i
+  }
+  return sum
+}
+
+console.log(sumofnumbers(1,2,3,4))
+```
+
+- Before the rest operator, JavaScript functions had the arguments object, which gives you access to all the arguments passed to a function. The `arguments` keyword won't work with arrow function and **it is not highly recommended to use it**.
+
+## Nested Function
+
+- Nested functions means you can define one or more functions inside another function. The inner functions have access to the variables and parameters of the outer function.
+- Lets see some example
+
+```
+function outerFunction(outerParam) {
+  console.log("Outer parameter: " + outerParam);
+
+  // Inner function
+  function innerFunction(innerParam) {
+    console.log("Inner parameter: " + innerParam);
+  }
+
+  innerFunction("Hello from inner function!");  // Calling inner function
+}
+
+outerFunction("Hello from outer function!");
+
+Output:
+Outer parameter: Hello from outer function!
+Inner parameter: Hello from inner function!
+```
+
+- The inner function can access variables and parameters of the outer function, but the outer function cannot access variables of the inner function. Below is an example
+
+```
+function outerFunction(outerParam) {
+  console.log("Outer parameter: " + outerParam);
+  const outerVariable="I am outer function variable"
+
+  // Inner function
+  function innerFunction(innerParam) {
+    console.log("Inner parameter: " + innerParam);
+    console.log(outerVariable)
+  }
+
+  innerFunction("Hello from inner function!");  // Calling inner function
+}
+
+outerFunction("Hello from outer function!");
+
+Output:
+Outer parameter: Hello from outer function!
+Inner parameter: Hello from inner function!
+I am outer function variable
+```
+
+### Closure
+
+- When the inner function retains access to the variables of the outer function even after the outer function has executed, it's called a **closure**. Lets see below example
+
+```
+function outerFunction(outerParam) {
+  // Outer variable
+  const outerVar = "I'm from outer scope!";
+  
+  // Inner function (closure)
+  function innerFunction() {
+    console.log(outerVar);  // Have kept the outerVar from outer function
+  }
+
+  return innerFunction;  // Return inner function
+}
+
+const inner = outerFunction();  // Call outer function and taking its inner method as in return, outer function execution got finished
+inner();  // Calling inner method Output: I'm from outer scope!
+
+Output:
+I'm from outer scope!
+```
+
+- In this example, even though `outerFunction` has finished executing, the `innerFunction` still has access to `outerVar` because of the **closure**. This is a powerful concept in JavaScript.
+
 
 ## Defer Attribute
 
@@ -1733,7 +2216,7 @@ function double(num1)
 <video controls src="20241002-1004-10.3502495.mp4" title="Title"></video>
 
 - We can control the debugging by using the `Step in function` or `Step to next break point` any many more.
-- We can also see the local and global scope of the variable even the Call Stack (show which method is calling other methods)
+- We can also see the local and global scope of the variable even the Call Stack (show which function is calling other function)
 
 ![alt text](image-42.png)
 
@@ -2325,7 +2808,7 @@ Program Executed
 
 ```
 try {
-  myFunctionWhichIsNotDefined() // No such method is defined
+  myFunctionWhichIsNotDefined() // No such function is defined
 } catch (catchError) {
   console.log("An error occurred: " + catchError.message);
 }
@@ -2928,7 +3411,7 @@ addListenerBtn.addEventListener('click', addListener);
 
 <video controls src="20241003-1314-35.9892014.mp4" title="Title"></video>
 
-- **Nope, it does not add a new event listener when clicked multiple time to add new event listener for the same input** why so?. The `addEventListener` method in JavaScript does not add duplicate listeners if the same function is already attached to the same event on the same element. This means:
+- **Nope, it does not add a new event listener when clicked multiple time to add new event listener for the same input** why so?. The `btnName.addEventListener()` method in JavaScript does not add duplicate listeners if the same function is already attached to the same event on the same element. This means:
   - Even if you click the `addListenerBtn` multiple times, the same `printMessage` function is being added as the event listener to `clickableBtn`.
   - JavaScript is smart, it detects that the same function is already attached to the click event on `clickableBtn`, so it doesn’t add the new listener again and again.
 - This behavior is why you only see one event being logged when `clickableBtn` is clicked, no matter how many times you add the listener.

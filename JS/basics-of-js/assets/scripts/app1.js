@@ -547,3 +547,123 @@ function function4(){
 }
 
 function4()
+
+const p= {
+  name: "Alice",
+  greet: function() {
+    console.log("Hello, " + this.name + "!");
+  }
+};
+
+// Calling the method
+p.greet();  // Output: Hello, Alice!
+
+let funt=function greet() {
+  console.log("Hello!");
+}
+
+// Adding a property to the function
+funt.language = "English";
+funt() //  calling the variable name instead of function name because we cannot directly access the function name and call it
+console.log(funt.language);  // Output: English
+console.dir(funt)
+
+
+function executeFunction(fn) {
+  fn();  // Call the passed function
+}
+
+function testfunct1() {
+  console.log("test1");
+}
+
+function testfunct2() {
+  console.log("test2");
+}
+
+// Passing greet function as an argument
+executeFunction(testfunct1);  // Output: test1
+executeFunction(testfunct2);  // Output: test2
+
+
+// Anonymous function assigned to a variable
+const g = function() {
+  console.log("Hello!");
+};
+
+g();  // Output: Hello!
+
+(function() {
+  console.log("This runs immediately!");
+})();
+
+const greet1=()=>console.log("Hi")
+greet1()
+
+function addNumbers(num1,num2=0){
+  console.log("Num1 - "+num1)  
+  console.log("Num2 - "+num2)
+  console.log(num1+num2)
+}
+
+addNumbers(0)
+
+function sumOfNumbers(...AllArguments){
+  let sum=0
+  for(const i of AllArguments){
+    sum+=i
+  }
+  console.log(sum)
+}
+
+sumOfNumbers(1,2,3,4,5,6)
+
+function display(firstElement,secondElement, ...restElements) {
+  console.log(firstElement);  // Output: 1
+  console.log(secondElement) // Output: 2
+  console.log(restElements);   // Output: [3, 4, 5]
+}
+
+display(1, 2, 3, 4, 5);
+
+
+let sumofnumbers=function (){
+  let sum=0
+  for(const i of arguments){ // don't use this.
+    sum+=i
+  }
+  return sum
+}
+
+console.log(sumofnumbers(1,2,3,4))
+
+// function outerFunction(outerParam) {
+//   console.log("Outer parameter: " + outerParam);
+//   const outerVariable="I am outer function variable"
+
+//   // Inner function
+//   function innerFunction(innerParam) {
+//     console.log("Inner parameter: " + innerParam);
+//     console.log(outerVariable)
+//   }
+
+//   innerFunction("Hello from inner function!");  // Calling inner function
+// }
+
+// outerFunction("Hello from outer function!");
+
+function outerFunction(outerParam) {
+  // Outer variable
+  const outerVar = "I'm from outer scope!";
+  
+  // Inner function (closure)
+  function innerFunction() {
+    console.log(outerVar);  // Have kept the outerVar from outer function
+  }
+
+  return innerFunction;  // Return inner function
+}
+
+const inner = outerFunction();  // Call outer function and taking its inner method as in return, outer function execution got finished
+inner();  // Calling inner method Output: I'm from outer scope!
+
