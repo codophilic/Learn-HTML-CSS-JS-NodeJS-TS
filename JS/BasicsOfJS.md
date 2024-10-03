@@ -32,7 +32,7 @@
 ![alt text](image-1.png)
 
 - Let's say you write your Javascript code and you want it to have some effect on the web page, if we talk about the browser as the environment where we run our script. Then you have one important thing built into any environment where you want to run Javascript code and that's a **Javascript engine**.
-- The Chrome browser has V8 as its JS engine, in Firefox the name would be SpiderMonkey, Safari uses JavaScriptCore and of course other browsers also either reuse these engines or have their own engines. Now the job of the engine is to parse code, read and understand your Javascript code, then on the fly compile it to machine code because machine code executes faster, so it reads your code but it does not necessarily execute it like that but instead, it now takes that code and compiles it to code which is faster to execute by the machine and then it executes that machine code.
+- The Chrome browser has V8 as its JS engine, in Firefox the name would be SpiderMonkey, Safari uses JavaScriptCore and of course other browsers also either reuse these engines or have their own engines. Now the job of the engine is to parse code or read the code and understand your JS code, then on the fly compile it to machine code because machine code executes faster, so it reads your code but it does not necessarily execute it like that but instead, it now takes that code and compiles it to code which is faster to execute by the machine and then it executes that machine code.
 - This all happens in the browser with the help of the Javascript engine and then when that code is executed, we have that effect on our web page. All of these happens on a single thread.
 - The Javascript code execution runs on one single thread.
 - Hold on, we had **Javascript** is a scripting language where it only require interpreter. **Then why does Javascript engine compiles it?**
@@ -47,6 +47,11 @@
 - **It’s still called an interpreted scripting language because**:
     - You write the code, and it runs immediately (no manual compilation).
     - But to make it faster, browsers now secretly compile parts of the code while it's running.
+- It's also important to note that the browser also gives you a couple of features, so-called **Browser APIs** which are built in, which you can use into from your Javascript code. This are some in-built APIs provided by browser for example for getting the user's location. These browser APIs are part of the browser, depending on the browser like Google Chrome which uses v8 as its JS Engine as this api written in C++ but again that depends on the browser you're using. 
+- The browser gives you communication bridges via functions or object to call these in-built api in your JS code.
+
+![alt text](image-56.png)
+
 
 ## Dynamic Interpreted and Weekly Typed Programming language
 
@@ -2383,30 +2388,560 @@ try{
 
 - JavaScript provides a built-in `Error` object, which you can use to throw standard errors with custom messages.
 
+## ES5 (ECMAScript 5) vs ES6 (ECMAScript 6)
+
+- ECMAScript is a standard specification which is used by JavaScript. So over time, ECMAScript and therefore Javascript evolved, it had a slow evolvement and it became more and more important and one major version that was released in the past was basically **ECMAScript version 5**, you could say, this is just a term that was assigned to one specific version of that standard that was released and that was agreed by all browser.
+- Now ECMAScript 5 included some important improvements and most importantly, standardization back then because before that, a lot of browsers basically did what they wanted like implement their own type of JavaScript and ECMAScript 5 was the first real big standard. We then had one common ground for browsers to implement features, so that was very important.
+- **After ECMAScript 5, the next major milestone was ECMAScript 6 (ES6), also known as ECMAScript 2015**, which was a huge leap forward for the language. ES6 introduced many modern features and improvements that addressed several limitations of ES5. It was a pivotal update that made JavaScript more powerful, expressive, and better suited for building large-scale applications.
+- ES6 brought features like `let` and `const` for block-scoped variables, classes for better object-oriented programming, arrow functions for concise function syntax, promises for easier handling of asynchronous operations, and modules for organizing code. These additions significantly improved developer productivity and made JavaScript more manageable for complex projects.
+- One key motivation for ES6 was to help JavaScript catch up with the evolving needs of web development. JavaScript had become a crucial language for both client-side and server-side programming, and with this, developers demanded more structured, maintainable, and performant code.
+- ES6 also introduced features like the `for-of` loop, default parameters, template literals, and the spread and rest operators, making the language more flexible and modern. These improvements not only enhanced the way developers wrote code but also increased compatibility across different browsers due to the standardized specification.
+- ES5 is compatible with all browsers, including old ones, but lacks modern syntax and features. ES6 introduces powerful new features. **Modern browsers fully support ES6**. Now in ES6 , the features of ES5 won't be remove as it would lead to issue supported by old browser who is using ES5 standards.
+- All the above learnings are based on ES6.
+
+![alt text](image-54.png)
+
+### var
+
+- `var` (from ES5) is similarly like `let` (from ES6) which are used to initialize or declare variables. But there are major difference.
+
+#### Scope
+
+- Consider below code which has usage of `var`.
+
+```
+if(true){
+  var AvarVariable1=10;
+}
+
+console.log(AvarVariable1) // Accessible outside the if block (global scope)
+
+function AvarFunc(){
+  if(true){
+    var AvarVariable=20;
+  }
+  
+  console.log(AvarVariable) // Accessible outside the if block (local scope)
+  console.log(AvarVariable1)
+}
+
+AvarFunc()
+
+Output:
+10
+20
+10
+```
+
+- `var` has function scope, meaning it is accessible throughout the entire function where it's defined. If defined outside of a function, it's globally scoped.
+
+- Consider below code which has usage of `let`. (Completely same as above)
+
+```
+if(true){
+  let AvarVariable1=10;
+}
+
+console.log(AvarVariable1) // Not accessible
+
+function AvarFunc(){
+  if(true){
+    let AvarVariable=20;
+  }
+  
+  console.log(AvarVariable) // Not accessible
+  console.log(AvarVariable1) // Not accessible
+}
+
+AvarFunc()
+
+Output:
+app1.js:446 Uncaught ReferenceError: AvarVariable1 is not defined
+    at app1.js:446:13
+```
+
+- `let` has block scope, meaning it is only accessible within the block `{}` in which it is defined (such as an `if` or `for` block or functions etc..).
+
+```
+function example() {
+  if (true) {
+    let y = 5; // let is block-scoped
+  }
+  console.log(y); // ReferenceError: y is not defined
+}
+example();
+```
+
+- **`var` can lead to unexpected behavior because it's accessible outside the block, while `let` is confined to the block, making it more predictable and less error-prone.**
+
+- Consider below code.
+
+```
+// Below is a block
+{
+  let v1=10
+  var v2=20
+}
+
+console.log(v2)
+console.log(v1) // Not accessible , because let has a Block scope {..}
+
+Output:
+20
+app1.js:466 Uncaught ReferenceError: v1 is not defined
+    at app1.js:466:13
+```
+- Consider below code for `const` both variables has different scope but names are same.
+
+```
+// global scope
+const bar = 41;
+console.log(bar); // 41
+
+if (true) { // block scope
+ const bar = 42; // Looks like re-initialize but it is not, the scopes are different thats why
+ console.log(bar); // 42
+}
+
+console.log(bar); // 41
+```
+
+#### Re-declaration
+
+- Consider below code which uses `var`.
+
+```
+var a = 5;
+var a = 10; // No error
+```
+
+- Using `var` you can redeclare the same variable in the same scope.
+
+- Consider below code which uses `let`.
+
+```
+let b = 5;
+let b = 10; // SyntaxError: Identifier 'b' has already been declared
+```
+
+- Using `let` you cannot redeclare a variable in the same scope.
+- The re-declaration of using `var` will create confusion for developers whether the variable was already declare or not , so the existing variable which was used for different functionality purpose will won't work if re-declared.
+
+#### Global Object Property
+
+- In JavaScript, the global object is an object that represents the global environment in which your code runs. In browsers, this global object is called `window`.
+- Consider below code which uses `var`.
+
+```
+var x = 10;
+console.log(window.x); // 10
+```
+
+- In this example, the variable `x` becomes a property of window. So, you can access `x` using `window.x`. This means the global var-declared variable and `window.x` refer to the same value.
+- Consider below code which uses `let`.
+
+```
+let y = 10;
+console.log(window.y); // undefined
+```
+
+- `let` variables are not added as properties of the global object.
+
+>[!NOTE]
+> - The `window` object holds all the global variables and functions in a browser. When you use `var`, you unintentionally add properties to this global object, which can cause conflicts if different parts of your code (or third-party scripts) use the same variable names. This is called **global scope pollution** and is one of the reasons why `let` is preferred, as it does not add variables to the global object.
 
 
+#### Hoisting
+
+- Consider below code which uses `var`.
+
+```
+console.log(a); // undefined (because of hoisting)
+var a = 10;
+```
+
+- Consider below code which uses `let`.
+
+```
+console.log(b); // ReferenceError (cannot access 'b' before initialization)
+let b = 20;
+```
+
+- **Javascript has a special feature called hoisting** which in the end means that the Javascript engine, the browser, when it loads your script goes over your entire script and it does things like look for functions which it then automatically loads and registers so that you can write functions below your logic or above your logic as position does not matters for it, it does the same for variables and for variables created with `var`, it actually pulls this variable declaration to the beginning of your file. The browser moves function and variable declarations to the top of their respective scope before executing the code but it just declare them it does not initialize them.
+- In JavaScript hoisting is done for `var` as well as for `let` and `const`.
+- For `var` the variables are moved up and are declared and assign with `undefined` as its value. So that you get no error message.
+- **Hoisting means that JavaScript moves variable declarations to the top of their scope, but `var` gets initialized to undefined, while `let` remains uninitialized until it is encountered in the code**.
+- Hoisting is the process of the JavaScript compiler reading variable declarations first to create space in memory for them. Variables declared with `let` and `const` are hoisted to the top of their scope, but they are not initialized. **This means that the block of code is aware of the variable, but it cannot be used until it has been declared because those variable are in TDZ (temporal dead zone) meaning that any attempt to access them will result in a reference error (`ReferenceError`).**
+- Consider below code for `const` both variables has different scope but names are same.
+
+```
+// global scope
+const bar = 41;
+console.log(bar); // 41
+
+if (true) { // block scope
+ console.log(bar); // ReferenceError (not 41) <-- PROOF OF THE HOISTING / TDZ , consist of the `block scope` bar constant and not the global scope bar constant
+ const bar = 42; // Looks like re-initialize but it is not, the scopes are different thats why
+ console.log(bar); // 42
+}
+
+console.log(bar); // 41
+```
+
+- Inside the if block, a new block-scoped variable `bar` is declared using `const`. This creates a new variable within the block that shadows the **global** `bar`.
+- When the first `console.log(bar)` is encountered before the block-scoped `bar` is declared, JavaScript is aware of the block-scoped `bar`, but since it hasn’t been initialized yet (**because of hoisting and the temporal dead zone**), it throws a `ReferenceError`.
+- Once you declare and initialize `const bar = 42`;, the next `console.log(bar)` will outputs `42` as it refers to the block-scoped `bar`.
+
+>[!NOTE]
+> - Since there are so many issues with `var` it can be removed right in ES6 ? No, because many other browser uses `var` variables, removing it will make the browser unstable and error prone.
+
+### Strict Mode
+
+- Consider below code.
+
+```
+function setName() {
+  userName = "ABC"; // Implicit global variable!
+}
+
+setName();
+console.log(userName); // ABC (global scope)
+
+Output:
+ABC
+```
+
+- Here if you see we have not define `var`, `let` or `const` against our variable name `userName`, still it got printed why so? JavaScript will automatically treat this as `var userName = "ABC"` and will be placed in the **global scope**, even if it's inside a function. Such mode of declaring variables is called as **non-strict or default mode**.
+- This can lead to bugs because if you forget to declare a variable with `var`, `let`, or `const`, it can unintentionally leak into the global scope.
+- Now consider below code
+
+```
+"use strict";
+
+function setName() {
+  userName = "ABC"; // Implicit global variable!
+}
+
+setName();
+console.log(userName); // ABC (global scope)
+
+Output:
+Uncaught ReferenceError: userName is not defined
+    at setName (app1.js:6:12)
+    at app1.js:9:1
+```
+
+- In strict mode, this behavior changes. JavaScript will not allow you to declare a variable without `var`, `let`, or `const`. If you try to assign a value to an undeclared variable, it will throw a `ReferenceError`.
+- **In non-strict mode, JavaScript implicitly treats the undeclared variable as a global variable (like a `var` in global scope), but it's not recommended. In strict mode, assigning to an undeclared variable throws an error. You must explicitly declare variables using `var`, `let`, or `const` to avoid issues**.
+- You can also enable strict mode inside a specific function.
+
+```
+function myFunction() {
+  "use strict";
+  var y = 3.14;
+}
+```
+
+- Consider below code without strict mode
+
+```
+function setName(a,a) {
+
+  console.log(a+a)
+}
+
+setName(1,1);
+
+Output:
+2
+```
+
+- Now consider below code with strict mode
+
+```
+"use strict";
+
+function setName(a,a) {
+
+  console.log(a+a)
+}
+
+setName(1,1);
+```
+
+- On browser console
+
+![alt text](image-55.png)
+
+- **In strict mode, functions can’t have duplicate parameter names.**
+- There are several other things which are disallowed or disabled in [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode#changes_in_strict_mode)
+
+## Primitive vs Reference Values
+
+- In JavaScript, values are categorized into two types: primitive values and reference values.
+
+### Primitive value
+
+- Primitive values are the most basic types of data in JavaScript, and t**hey are stored directly on the stack** (Memory management). When you work with a primitive value, you are dealing with the actual value itself.
+- Primitive types in JavaScript, number, string, boolean, undefined, null etc..
+- They are immutable (cannot be changed). They are **copied by value**, meaning if you assign a primitive value to another variable, the new variable gets a copy of the original value, not a reference to it.
+
+```
+let a = 10;  // Primitive value (number)
+let b = a;   // Copy of the value of 'a'
+
+console.log(a); // 10
+console.log(b); // 10
+
+b = 20; // Changing 'b' doesn't affect 'a'
+
+console.log(a); // 10 (a remains the same)
+console.log(b); // 20 (b is now updated)
+```
+
+### Reference value
+
+- Reference values in JavaScript are objects. They include:  object, array, function.
+- Unlike primitive values, reference values are stored in the heap, and the variable holds a reference (or memory address) to where the object is stored in memory. When you work with reference values, you’re dealing with references (or pointers) to the objects, **not the objects themselves**.
+- They are mutable (can be changed). They are **copied by reference**, meaning when you assign a reference value to another variable, both variables point to the same object in memory.
+
+```
+let person1 = { name: "John", age: 30 }; // Reference value (object)
+let person2 = person1; // Copy the reference, not the object itself
+
+console.log(person1.name); // John
+console.log(person2.name); // John
+
+person2.name = "Jane"; // Changing 'person2' affects 'person1'
+
+console.log(person1.name); // Jane (person1 is also changed)
+console.log(person2.name); // Jane
+```
+
+| **Primitive Values**              | **Reference Values**                           |
+|-----------------------------------|------------------------------------------------|
+| Stored on the stack               | Stored in the heap                             |
+| Copied by value                   | Copied by reference                            |
+| Immutable (cannot be changed)     | Mutable (can be changed)                       |
+| Each variable holds its own value | Variables share a reference to the same object |
+| Examples: number, string, boolean | Examples: object, array, function              |
 
 
+- Primitive values are simple data types (like numbers or strings) that are copied by value. Changing one copy does not affect the other. Reference values are objects or arrays, and they are copied by reference, meaning changes to one variable will affect the other because they both point to the same object in memory.
+
+![alt text](image-65.png)
 
 
+## Memory Management
+
+- The memory life cycle defines a JavaScript variable or object’s journey from initialization to removal.
+
+![alt text](image-58.png)
+
+- **Initialization** is the creation of the variable. In JavaScript, we do this using the `let`, `const`, or `var` keywords. During this stage, the JavaScript Engine reserves memory for the variables and stores the values inside the allocated memory space.
+
+```
+let name = 'dummy';
+```
+
+- **Accessing** is using the variable of the object inside the code. Many times, we’ll also be modifying the values of these variables or objects during this stage.
+
+```
+if (name === 'dummy') {
+  // Changing the value
+  name = 'DUMMY!';
+}
+```
+
+- Removal is the deallocation of the reserved memory taken up by the variables. After deallocation, we won’t be able to access the variable from our JavaScript code. For example, we cannot access the variables created inside a function.
+
+```
+function sum() {
+  let x = 10;
+  let y = 20;
+  let sum = x + y;
+}
+
+console.log(x); // This will throw and error!
+```
+
+- The 3 phases or parts of the memory life cycle which are the same for all programming languages are;
+  - **Allocation** when we declare a variable, we need to allocate the memory. In JavaScript, this is handled automatically.
+  - **Using** the allocated memory.
+  - **Releasing** the memory when not in use anymore. In JavaScript, this is handled automatically (it is called **JavaScript garbage collection**).
+
+- We talked about allocation and deallocation, but the question is that where do these allocations and deallocation happen?
+- JavaScript consists of two types of memory spaces, i.e., Stack and Heap, to store variables. The difference between them is what variables get stored in which type of storage. Let’s take a closer look at stacks and heaps.
 
 
+![alt text](image-57.png)
+
+### Stack
+
+- Stack is kind of the short term memory. It manages our program flow and mainly that means that the stack keeps control over which function is currently executing.
+- Let’s say you have some variables that you add one by one to the stack. The last variable pushed is at the top, which means it will be the first to get removed when the memory gets de-allocated.
+- JavaScript uses the stack data structure to **store static or fixed-size data**. This includes all numbers, strings, booleans, and other primitive data types. **These data types have a fixed size known at compile time**. Variables such as objects, arrays, etc., are not stored in the stack as their size varies during run time.
+
+![alt text](image-59.png)
+
+### Heap
+
+- Since Stack can only store fixed-size or static data, where does JavaScript store dynamic data? The answer is Heap. The heap memory, unlike stack memory, doesn’t have a fixed-size limitation, i.e., **the memory gets allocated dynamically**.
+- JavaScript uses a heap for storing variables whose size is unknown at compile time or may vary at the run time, such as objects, arrays, functions, etc.
+- The JavaScript Engine dynamically allocates memory to the heap. Initially, the heap size depends on available system memory, and it can be dynamically increased/decreased based on the need.
+- Accessing data in the heap is slower compared to the stack.
 
 
+![alt text](image-60.png)
+
+>[!NOTE]
+> - You can check the current memory usage of your **Node.js** application using the `process.memoryUsage()` method.
+> - You may manually adjust the heap size of your **Node.js** process by simply passing the **`--max_old_space_size`** flag using the command line.
+
+- JavaScript allocates memory for objects within the heap, but we must have a reference to that memory location to access the value. The reference to the memory location resides in the stack memory.
+
+![alt text](image-61.png)
+
+- Below is an example how the code is represented in stack and heap
+
+![alt text](image-62.png)
+
+- Consider below example where two variable have same value , this means they are reference the same object but as different reference values which are stored inside the stack. **The stack consist of reference values to objects and not object**.
+
+![alt text](image-64.png)
+
+- From the picture we can see how different values are stored, both the `“person”` and `“newPerson”` objects are stored in the heap and they point to the same object (our object also means object in JS and functions). But a reference to it is stored in the stack.
+- We can see the how stack works using developer tools on chrome. Consider below code.
+
+```
 
 
+function function1(){
+  let a=100
+  let b=1001
+  console.log(a+b)
+}
+function function2(){
+  function1()
+  console.log(2)
+}
+function function3(){
+  function2()
+  console.log(3)
+}
+function function4(){
+  function3()
+  console.log(4)
+}
+
+function4()
+```
+
+- Lets open the browser and add debugger and watch how the **Call Stack** works.
+
+<video controls src="20241003-1133-57.3815335.mp4" title="Title"></video>
 
 
+- If you see initially `function4()` was in the stack, since `function4()` called `function3()` , so the `function3()` also got into the stack at the top. Same way when `function3()` called `function2()`, even the `function2()` got stacked, Similarly `function1()` got stacked at the top.
+- Now as soon as `function1()` execution got finished it was removed from the stack, when `function2()` execution got finished it got removed from the stack and so on `function3()` and `function4()` following LIFO (Last-In-First-Out) order.
+- If you notice there is something called **anonymous** in the call stack video. What is it?
+- Now in the stack, it all starts with some **anonymous** code execution which basically is the script file itself, it doesn't have a name. **For JavaScript your JS file is itself a function without any name thats why you can see it is called anonymous**. It is basically your script getting executed.
 
 
+![alt text](image-63.png)
 
 
+### Garbage Collector
+
+- Where JavaScript stores its memory. But the memory life cycle which we discussed previously, shows that there is one last step; releasing the memory when not in use. This process is handled automatically by JavaScript i.e the JavaScript garbage collector takes care of this.
+- When an object in the heap is no longer referenced by any variable (i.e.,those variables in stack which has no references pointing to it ), it becomes eligible for garbage collection. The JavaScript engine’s garbage collector will automatically reclaim that memory, preventing memory leaks.
+- Consider below code
+
+```
+let vari={name:"ABC",age:12}
+vari=null
+```
+
+- `vari` is the reference variable which points the object `{name:"ABC",age:12}`. So making `vari=null` we tell JS that the object `{name:"ABC",age:12}` is eligible for garbage collection.
+- In the V8 engine, the Garbage Collector (GC) runs periodically to automatically manage memory by identifying and reclaiming memory that is no longer in use. This process helps prevent memory leaks and ensures that memory is efficiently reused during program execution.
+- The garbage collector runs automatically and periodically without developer intervention. The timing depends on the V8 engine’s internal logic, which checks for memory pressure, the number of unreachable objects, to trigger a garbage collection cycle.
+
+```
+function createObject() {
+    let obj = { name: "Object1" };
+    // The object is used here
+    console.log(obj.name); // Output: Object1
+}
+
+// After createObject() is done, 'obj' is no longer referenced
+createObject(); 
+
+// 'obj' becomes unreachable and eligible for GC after the function execution ends
+```
+
+![alt text](image-66.png)
+
+- Now consider below HTML and JS code.
+
+```
+HTML Code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Behind the Scenes</title>
+  <script src="assets/scripts/memoryleakexampleJS.js" defer></script>
+</head>
+<body>
+  <input type="text" id="click-message-input">
+  <button id="add-listener-btn">Add a listener to the other button</button>
+  <button id="clickable-btn">Click me</button>
+</body>
+</html>
 
 
+JS Code
+const addListenerBtn = document.getElementById('add-listener-btn');
+const clickableBtn = document.getElementById('clickable-btn');
+const messageInput = document.getElementById('click-message-input');
+
+function printMessage() {
+  const value = messageInput.value;
+  console.log(value || 'Clicked me!');
+}
+
+function addListener() {
+  clickableBtn.addEventListener('click', printMessage);
+}
+
+addListenerBtn.addEventListener('click', addListener);
+```
+
+- As JS code, the button `Click me` will get trigger when the user clicks on `Add a listener to the other button` button. Post the trigger happens , and then the user clicks on `Click me` button , the `console.log` will print the value entered by user. So whenever a new clicks on the `addListenerBtn` button for a new text, a new event listener will be added.
+
+<video controls src="20241003-1304-20.7644236.mp4" title="Title"></video>
+
+- Now what if , the user clicks on `Add a listener to the other button` button multiple times? for the same input? will it create multiple new event listener for the same input? lets find out
 
 
+<video controls src="20241003-1314-35.9892014.mp4" title="Title"></video>
 
+- **Nope, it does not add a new event listener when clicked multiple time to add new event listener for the same input** why so?. The `addEventListener` method in JavaScript does not add duplicate listeners if the same function is already attached to the same event on the same element. This means:
+  - Even if you click the `addListenerBtn` multiple times, the same `printMessage` function is being added as the event listener to `clickableBtn`.
+  - JavaScript is smart, it detects that the same function is already attached to the click event on `clickableBtn`, so it doesn’t add the new listener again and again.
+- This behavior is why you only see one event being logged when `clickableBtn` is clicked, no matter how many times you add the listener.
+- **JavaScript prevents the addition of duplicate listeners by checking if the exact same function (`printMessage`) is already attached to `clickableBtn`. As a result, no unnecessary listeners are created, which helps prevent memory leaks. JavaScript is smart about reusing the same listener function, avoiding unnecessary memory consumption.**
 
+### Browser Engine
+
+- **Where do this memory management happens and do does it? its your browser engine uses your device hardware**. When you run a browser like Google Chrome (which uses the V8 JavaScript engine), the browser allocates memory from the operating system to execute JavaScript code.
+- The V8 engine creates and manages the heap and stack for JavaScript memory management. This memory comes from the system's RAM (system memory), and the browser application (like Chrome) requests memory from the OS for the engine to use
+- The browser (like Chrome) acts as a container for running web applications, and part of this process involves the V8 engine requesting and managing memory from the OS.
+Heap and stack memory are internal to the V8 engine, but the V8 engine taps into system memory (i.e., the physical RAM on your computer) to allocate space for these structures. This interaction with the operating system is how the engine stores and manages data.
+- JavaScript execution involves RAM (system memory) for heap and stack management, not disk space. Browsers may use disk storage for things like caching, local storage, or cookies, but that's separate from the in-memory heap and stack used for code execution.
+- Online reference for [memory management](https://www.turing.com/kb/handling-memory-management-in-javascript#javascript-engine-storages-(stack-and-heap-memory))
 
 
 

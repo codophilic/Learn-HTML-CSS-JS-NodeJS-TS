@@ -421,3 +421,129 @@ try{
 }
 
 
+// if(true){
+//   var AvarVariable1=10;
+// }
+
+// console.log(AvarVariable1)
+
+// function AvarFunc(){
+//   if(true){
+//     var AvarVariable=20;
+//   }
+  
+//   console.log(AvarVariable)
+//   console.log(AvarVariable1)
+// }
+
+// AvarFunc()
+
+
+// if(true){
+//   let AvarVariable1=10;
+// }
+
+// console.log(AvarVariable1)
+
+// function AvarFunc(){
+//   if(true){
+//     let AvarVariable=20;
+//   }
+  
+//   console.log(AvarVariable)
+//   console.log(AvarVariable1)
+// }
+
+// AvarFunc()
+
+// Below is a block
+// {
+//   let v1=10
+// }
+
+// console.log(v2)
+// console.log(v1) // Not accessible , because let has a Block scope {..}
+
+var v2=20
+
+var x = 10;
+console.log(window.x); // 10
+
+let y = 10;
+console.log(window.y); // undefined
+
+let abc;
+console.log(abc)
+
+// // global scope
+// const bar = 41;
+// console.log(bar); // 41
+
+// if (true) { // block scope
+//  console.log(bar); // ReferenceError (not 41) <-- PROOF OF THE HOISTING / TDZ
+//  const bar = 42;
+//  console.log(bar); // 42
+// }
+
+// console.log(bar); // 41
+
+
+function setName() {
+  userName = "ABC"; // Implicit global variable!
+}
+
+setName();
+// console.log(userName); // ABC (global scope)
+
+
+"use strict"; // Won't work because there are codes above there
+
+function setName(a,a) {
+
+  console.log(a+a)
+}
+
+setName(1,1);
+
+let box1 = {
+    width: 100,
+    height: 50
+};
+
+let box2 = {
+    width: 120,
+    height: 80
+};
+
+const shapes=["square","circle","triangle","rectangle"]
+
+function createBox(width,height){
+  return{
+    width: width,
+    height: height
+  }
+}
+
+
+
+
+
+function function1(){
+  let a=100
+  let b=1001
+  console.log(a+b)
+}
+function function2(){
+  function1()
+  console.log(2)
+}
+function function3(){
+  function2()
+  console.log(3)
+}
+function function4(){
+  function3()
+  console.log(4)
+}
+
+function4()
