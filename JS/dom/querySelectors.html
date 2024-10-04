@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Selectors Example</title>
+    <style>
+        /* CSS Styles */
+        .highlight { /* Class Selector */
+            background-color: yellow;
+        }
+        .title {
+            color: blue;
+            font-size: 24px;
+        }
+        .description {
+            font-size: 18px;
+        }
+        #uniqueElement { /* ID Selector */
+            color: green;
+        }
+        /* Styling for nested elements */
+        .container p {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">CSS Selectors and Query Selectors</h1>
+    
+    <p class="description">This is a description paragraph.</p>
+    <p class="description">This is another description paragraph.</p>
+    
+    <div id="uniqueElement">This is a unique element.</div>
+    
+    <div class="container">
+        <p>Nested paragraph inside a container.</p>
+        <span class="inner">Inner Span</span>
+    </div>
+
+    <button class="btn">Click Me</button>
+
+    <script>
+        // Using querySelector() to select different types of elements
+        
+        // 1. Selecting an element by class, why `.title`? because in CSS Selector we define class selector by `.title{ CSS Styles }`
+        /**
+         * .title {
+            color: blue;
+            font-size: 24px;
+            }
+         */
+        let titleElement = document.querySelector('.title'); // Selects the first element with class "title"
+        console.log(titleElement.textContent); // Outputs: CSS Selectors and Query Selectors
+
+        // 2. Selecting an element by ID, why `#uniqueElement` because its an ID selector , same definition given during CSS Styling
+        /*
+        #uniqueElement {
+            color: green;
+        }
+        */
+        let uniqueElement = document.querySelector('#uniqueElement'); // Selects the element with ID "uniqueElement"
+        console.log(uniqueElement.textContent); // Outputs: This is a unique element.
+
+        // 3. Selecting the first description paragraph (matches the whatever the first description is found)
+        let firstDescription = document.querySelector('.description'); // Selects the first element with class "description"
+        firstDescription.classList.add('highlight'); // Adds highlight class to change background color
+        
+        // 4. Selecting nested elements
+        let nestedParagraph = document.querySelector('.container p'); // Selects the first <p> inside the container class
+        console.log(nestedParagraph.textContent); // Outputs: Nested paragraph inside a container.
+
+        // Using querySelectorAll() to select multiple elements
+        
+        // 5. Selecting all description paragraphs
+        let descriptionElements = document.querySelectorAll('.description'); // Selects all elements with class "description"
+        descriptionElements.forEach((el) => {
+            console.log(el.textContent); // Outputs each description paragraph
+        });
+
+        // 6. Selecting all buttons
+        let buttons = document.querySelectorAll('.btn'); // Selects all buttons with class "btn"
+        buttons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                alert('Button clicked!'); // Alerts when the button is clicked
+            });
+        });
+
+        // 7. Selecting all spans in the container
+        let innerSpans = document.querySelectorAll('.container span'); // Selects all <span> elements inside the container
+        innerSpans.forEach((span) => {
+            console.log(span.textContent); // Outputs: Inner Span
+        });
+
+        // 8. Selecting all <p> elements
+        let allParagraphs = document.querySelectorAll('p'); // Selects all <p> elements in the document
+        allParagraphs.forEach((p) => {
+            p.style.color = 'purple'; // Changes the color of all paragraphs to purple
+        });
+    </script>
+</body>
+</html>

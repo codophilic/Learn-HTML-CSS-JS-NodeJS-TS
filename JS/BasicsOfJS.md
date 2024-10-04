@@ -29,7 +29,7 @@
 
 ## How is JS executed on browser?
 
-![alt text](image-1.png)
+![alt text](Images/basicofjs/image-1.png)
 
 - Let's say you write your Javascript code and you want it to have some effect on the web page, if we talk about the browser as the environment where we run our script. Then you have one important thing built into any environment where you want to run Javascript code and that's a **Javascript engine**.
 - The Chrome browser has V8 as its JS engine, in Firefox the name would be SpiderMonkey, Safari uses JavaScriptCore and of course other browsers also either reuse these engines or have their own engines. Now the job of the engine is to parse code or read the code and understand your JS code, then on the fly compile it to machine code because machine code executes faster, so it reads your code but it does not necessarily execute it like that but instead, it now takes that code and compiles it to code which is faster to execute by the machine and then it executes that machine code.
@@ -50,12 +50,12 @@
 - It's also important to note that the browser also gives you a couple of features, so-called **Browser APIs** which are built in, which you can use into from your Javascript code. This are some in-built APIs provided by browser for example for getting the user's location. These browser APIs are part of the browser, depending on the browser like Google Chrome which uses v8 as its JS Engine as this api written in C++ but again that depends on the browser you're using. 
 - The browser gives you communication bridges via functions or object to call these in-built api in your JS code.
 
-![alt text](image-56.png)
+![alt text](Images/basicofjs/image-56.png)
 
 
 ## Dynamic Interpreted and Weekly Typed Programming language
 
-![alt text](image-2.png)
+![alt text](Images/basicofjs/image-2.png)
 
 ### Dynamic Interpreted
 
@@ -76,7 +76,7 @@
 - **To run JavaScript, browser has JavaScript Engine, so to  to run Javascript anywhere we must have this JavaScript Engine. So if  we take it out of the browser and then make it available as a standalone tool which you can use to execute Javascript anywhere else directly on your machine and this tool is in the end called Node.js**.
 - **Node.js** can be executed on any machine and therefore it's also often used to build web back-ends, to build web servers, server side
 
-![alt text](image-3.png)
+![alt text](Images/basicofjs/image-3.png)
 
 - There are two main environments where you can run JavaScript locally on your own machine:
     - Inside a Web Browser (like Chrome).
@@ -110,12 +110,12 @@
 
 - There is nothing relationship between JavaScript and Java. In initial days when javascript was developed, Java was popular languages, so JavaScript was prefixed with Java just to make it sound cooler.
 
-![alt text](image-4.png)
+![alt text](Images/basicofjs/image-4.png)
 
 
 ## History
 
-![alt text](image-5.png)
+![alt text](Images/basicofjs/image-5.png)
 
 - In 1995, Netscape introduces **LiveScript** which thereafter was renamed to Javascript. Now in 1996, Microsoft also released its own version of Javascript in Internet Explorer. Back then Javascript also wasn't able to do a lot of things, it was mainly used for a spam things, for annoying overlays and pop-ups but another problem was that you had to write very different scripts for different browsers.
 - In late 1996, people saw that this fragmentation could be a problem and therefore, Javascript the language was submitted to the **ECMA committee to start standardization**. ECMA stands for European Computer Manufacturers Association. This simply is an organization which will stand responsible for standardizing Javascript so that you have one standard which then could be implemented by multiple browsers. So then we had ongoing standardization efforts until 2005 roughly and Microsoft did really join the party, well we know how Microsoft was in the late 90s, early 2000s, ultimately they supported the standardized Javascript version.  Now the efforts of standardization continue and we had huge progress until 2011. It's evolving, new features are getting added, it's getting a better and better programming language 
@@ -171,9 +171,9 @@
 
 - The above code, is basically simple HTML with CSS we have not added JS over here.
 
-![alt text](image-6.png)
+![alt text](Images/basicofjs/image-6.png)
 
-![alt text](image-7.png)
+![alt text](Images/basicofjs/image-7.png)
 
 - The css file is under **assets/styles** (following a standard convection where all the static contents like video, images, pdf, css files are kept under **assets** folder).
 - Lets add some JavaScript code into our **index.html** file. So to add that we need to specify JS contents under script tag `<scripts></scripts>`.
@@ -221,7 +221,7 @@
 
 - Lets drag and drop our **index.html** file under chrome browser.
 
-<video controls src="20241001-1122-41.9592692.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241001-1122-41.9592692.mp4" title="Title"></video>
 
 - If you see we got a pop-up which says **Hello!!**. The `alert()` function gives a pop-up. If you see the rendering of the page, the JS feature `alert()` got loaded first then the HTML & CSS content got loaded later. What if you wanna render your HTML & CSS content first then your JS features? , do can add the `script` tag before the end of the body `</body>`.
 
@@ -269,7 +269,7 @@
 
 - This will load the HTML & CSS contents first then the JS features.
 
-![alt text](image-29.png)
+![alt text](Images/basicofjs/image-29.png)
 
 ## Import JavaScript Files
 
@@ -323,7 +323,7 @@ alert('Hello!!!');
 ```
 
 
-![alt text](image-8.png)
+![alt text](Images/basicofjs/image-8.png)
 
 
 - Lets create a another **app1.js**.
@@ -376,11 +376,11 @@ alert('Hi!!!');
 
 - When we reload our browser, both of our scripts gets executed.
 
-<video controls src="20241001-1206-54.7084265.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241001-1206-54.7084265.mp4" title="Title"></video>
 
 - Lets say change the order of script execution like below, first we will execute **app1.js** then **app.js**.
 
-<video controls src="20241001-1209-02.5438431.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241001-1209-02.5438431.mp4" title="Title"></video>
 
 - So the placing **order of script file matters**. Script will execute in the given sequential order.
 
@@ -415,7 +415,7 @@ pie=3.1;
 ```
 
 
-![alt text](image-9.png)
+![alt text](Images/basicofjs/image-9.png)
 
 
 - You can simple just declare the variable and then later you can initialize it.
@@ -436,14 +436,14 @@ const AConstVar;
 
 - JavaScript is case-sensitive in terms of variable name. If you create a variable name `username` and wanted to use this variable in your you cannot use it as `Username` or `userName` etc.. it must be exact `username`.
 
-![alt text](image-10.png)
+![alt text](Images/basicofjs/image-10.png)
 
 
 ## Operators
 
 - Operators are similar to performing mathematical operations on number. So using it, JavaScript provides us to manipulate the values of variables.
 
-![alt text](image-11.png)
+![alt text](Images/basicofjs/image-11.png)
 
 
 - Lets modify our **app1.js**
@@ -456,7 +456,7 @@ alert(alertVariable);
 
 - We still get the same output.
 
-![alt text](image-12.png)
+![alt text](Images/basicofjs/image-12.png)
 
 
 - In JavaScript , string value can be written in using single quote (**`''`**), double quote (**`""`**) and using backtick (**``**). Whatever you use ensure that you maintain the same string quote throughout your code.
@@ -474,7 +474,7 @@ alert(alertVariable+alterVariable2);
 
 - We still get the same output.
 
-![alt text](image-12.png)
+![alt text](Images/basicofjs/image-12.png)
 
 - JavaScript execute the code from top-bottom. It follows top-bottom approach. Below is valid string variable example.
 
@@ -505,7 +505,7 @@ alert(finalAns)
 
 - When we refresh the page.
 
-![alt text](image-13.png)
+![alt text](Images/basicofjs/image-13.png)
 
 - JavaScript also supports pre/post increment and pre/post decrement operator.
 
@@ -540,7 +540,7 @@ let finalAns="Value - "+num3 //Concatenate String with Number
 alert(finalAns)
 ```
 
-![alt text](image-14.png)
+![alt text](Images/basicofjs/image-14.png)
 
 - Lets try to modify the constant value.
 
@@ -557,11 +557,11 @@ alert(finalAns)
 
 - The alert pop-up won't appear from **app1.js**.
 
-<video controls src="20241001-1326-40.0273084.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241001-1326-40.0273084.mp4" title="Title"></video>
 
 - Since we are modified our **Constant variable**, the JS code did not executed on the browser, it has thrown some error. But where is the error?
 
-<video controls src="20241001-1327-53.7260785.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241001-1327-53.7260785.mp4" title="Title"></video>
 
 - Lets use backtick instead of double quotes.
 
@@ -590,14 +590,14 @@ alert(finalAns)
 
 - On browser we can see the `31` value got printed onto the next line.
 
-![alt text](image-15.png)
+![alt text](Images/basicofjs/image-15.png)
 
 
-![alt text](image-21.png)
+![alt text](Images/basicofjs/image-21.png)
 
 ## Function
 
-![alt text](image-16.png)
+![alt text](Images/basicofjs/image-16.png)
 
 - A JavaScript function is a block of code designed to perform a particular task. A JavaScript function is executed when "something" invokes it (calls it).
 - A JavaScript function is defined with the function keyword, followed by a name, followed by parentheses `()`. Function names can contain letters, digits, underscores, and dollar signs (same rules as variables).
@@ -622,7 +622,7 @@ additionOfNumbers(10,30)
 
 - When we reload the browser.
 
-![alt text](image-17.png)
+![alt text](Images/basicofjs/image-17.png)
 
 - If we call the function twice, we will get 3 alerts in total.
 
@@ -638,7 +638,7 @@ additionOfNumbers(40,40)
 
 - Reloading browser
 
-<video controls src="20241001-1423-15.1087384.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241001-1423-15.1087384.mp4" title="Title"></video>
 
 - If your function wanna return something, we can use **return** keyword.
 
@@ -683,7 +683,7 @@ alert('Sum is '+(functionResult+GlobalVariable))
 - **Global Scope**: Variables defined outside any function (like `GlobalVariable`) have global scope. They can be accessed and modified anywhere in the program, as long as the script is running.
 - **Local Scope**: Variables defined inside a function (like `result`) have local scope. They can only be accessed within that function and cannot be used outside of it.
 
-<video controls src="20241001-1450-48.4995500.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241001-1450-48.4995500.mp4" title="Title"></video>
 
 
 ## Shadowing Variables
@@ -703,7 +703,7 @@ greetUser('Max');
 - What do you think, will be the output?
 
 
-![alt text](image-18.png)
+![alt text](Images/basicofjs/image-18.png)
 
 - Because the local variable scope is within the function and if the variable name is same it will hide the outer or global variable data and uses the data defined for local variable.
 - In JavaScript, shadowing happens when a variable in a local scope (like inside a function) has the same name as a variable in an outer or global scope. The local variable "shadows" or hides the outer variable within that local scope.
@@ -731,7 +731,7 @@ functionResult=addOfNums(30,300)
 alert('Sum is '+(functionResult+GlobalVariable))
 ```
 
-![alt text](image-19.png)
+![alt text](Images/basicofjs/image-19.png)
 
 
 - Here the function is called through a reference, rather than its original name. This is a indirect invocation via reference.
@@ -765,7 +765,7 @@ console.log(transform(10,double)); // Prints 20
 
 - `console.log` print the data into the developer tools console.
 
-<video controls src="20241001-1629-48.7065927.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241001-1629-48.7065927.mp4" title="Title"></video>
 
 ## Converting Data Types
 
@@ -982,7 +982,7 @@ console.log(resultCombo3); // NaN
 
 
 
-![alt text](image-28.png)
+![alt text](Images/basicofjs/image-28.png)
 
 ## Completing Calculator Page
 
@@ -1180,7 +1180,7 @@ divideBtn.addEventListener('click', division);
 
 - When we go to the browser and run we get something like below
 
-![alt text](image-20.png)
+![alt text](Images/basicofjs/image-20.png)
 
 - This is because our input is not accepting proper numeric value. So we need to convert the `userInput` to `value` and parse it using `parseFloat` to accept floating numbers.
 
@@ -1264,7 +1264,7 @@ function division(){
 
 - Lets checkout
 
-<video controls src="20241001-1819-50.3317326.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241001-1819-50.3317326.mp4" title="Title"></video>
 
 ## Data Types
 
@@ -1285,7 +1285,7 @@ console.log(obj)
 
 - When we see the console, we get below output
 
-![alt text](image-22.png)
+![alt text](Images/basicofjs/image-22.png)
 
 
 - An object is a data structure that can hold multiple values in the form of key-value pairs. Each key (also known as a property) is a string (or Symbol), and each value can be of any data type. Object allow you to group related data and functionalities together.
@@ -1316,7 +1316,7 @@ let employee = {
 
 - On console
 
-![alt text](image-23.png)
+![alt text](Images/basicofjs/image-23.png)
 
 - We can also defined functions inside the object
 
@@ -1349,7 +1349,7 @@ const person = { name: "Alice", age: 30 };
 person = { name: "Bob", age: 40 }; // Error: Assignment to constant variable
 ```
 
-![alt text](image-24.png)
+![alt text](Images/basicofjs/image-24.png)
 
 - You cannot change the reference to point to a different object once the object is defined with `const`. You can change, add, or delete properties inside the object, because the reference to the object (the memory location where the object is stored) is still the same.
 - The object itself is stored in memory, and the reference to that object is constant, but the content of the object is mutable. You can think of it like this: the "container" (object) is fixed in place, but what you put inside the container can change.
@@ -1415,7 +1415,7 @@ const fruits = ["apple", "banana", "orange"];
 
 - On browser console
 
-![alt text](image-25.png)
+![alt text](Images/basicofjs/image-25.png)
 
 - Arrays allow you to store and work with multiple values at once. Array can store different data type elements
 
@@ -1440,10 +1440,10 @@ const MultipleDifferentElements=["Rahul",2,3.45,true,car,fruits]
 console.log(MultipleDifferentElements) 
 ```
 
-![alt text](image-26.png)
+![alt text](Images/basicofjs/image-26.png)
 
 
-![alt text](image-27.png)
+![alt text](Images/basicofjs/image-27.png)
 
 ## typeof
 
@@ -1477,15 +1477,15 @@ console.log(typeof t) //object (since array is special type of object)
 
 - On browser console
 
-![alt text](image-30.png)
+![alt text](Images/basicofjs/image-30.png)
 
 - You can also execute your JS code on browser console.
 
-<video controls src="20241002-0646-46.7216350.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241002-0646-46.7216350.mp4" title="Title"></video>
 
 - You can also access your JS scripts variable on the console.
 
-<video controls src="20241002-0648-12.3114200.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241002-0648-12.3114200.mp4" title="Title"></video>
 
 - What will be `typeof` function?
 
@@ -1497,7 +1497,7 @@ console.log(typeof tester) //function
 ```
 
 
-![alt text](image-31.png)
+![alt text](Images/basicofjs/image-31.png)
 
 ## Functions vs Methods
 
@@ -1563,7 +1563,7 @@ console.dir(greet)
 
 - We get below output
 
-![alt text](image-67.png)
+![alt text](Images/basicofjs/image-67.png)
 
 - Now it looks similar to object, **functions are indeed objects!** In fact, almost everything in JavaScript is an object, including functions.
 
@@ -1586,7 +1586,7 @@ console.dir(greet)
 
 - On browser console
 
-![alt text](image-68.png)
+![alt text](Images/basicofjs/image-68.png)
 
 - We can also store function in a variable or constants and call it using that variable name.
 
@@ -1605,7 +1605,7 @@ console.dir(funt)
 - Here the function is an expression instead of as a declaration. The variable becomes the global scope which can be access throughout the code.
 - On browser console we get below output for the above code.
 
-![alt text](image-69.png)
+![alt text](Images/basicofjs/image-69.png)
 
 - **The difference between function declaration and function expression is that the function expression returns an object (even though it does not have `return` keyword) which needs to be stored using variable or constants.**
 
@@ -1707,7 +1707,7 @@ function add(){
 
 - On console the error details are precisely mentioned, which function is giving out the error and what is the error.
 
-![alt text](image-70.png)
+![alt text](Images/basicofjs/image-70.png)
 
 - Now consider below code where the actual `add()` function is commented out and the function details are written directly like below
 
@@ -1737,7 +1737,7 @@ divideBtn.addEventListener('click', division);
 
 - We still get proper output.
 
-![alt text](image-71.png)
+![alt text](Images/basicofjs/image-71.png)
 
 - Now lets add a dummy variable just like previously we did for `add()` function.
 
@@ -1753,7 +1753,7 @@ addBtn.addEventListener('click', function (){
 
 - We are still expecting error, but since here we have not specified any function name , what will the browser console give in the error for such undefined named function? **anonymous**.
 
-![alt text](image-72.png)
+![alt text](Images/basicofjs/image-72.png)
 
 - **An anonymous function in JavaScript is simply a function without a name. It's often used when you need a function temporarily and don’t plan to reuse it elsewhere.**
 
@@ -1810,7 +1810,7 @@ const add = (a, b) => a + b;
 console.log(add(2, 3));  // Output: 5
 ```
 
-![alt text](image-73.png)
+![alt text](Images/basicofjs/image-73.png)
 
 - **Use regular anonymous functions if you need to create methods for an object or else for simpler code prefer arrow function.**
 
@@ -1863,7 +1863,7 @@ display(1, 2, 3, 4, 5);
 
 - On browser console
 
-![alt text](image-74.png)
+![alt text](Images/basicofjs/image-74.png)
 
 - **We cannot define multiple rest operators**.
 
@@ -2041,37 +2041,37 @@ console.log("Hi")
 
 - Lets open **Performance** window using developer tools of chrome (open the chrome tab in incognito mode)
 
-![alt text](image-32.png)
+![alt text](Images/basicofjs/image-32.png)
 
 - Click on **Record and Reload** button.
 
-<video controls src="20241002-0823-36.6870588.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241002-0823-36.6870588.mp4" title="Title"></video>
 
 - You will get some time frame statistics which shows how much your web page took time to load the details. The performance tab allows us to get an idea of what the browser does in detail when it renders the pages.
 - Lets carefully observer these stats.
 
-<video controls src="20241002-0828-03.6197769.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241002-0828-03.6197769.mp4" title="Title"></video>
 
 - Initially the network request was sent to load html file and it receive the response.
 
-![alt text](image-33.png)
+![alt text](Images/basicofjs/image-33.png)
 
 - Since our HTML files consist of external files like CSS and JS, those request was also sent by network.
 
-![alt text](image-34.png)
+![alt text](Images/basicofjs/image-34.png)
 
 - Moving further, the parsing of HTML code got started from line (0-34)
 
-![alt text](image-35.png)
+![alt text](Images/basicofjs/image-35.png)
 
 - Also the parsing of css got started.
 - The browser stopped the parsing of HTML code and started compilation of JS file **app1.js**
 
-![alt text](image-36.png)
+![alt text](Images/basicofjs/image-36.png)
 
 - Moving further, the browser executed **app1.js**, now again started parsing HTML file and **acceptDisplay.js**.
 
-![alt text](image-37.png)
+![alt text](Images/basicofjs/image-37.png)
 
 - Since there's not much time difference between but still we request the Javascript files only after the parsing is done or when it's almost done entirely because we do that at the bottom of the HTML file. So that's why we only request the files once we're almost done parsing the HTML document.
 - Now what we effectively see that the **acceptDisplay.js** script evaluation was started around `1302.4ms` whereas those evaluation could be done earlier when the parsing of HTML was happening. Post evaluation we can execute the JS scripts.
@@ -2126,7 +2126,7 @@ console.log("Hi")
 - **When you use `defer`, the browser downloads the script as soon as possible (in parallel with HTML parsing) but waits to execute it until the HTML document is completely parsed. This way, the script is ready to execute as soon as the HTML is fully loaded, but it doesn't block the rendering or parsing of the page**
 - If you see the parsing is done and post that the script got executed
 
-<video controls src="20241002-0901-38.3162379.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241002-0901-38.3162379.mp4" title="Title"></video>
 
 ## Async Attribute
 
@@ -2179,13 +2179,13 @@ console.log("Hi")
 
 - In performance tool, we can see the **app1.js** got executed before the parsing of CSS stylesheet.
 
-![alt text](image-38.png)
+![alt text](Images/basicofjs/image-38.png)
 
 - `defer`: Scripts are executed after the HTML is fully parsed.
 - `async`: Scripts are executed as soon as they are downloaded, which might happen before or after the HTML is parsed, depending on the download speed.
 
 
-![alt text](image-39.png)
+![alt text](Images/basicofjs/image-39.png)
 
 ## Debugging using Developer Tools
 
@@ -2199,26 +2199,26 @@ function double(num1)
 
 - This can be caught within the editor, but this can be also caught on the developer tool of chrome.
 
-![alt text](image-40.png)
+![alt text](Images/basicofjs/image-40.png)
 
 - So under `Sources` go to the file **app1.js** which is throwing the error.
 
-![alt text](image-41.png)
+![alt text](Images/basicofjs/image-41.png)
 
 - So after fixing **app1.js**, lets open **acceptDisplay.js** file and perform some debugging on it.
 
-<video controls src="20241002-0953-18.3016412.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241002-0953-18.3016412.mp4" title="Title"></video>
 
 - Using **Watch Expression**, we can access variables name and its value and perform any required expression.
 - Here we have button click event, we can also debug based on events
 
 
-<video controls src="20241002-1004-10.3502495.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241002-1004-10.3502495.mp4" title="Title"></video>
 
 - We can control the debugging by using the `Step in function` or `Step to next break point` any many more.
 - We can also see the local and global scope of the variable even the Call Stack (show which function is calling other function)
 
-![alt text](image-42.png)
+![alt text](Images/basicofjs/image-42.png)
 
 ## Boolean Operator
 
@@ -2264,7 +2264,7 @@ console.log(2==="2") //false
 - Strict equality (`===`) and inequality (`!==`) are usually preferred for clarity and to avoid unexpected type coercion.
 - Below are other operators 
 
-![alt text](image-43.png)
+![alt text](Images/basicofjs/image-43.png)
 
 - Lets compare two arrays and two objects
 
@@ -2409,11 +2409,11 @@ else{
 
 - Here in the `if()` block we are not performing any logical comparision which gonna return true or false. We are just passing a variable now since `if()` block requires boolean data type value in its `()` condition, JavaScript performs **type coercion** and evaluates the `aString` variable in form of boolean.
 
-![alt text](image-44.png)
+![alt text](Images/basicofjs/image-44.png)
 
 - **Truthy and falsy values are non-Boolean values that JavaScript treats as true or false when evaluated in a Boolean context (such as in an if statement or logical operations).**
 
-![alt text](image-45.png)
+![alt text](Images/basicofjs/image-45.png)
 
 - Consider below code
 
@@ -2472,7 +2472,7 @@ console.log("first" && "second" && "third");
 // It returns "third" because both "first" and "second" are truthy and there’s no falsy value.
 ```
 
-![alt text](image-47.png)
+![alt text](Images/basicofjs/image-47.png)
 
 
 - **||** (OR) logical operator when evalutes multiple falsy/truthy value it returns **first** truthy value within the evaluated expression (if there is no truthy value in the expression then it returns the **last falsy** value), whereas **&&** returns the **last** truthy value when all values are truthy, **else any falsy value is found it will return first falsy value**.
@@ -2526,7 +2526,7 @@ console.log("User's name is: " + UserName);
 //If user enters name as Rahul -> User's name is: Rahul -> Gets print out on console
 ```
 
-![alt text](image-46.png)
+![alt text](Images/basicofjs/image-46.png)
 
 ## Ternary Operator
 
@@ -2739,7 +2739,7 @@ Index - 2 , fruit name - orange
 > - `for..of` is used when you want to work directly with the values in an array or other iterable. `for..in` used for objects where you want to access the keys and their corresponding values.
 
 
-![alt text](image-48.png)
+![alt text](Images/basicofjs/image-48.png)
 
 
 ## Break & Continue Keyword
@@ -2800,7 +2800,7 @@ Program Executed
 - Error handling in JavaScript allows you to manage exceptions (errors) that occur during code execution. Instead of the script stopping abruptly when an error occurs, you can catch and handle the error gracefully. This helps ensure that your code behaves more predictably, even in the presence of errors.
 - Some Error can be handle by showing some alert or executing other block whereas some erros can't be handle like connectivity erros etc..
 
-![alt text](image-49.png)
+![alt text](Images/basicofjs/image-49.png)
 
 ### try-catch
 
@@ -2814,7 +2814,7 @@ try {
 }
 ```
 
-![alt text](image-50.png)
+![alt text](Images/basicofjs/image-50.png)
 
 ### Finally
 
@@ -2831,7 +2831,7 @@ try {
 }
 ```
 
-![alt text](image-51.png)
+![alt text](Images/basicofjs/image-51.png)
 
 ### Throw
 
@@ -2849,7 +2849,7 @@ try{
 
 - The output is `Infinity`
 
-![alt text](image-52.png)
+![alt text](Images/basicofjs/image-52.png)
 
 - In such case you need to indicate your program or if the end user (incase of accepting input) that the `denominator` must not be 0. You can `throw` your own custom `Error`.
 
@@ -2867,7 +2867,7 @@ try{
 
 - On console.
 
-![alt text](image-53.png)
+![alt text](Images/basicofjs/image-53.png)
 
 - JavaScript provides a built-in `Error` object, which you can use to throw standard errors with custom messages.
 
@@ -2882,7 +2882,7 @@ try{
 - ES5 is compatible with all browsers, including old ones, but lacks modern syntax and features. ES6 introduces powerful new features. **Modern browsers fully support ES6**. Now in ES6 , the features of ES5 won't be remove as it would lead to issue supported by old browser who is using ES5 standards.
 - All the above learnings are based on ES6.
 
-![alt text](image-54.png)
+![alt text](Images/basicofjs/image-54.png)
 
 ### var
 
@@ -3154,7 +3154,7 @@ setName(1,1);
 
 - On browser console
 
-![alt text](image-55.png)
+![alt text](Images/basicofjs/image-55.png)
 
 - **In strict mode, functions can’t have duplicate parameter names.**
 - There are several other things which are disallowed or disabled in [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode#changes_in_strict_mode)
@@ -3212,14 +3212,14 @@ console.log(person2.name); // Jane
 
 - Primitive values are simple data types (like numbers or strings) that are copied by value. Changing one copy does not affect the other. Reference values are objects or arrays, and they are copied by reference, meaning changes to one variable will affect the other because they both point to the same object in memory.
 
-![alt text](image-65.png)
+![alt text](Images/basicofjs/image-65.png)
 
 
 ## Memory Management
 
 - The memory life cycle defines a JavaScript variable or object’s journey from initialization to removal.
 
-![alt text](image-58.png)
+![alt text](Images/basicofjs/image-58.png)
 
 - **Initialization** is the creation of the variable. In JavaScript, we do this using the `let`, `const`, or `var` keywords. During this stage, the JavaScript Engine reserves memory for the variables and stores the values inside the allocated memory space.
 
@@ -3257,7 +3257,7 @@ console.log(x); // This will throw and error!
 - JavaScript consists of two types of memory spaces, i.e., Stack and Heap, to store variables. The difference between them is what variables get stored in which type of storage. Let’s take a closer look at stacks and heaps.
 
 
-![alt text](image-57.png)
+![alt text](Images/basicofjs/image-57.png)
 
 ### Stack
 
@@ -3265,7 +3265,7 @@ console.log(x); // This will throw and error!
 - Let’s say you have some variables that you add one by one to the stack. The last variable pushed is at the top, which means it will be the first to get removed when the memory gets de-allocated.
 - JavaScript uses the stack data structure to **store static or fixed-size data**. This includes all numbers, strings, booleans, and other primitive data types. **These data types have a fixed size known at compile time**. Variables such as objects, arrays, etc., are not stored in the stack as their size varies during run time.
 
-![alt text](image-59.png)
+![alt text](Images/basicofjs/image-59.png)
 
 ### Heap
 
@@ -3275,7 +3275,7 @@ console.log(x); // This will throw and error!
 - Accessing data in the heap is slower compared to the stack.
 
 
-![alt text](image-60.png)
+![alt text](Images/basicofjs/image-60.png)
 
 >[!NOTE]
 > - You can check the current memory usage of your **Node.js** application using the `process.memoryUsage()` method.
@@ -3283,15 +3283,15 @@ console.log(x); // This will throw and error!
 
 - JavaScript allocates memory for objects within the heap, but we must have a reference to that memory location to access the value. The reference to the memory location resides in the stack memory.
 
-![alt text](image-61.png)
+![alt text](Images/basicofjs/image-61.png)
 
 - Below is an example how the code is represented in stack and heap
 
-![alt text](image-62.png)
+![alt text](Images/basicofjs/image-62.png)
 
 - Consider below example where two variable have same value , this means they are reference the same object but as different reference values which are stored inside the stack. **The stack consist of reference values to objects and not object**.
 
-![alt text](image-64.png)
+![alt text](Images/basicofjs/image-64.png)
 
 - From the picture we can see how different values are stored, both the `“person”` and `“newPerson”` objects are stored in the heap and they point to the same object (our object also means object in JS and functions). But a reference to it is stored in the stack.
 - We can see the how stack works using developer tools on chrome. Consider below code.
@@ -3322,7 +3322,7 @@ function4()
 
 - Lets open the browser and add debugger and watch how the **Call Stack** works.
 
-<video controls src="20241003-1133-57.3815335.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241003-1133-57.3815335.mp4" title="Title"></video>
 
 
 - If you see initially `function4()` was in the stack, since `function4()` called `function3()` , so the `function3()` also got into the stack at the top. Same way when `function3()` called `function2()`, even the `function2()` got stacked, Similarly `function1()` got stacked at the top.
@@ -3331,7 +3331,7 @@ function4()
 - Now in the stack, it all starts with some **anonymous** code execution which basically is the script file itself, it doesn't have a name. **For JavaScript your JS file is itself a function without any name thats why you can see it is called anonymous**. It is basically your script getting executed.
 
 
-![alt text](image-63.png)
+![alt text](Images/basicofjs/image-63.png)
 
 
 ### Garbage Collector
@@ -3362,7 +3362,7 @@ createObject();
 // 'obj' becomes unreachable and eligible for GC after the function execution ends
 ```
 
-![alt text](image-66.png)
+![alt text](Images/basicofjs/image-66.png)
 
 - Now consider below HTML and JS code.
 
@@ -3404,12 +3404,12 @@ addListenerBtn.addEventListener('click', addListener);
 
 - As JS code, the button `Click me` will get trigger when the user clicks on `Add a listener to the other button` button. Post the trigger happens , and then the user clicks on `Click me` button , the `console.log` will print the value entered by user. So whenever a new clicks on the `addListenerBtn` button for a new text, a new event listener will be added.
 
-<video controls src="20241003-1304-20.7644236.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241003-1304-20.7644236.mp4" title="Title"></video>
 
 - Now what if , the user clicks on `Add a listener to the other button` button multiple times? for the same input? will it create multiple new event listener for the same input? lets find out
 
 
-<video controls src="20241003-1314-35.9892014.mp4" title="Title"></video>
+<video controls src="Images/basicofjs/20241003-1314-35.9892014.mp4" title="Title"></video>
 
 - **Nope, it does not add a new event listener when clicked multiple time to add new event listener for the same input** why so?. The `btnName.addEventListener()` method in JavaScript does not add duplicate listeners if the same function is already attached to the same event on the same element. This means:
   - Even if you click the `addListenerBtn` multiple times, the same `printMessage` function is being added as the event listener to `clickableBtn`.
@@ -3474,7 +3474,8 @@ Heap and stack memory are internal to the V8 engine, but the V8 engine taps into
 
 
 
-
+### bind() method is pending to learn
+prepares your function for execution rather than execution 
 
 
 
