@@ -390,9 +390,157 @@ childElementsOfDiv.forEach(i=>{
 
 ![alt text](image-12.png)
 
+## Attribute vs Property
+
+- Attributes are defined in the HTML itself. They are part of the HTML tag and are used for initial values.
+- Properties are part of the DOM (Document Object Model). Once the HTML is loaded into the browser, elements become objects with properties. Properties can change over time and may not always match the attribute values from the HTML. Properties are accessed directly on the element object in JavaScript.
+- Lets understand via example, consider below HTML code.
+
+```
+<input type="text" value="initial value" />
+```
+
+- Attributes are defined in the HTML markup and provide initial values for elements. They are static and do not change once the page is loaded unless explicitly modified using JavaScript. In this example, `value="initial value"` is an attribute.
+- When modified using JS
+
+```
+const inputElement = document.querySelector('input');
+console.log(inputElement.value); // Logs the current value of the input element
+inputElement.value = 'new value'; // Changes the current value of the input element
+```
+
+- In this example, `value` is a property of the `inputElement` object which got modified by JS. Now the current value is `new value` for the **property `value`**. Properties are part of the DOM and represent the current state of an element. They are dynamic and can change as the user interacts with the page or through JavaScript.
+- In the creation, HTML attributes will determine the initial qualities of the object. With the help of the DOM API and javascript, the HTML is parsed in turned into an object that we can work with. Objects have properties that we can manipulate to change the look, feel, and behavior of our applications.
+- **Attributes initialize DOM properties. Attributes are static, while properties are dynamic. Attributes are the initial setup, while properties reflect the live state of elements in JavaScript.**
+- Attributes can be accessed using `getAttribute` and `setAttribute` methods, while properties can be accessed directly on the DOM object.
+
+```
+const inputElement = document.getElementById('myInput');
+
+// Accessing attribute
+console.log(inputElement.getAttribute('value')); // "initial value"
+
+// Accessing property
+console.log(inputElement.value); // "initial value"
+
+// Changing property
+inputElement.value = 'new value';
+console.log(inputElement.value); // "new value"
+console.log(inputElement.getAttribute('value')); // "initial value"
+```
+
+- **Attributes and Properties may or may not have same name and it may or may not be live synchronization**. Lets understand this via example. Consider below HTML code.
+
+```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>DOM</title>
+  </head>
+  <body>
+    <h1 id="header1id" class="domheader"> DOM Header</h1>    
+    <div id="myDiv">
+        Hello, World!
+        <!-- This is a comment -->
+
+        <input id="inputid" value="a default input msg">
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
+```
+
+- On browser console, the `Element` tab represent HTML tags and attributes.
+
+![alt text](image-14.png)
+
+- Whereas in the console we have `document` and its object.
+
+![alt text](image-15.png)
+
+- Lets clear the console, lets update the header content (`DOM Header`) to a new content (`My Header`). So this can be done by fetching the header id. Now using developer console, we will get object and object has properties. So using the property we will change it and check whether it reflects in the `Element` tab.
+
+<video controls src="20241004-1446-03.1161567.mp4" title="Title"></video>
+
+- Now if you see , to fetch the `id` attribute, there is a property name `h1var.`**`id`**, so here the property name is same as attribute name (**1 (`id`):1 (variblename.`id`) name mapping**), now what happens if we change the **id value (`header1id`)**?
+
+<video controls src="20241004-1451-52.5361818.mp4" title="Title"></video>
+
+- When we change the id value to a new value (`mynewheaderid`), it got reflected in the `Element` tab of developer tools. This states that **id attribute and id property are in live synchronization**.
+- Now similarly can we did for `id` can we do it for the class value (`domheader`)? lets see
+
+<video controls src="20241004-1500-40.0695842.mp4" title="Title"></video>
+
+- If you see **there is live synchronization between class attribute and class property** by their name differ, for attribute we have `class="domheader"`, whereas for property we need to fetch using `classHeaderVar.header1id.`**`className`**. So the names are little bit different.
+- Now for `input` element we have a tag `value`, is there live synchronization for it as well? lets check
+
+<video controls src="20241004-1510-25.5601076.mp4" title="Title"></video>
+
+- The element attribute and property names are same **but they are not synchronize**, it makes sense because suppose this html is exposed to user and user enters a value in the input, this would override the existing default value (`value="a default input msg"`). So whenever a user again open that same html file it would see the previous input entered by him/her instead of default value.
+- Hence, **Attributes and Properties may or may not have same name and it may or may not be live synchronization**.
 
 
+![alt text](image-16.png)
 
+- You can also access HTML elements tag using property `getElementsByTagName`.
+
+![alt text](image-17.png)
+
+## Parent, Child, Descendent and Ancestor
+
+- Think of HTML elements like members of a family tree:
+    - Parent: This is like a parent in a family. It’s the direct element that holds or wraps other elements inside it.
+    - Child: This is like a child in the family. It is directly inside a parent element.
+    - Ancestor: This refers to any element above the current element in the hierarchy (like parents, grandparents, great-grandparents, etc.).
+    - Descendant: This refers to any element that is inside another element, no matter how many levels deep (like children, grandchildren, great-grandchildren, etc.).
+- Consider below HTML
+
+```
+<div id="grandParent">
+  <div id="parent">
+    <p id="child">This is a paragraph.
+      <a id="descendant" href="#">This is a link</a>
+    </p>
+  </div>
+</div>
+```
+
+- a `<div>` is the parent, and inside that, there's a `<p>` (paragraph) which is the child. If the `<p>` has an `<a>` (link) inside it, then the `<a>` is a descendant of both the `<p>` and `<div>`. Meanwhile, the `<div>` is an ancestor of both the `<p>` and `<a>`.
+- Below is the JS code
+
+```
+let divGrandParentvar = document.getElementById('grandParent');
+let divParentvar = document.getElementById('parent');
+let Pchildvar = document.getElementById('child');
+let aDescendantvar = document.getElementById('descendant');
+
+// Parent-Child relationship
+console.log(divParentvar.parentElement); // Outputs: <div id="grandParent">
+console.log(Pchildvar.parentElement);  // Outputs: <div id="parent">
+
+// Descendant and Ancestor
+console.log(aDescendantvar.closest('div')); // Outputs: <div id="parent"> (first matching ancestor)
+console.log(divGrandParentvar.contains(aDescendantvar)); // Outputs: true (because descendant is inside grandParent)
+
+// Direct child access
+console.log(divParentvar.children); // Outputs: [<p id="child">This is a paragraph...</p>]
+
+// Navigating ancestors and descendants
+console.log(Pchildvar.parentElement); // Outputs: <div id="parent"> (child's direct parent)
+console.log(divParentvar.children[0]);  // Outputs: <p id="child"> (parent's direct child)
+
+// Check if the parent is an ancestor of the link
+console.log(divParentvar.contains(aDescendantvar)); // Outputs: true
+```
+
+- On browser console
+
+![alt text](image-18.png)
+
+![alt text](image-19.png)
 
 
 

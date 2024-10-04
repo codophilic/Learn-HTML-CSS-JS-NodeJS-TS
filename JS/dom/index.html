@@ -7,11 +7,23 @@
     <title>DOM</title>
   </head>
   <body>
-    <h1 id="header1id"> DOM Header</h1>    
+    <h1 id="header1id" class="domheader"> DOM Header</h1>    
     <div id="myDiv">
         Hello, World!
         <!-- This is a comment -->
+
+        <input id="inputid" value="a default input msg">
     </div>
+
+    <div id="grandParent">
+      <div id="parent">
+        <p id="child">This is a paragraph.
+          <a id="descendant" href="#">This is a link</a>
+        </p>
+      </div>
+    </div>
+
     <script src="app.js"></script>
+
   </body>
 </html>
