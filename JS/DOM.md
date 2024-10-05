@@ -543,7 +543,7 @@ console.log(divParentvar.contains(aDescendantvar)); // Outputs: true
 ![alt text](image-19.png)
 
 
-## Traversing in DOM
+## DOM Traversal
 
 - Traversing the DOM in JavaScript refers to navigating between nodes in the DOM tree. You can traverse from a specific node to its parent, siblings, and child nodes. The DOM provides various properties for these traversals, and each has specific differences.
 
@@ -593,7 +593,7 @@ console.log(parentDiv.lastElementChild);  // <ul>...</ul>
 - `children`: Returns an `HTMLCollection` of only the child element nodes (ignores text nodes or comments).
 - `firstChild`: Returns the first child node (could be an element, text, or comment).
 - `firstElementChild`: Returns the first element child.
-- `lastChild`: Returns the last child node.
+- `lastChild`: Returns the last child node (could be an element, text, or comment).
 - `lastElementChild`: Returns the last element child.
 
 - If you see the output of `console.log(parentDiv.childNodes);` , you can see some `text` nodes inside the list. What are the?
@@ -669,9 +669,275 @@ console.log(childList1.parentNode)
 
 ### 3. Traversing to Ancestor
 
+- Consider below HTML & JS Code
 
+```
+HTML Snip
+      <div id="ancestor">
+        <div class="middle">
+            <p id="current">Current Node</p>
+        </div>
+    </div>
+
+JS Snip
+let currentNode = document.getElementById('current');
+console.log(currentNode.closest('div')); // <div class="middle">
+console.log(currentNode.closest('#ancestor')); // <div id="ancestor">
+```
+
+- On browser console.
+
+![alt text](image-28.png)
+
+- `closest()`: This method returns the closest ancestor of the current element (or the element itself) that matches the selector you pass in. It traverses upwards through the DOM hierarchy
+
+### 4. Traversing to Siblings
+
+- In the below HTML snip, `<p>`, `<span>`, `<ul>` and `<div id="ancestor">` they all belong to same parent `<div id="parentDiv">` and thus becomes siblings.
+
+```
+  <div id="parentDiv">
+      <p id="first-child">First Child</p>
+      <!-- This is my Comment -->
+      <span id="second-child">Second Child</span>
+      <ul>
+        <li class="list-item"> Item 1 </li>
+        <li class="list-item"> Item 2 </li>
+        <li class="list-item">                        Item 3 </li>
+      </ul>
+      <div id="ancestor">
+        <div class="middle">
+            <p id="current">Current Node</p>
+        </div>
+    </div>
+  </div>
+```
+
+- Consider below JS code.
+
+```
+let secondChild = document.getElementById('second-child');
+
+//Sibling below second child
+console.log(secondChild.nextSibling);         // #text
+console.log(secondChild.nextElementSibling);  // <ul>..<ul>
+
+//Sibling above second child
+console.log(secondChild.previousSibling);         // #text
+console.log(secondChild.previousElementSibling);  // <p id="first-child">
+```
+
+- On browser console
+
+![alt text](image-29.png)
 
 ![alt text](image-20.png)
+
+### DOM Traversal vs Query Selectors
+
+- When we have query selector which will share us the element when why the need of DOM traversal? **DOM traversal is useful when you already have a reference to a node and want to navigate relative to it (e.g., finding parent or sibling elements), which is efficient since you're moving through a small part of the DOM. In contrast, query selectors (`querySelector`, `querySelectorAll`) search the entire document, which can be slower, especially in large DOM trees. DOM traversal is often faster for local navigation, while query selectors are useful for finding elements globally but might impact performance if overused. Using DOM traversal methods can help optimize operations that involve nearby elements.**
+- Consider below HTML snip and JS Code.
+
+```
+HTML Snip
+ <body>
+    <script src="app.js" defer></script>
+</body>
+
+JS Code
+console.log(document.body.firstElementChild) // <script>..</script>
+```
+
+- Now lets say you are modifying your HTML code
+
+```
+HTML Snip
+ <body>
+    <header>DOM Traversal VS Query Selectors</header>
+    <script src="app.js" defer></script>
+</body>
+```
+
+- Now the same JS Code will give output as `<header>..</header>`. **So using DOM traversal is efficient but you need to ensure modifying your HTML elements does not affect your traversal logics.**
+
+## Create/Append/Replace HTML Elements
+
+- Using DOM, JS can insert or append HTML elements inside the HTML page. There are two ways to achieve this
+
+### HTML Methods
+
+#### 1. innerHTML
+
+- The `innerHTML` property can be used to write the dynamic html on the html document. The `innerHTML` property in JavaScript allows you to get or set the HTML content of an element as a string.
+- Consider below HTML snip.
+
+```
+    <div id="parentDiv">
+      <p id="first-child">First Child</p>
+      <!-- This is my Comment -->
+      <span id="second-child">Second Child</span>
+      <ul>
+        <li class="list-item"> Item 1 </li>
+        <li class="list-item"> Item 2 </li>
+        <li class="list-item">                        Item 3 </li>
+      </ul>
+      <div id="ancestor">
+        <div class="middle">
+            <p id="current">Current Node</p>
+        </div>
+    </div>
+  </div>
+```
+
+- The below JS snip will replace the inner `div` contents by `h2`.
+
+```
+// InnerHTML
+let divContent=document.querySelector("#parentDiv")
+divContent.innerHTML="<h2> Hello </h2>"
+```
+
+- On web page and developer tools
+
+![alt text](image-30.png)
+
+- The below JS snip will append the `h2` element with current inner `div` elements. (`innerHTML +=`)
+
+```
+// InnerHTML
+let divContent=document.querySelector("#parentDiv")
+divContent.innerHTML+="<h2> Hello </h2>"
+```
+
+- On web page and developer tools
+
+![alt text](image-31.png)
+
+- **The `innerHTML` method replaces or appends the entire `div` contents**. How so?, run the same append snip on the browser console.
+
+
+<video controls src="20241005-1531-48.3138271.mp4" title="Title"></video>
+
+- The flash indicates the entire inner elements are rendered.
+
+##### innerHTML is not Recommended
+
+- Re-rendering: The entire content of #content is replaced, which can lead to performance issues.
+- Potential for Mistakes: If there's a typo or invalid HTML in the string, the entire structure can break.
+-  Directly inserting user-provided content with innerHTML can expose your application to **Cross-Site Scripting (XSS) attacks** if the content isn't properly sanitized
+
+#### insertAdjacentHTML
+
+- The `insertAdjacentHTML()` method allows you to insert HTML directly into the DOM at a specific position relative to an existing element. It doesn't re-render the entire content, making it more efficient than using `innerHTML`.
+- Consider below JS code for the same HTML code mentioned above.
+
+```
+let divContent=document.querySelector("#parentDiv")
+// Insert HTML inside the div, before its first child
+divContent.insertAdjacentHTML('afterbegin', '<p>New content at the beginning</p>');
+    
+// Insert HTML inside the div, after its last child
+divContent.insertAdjacentHTML('beforeend', '<p>New content at the end</p>');
+
+// Insert HTML before the div itself
+divContent.insertAdjacentHTML('beforebegin', '<h3>Before the div</h3>');
+
+// Insert HTML after the div itself
+divContent.insertAdjacentHTML('afterend', '<h3>After the div</h3>');
+```
+
+- On browser console
+
+![alt text](image-32.png)
+
+- It doesn't replace or re-render the entire content, only inserts at the specified position. You can choose exactly where to insert the new content relative to the existing element.
+
+
+<video controls src="20241005-1544-22.0294004.mp4" title="Title"></video>
+
+>[!NOTE]
+> - Even though insertAdjacentHTML() is more efficient than innerHTML, it still poses a security risk for Cross-Site Scripting (XSS) attacks if you're inserting unsanitized and typo mistake may still occur.
+
+### createElement
+
+- For the same HTML code, consider below JS snip
+
+```
+//createElement
+let divContent=document.querySelector("#parentDiv")
+let newPara=document.createElement("p")
+newPara.textContent="This is a new para from createElement()"
+divContent.appendChild(newPara)
+```
+
+- On browser console
+
+![alt text](image-33.png)
+
+- Now consider below JS code. (Just added 2 more lines to the above code)
+
+```
+//createElement
+let newPara=document.querySelector("p") //getElementById()
+newPara.textContent="This is a new para from createElement()"
+divContent.appendChild(newPara)
+newPara.textContent="This is a new para added before <div> by createElement()"
+divContent.insertBefore(document.getElementById("ancestor"), newPara)
+```
+
+- On browser console
+
+![alt text](image-34.png)
+
+- If you notice, earlier the content for the paragraph tag was `This is a new para from createElement()` , post code changes that got replaced to `This is a new para added before <div> by createElement()` instead of getting a new para element. Why so?
+  - In the first line, `document.querySelector("p")` selects an existing `<p>` element from the DOM. You are not creating a new element with `createElement();` you are referencing an existing one.
+  - When you use `newPara.textContent = ...`, you're modifying the content of the same paragraph (`newPara`), not creating a new `<p>` element.
+  - Since you're still dealing with the same element, `appendChild()` and `insertBefore()` are moving the same `<p>` element around the DOM.
+  - If you want to create a new paragraph element instead of selecting an existing one, use `document.createElement()`
+
+>[!NOTE]
+> - Ensure the second argument of `insertBefore()` is a single element only and a valid DOM element otherwise it will throw error. It cannot accept `Nodelist` or arrays which is returned by `getElementsByTagName()`, `querySelectorAll()` etc... It works with `getElementById()` or `querySelector()`. 
+
+- We can also perform replacement of contents using `replaceChild()` method.
+- If you wanna add multiple elements or nodes instead of using `appendChild()` you can use `append()` method.
+
+## Cloning DOM nodes
+
+- Cloning DOM nodes is done using the `cloneNode()` method. This method creates a copy of the selected DOM node. It accepts a single argument `true` or `false` that determines whether the children of the node should also be cloned.
+- Consider below HTML code and JS Code.
+
+```
+HTML Code
+    <div id="parentDiv">
+      <p id="first-child">First Child</p>
+      <!-- This is my Comment -->
+      <span id="second-child">Second Child</span>
+      <ul>
+        <li class="list-item"> Item 1 </li>
+        <li class="list-item"> Item 2 </li>
+        <li class="list-item">                        Item 3 </li>
+      </ul>
+      <div id="ancestor">
+        <div class="middle">
+            <p id="current">Current Node</p>
+        </div>
+    </div>
+
+
+JS Code
+let cloningNode=document.getElementById("parentDiv")
+let deepClone=cloningNode.cloneNode(true) // Deep Cloning , copies all the descendent or child nodes
+document.body.appendChild(deepClone)
+```
+
+- On browser console, all the child nodes got cloned when used `true` as arguments in `cloneNode()`
+
+![alt text](image-35.png)
+
+- If `false` (default argument) is used, we get below page, just the `<div>` element got created
+
+<video controls src="20241005-1721-23.6581583.mp4" title="Title"></video>
+
 
 
 
