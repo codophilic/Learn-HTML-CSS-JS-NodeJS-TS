@@ -7,6 +7,8 @@
     <title>DOM</title>
   </head>
   <body>
+    <script src="app.js" defer></script>
+
     <h1 id="header1id" class="domheader"> DOM Header</h1>    
     <div id="myDiv">
         Hello, World!
@@ -23,7 +25,17 @@
       </div>
     </div>
 
-    <script src="app.js"></script>
+
+    <div id="parentDiv">
+      <p id="first-child">First Child</p>
+      <!-- This is my Comment -->
+      <span id="second-child">Second Child</span>
+      <ul>
+        <li class="list-item"> Item 1 </li>
+        <li class="list-item"> Item 2 </li>
+        <li class="list-item">                        Item 3 </li>
+      </ul>
+  </div>
 
   </body>
 </html>

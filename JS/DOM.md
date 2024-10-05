@@ -543,6 +543,107 @@ console.log(divParentvar.contains(aDescendantvar)); // Outputs: true
 ![alt text](image-19.png)
 
 
+## Traversing in DOM
+
+- Traversing the DOM in JavaScript refers to navigating between nodes in the DOM tree. You can traverse from a specific node to its parent, siblings, and child nodes. The DOM provides various properties for these traversals, and each has specific differences.
+
+### 1. Traversing to Child nodes
+
+- Consider below HTML snippet
+
+```
+    <div id="parentDiv">
+      <p id="first-child">First Child</p>
+      <!-- This is my Comment -->
+      <span id="second-child">Second Child</span>
+      <ul>
+        <li class="list-item"> Item 1 </li>
+        <li class="list-item"> Item 2 </li>
+        <li class="list-item">                        Item 3 </li>
+      </ul>
+  </div>
+```
+
+- Consider below JS code
+
+```
+//Traversing in DOM
+
+let parentDiv = document.getElementById("parentDiv");
+console.log(parentDiv)
+console.log(parentDiv.childNodes);   // NodeList(9) [text, p#first-child, text, comment, text, span#second-child, text, ul, text]
+console.log(parentDiv.childNodes.length);   // 9
+console.log(parentDiv.childNodes[3]);   // <!-- This is my Comment --> (Accessing 4th element in the list , it is 0 based index)
+console.log(parentDiv.children);     // HTMLCollection(3) [p#first-child, span#second-child, ul]
+console.log(parentDiv.children.length);     // 3
+console.log(parentDiv.children[2]);     // <ul>...</ul> (Accessing 3th element in the list , it is 0 based index)
+console.log(parentDiv.children[2].children[2]);     
+console.log(parentDiv.children[2].children[2].textContent);     //              item3
+console.log(parentDiv.firstChild);        // #text
+console.log(parentDiv.firstElementChild); // <p id="first-child">
+console.log(parentDiv.lastChild);         // #text
+console.log(parentDiv.lastElementChild);  // <ul>...</ul>
+```
+
+- On browser console.
+
+![alt text](image-21.png)
+
+- `childNodes`: Returns a `NodeList` of all child nodes (including elements, text nodes, and comments).
+- `children`: Returns an `HTMLCollection` of only the child element nodes (ignores text nodes or comments).
+- `firstChild`: Returns the first child node (could be an element, text, or comment).
+- `firstElementChild`: Returns the first element child.
+- `lastChild`: Returns the last child node.
+- `lastElementChild`: Returns the last element child.
+
+- If you see the output of `console.log(parentDiv.childNodes);` , you can see some `text` nodes inside the list. What are the?
+
+![alt text](image-22.png)
+
+- Those are white-spaces of your html
+
+![alt text](image-23.png)
+
+- When you see the content `data: "\n      "` , these contents are next line and white spaces mention in the red color on the image. These white spaces are automatically gets hide by the browser. These white spaces are still there in the DOM structure representing as text nodes.
+- In the HTML code for the list element `<li>`, we have added `              Item3`, now there are so many white spaces before the word `Item3` but on the page it is not visible to us. Because it gets hide by the browser.
+
+![alt text](image-24.png)
+
+- Under the `Element` tab of browser console, when you type `white-space:pre` under the `Style` tab of `Element` you can see the whitespaces
+
+
+![alt text](image-25.png)
+
+- The reason the browser automatically omits whitespace (such as spaces, tabs, and newlines) inside text nodes is that by default, the browser treats HTML in a way that normalizes or collapses whitespace. This behavior is part of the HTML/CSS rendering engine, which is designed to simplify and improve the layout of web pages.
+- In HTML, any sequence of whitespace characters (spaces, tabs, newlines) is collapsed into a single space when rendered in a browser. This means that no matter how many spaces you add between words or elements in the HTML, only one space will appear in the output.
+
+```
+<p>    This    is    a    test.   </p>
+```
+
+- On browser
+
+```
+This is a test.
+```
+
+- Text nodes in the DOM may still preserve the exact whitespace that you wrote in the HTML. When you access these nodes in JavaScript, you'll see the full whitespace, but the browser doesn’t display it unless explicitly told to. This is why text nodes retain the spaces, but the browser’s visual output collapses them.
+- When you apply the CSS style
+
+```
+<p style="white-space: pre;">
+    This    is    a    test.
+</p>
+```
+
+- The browser will display
+
+```
+    This    is    a    test.
+```
+
+
+![alt text](image-20.png)
 
 
 
