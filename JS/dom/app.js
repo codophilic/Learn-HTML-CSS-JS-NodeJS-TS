@@ -40,6 +40,7 @@
 
 //Traversing in DOM
 
+//Child Traversing
 let parentDiv = document.getElementById("parentDiv");
 console.log(parentDiv)
 console.log(parentDiv.childNodes);   // NodeList(9) [text, p#first-child, text, comment, text, span#second-child, text, ul, text]
@@ -54,3 +55,10 @@ console.log(parentDiv.firstChild);        // #text
 console.log(parentDiv.firstElementChild); // <p id="first-child">
 console.log(parentDiv.lastChild);         // #text
 console.log(parentDiv.lastElementChild);  // <ul>...</ul>
+
+//Parent Traversing
+let childList=document.getElementsByTagName("li")[0]
+console.log(childList)
+console.log(childList.parentElement)
+let childList1=document.getElementById("second-child")
+console.log(childList1.parentNode)

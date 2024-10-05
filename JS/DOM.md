@@ -547,7 +547,7 @@ console.log(divParentvar.contains(aDescendantvar)); // Outputs: true
 
 - Traversing the DOM in JavaScript refers to navigating between nodes in the DOM tree. You can traverse from a specific node to its parent, siblings, and child nodes. The DOM provides various properties for these traversals, and each has specific differences.
 
-### 1. Traversing to Child nodes
+### 1. Traversing to Child Elements/nodes
 
 - Consider below HTML snippet
 
@@ -641,6 +641,34 @@ This is a test.
 ```
     This    is    a    test.
 ```
+
+
+### 2. Traversing to Parent Elements/nodes
+
+- Consider below code for the same above HTML
+
+```
+let childList=document.getElementsByTagName("li")[0]
+console.log(childList)
+console.log(childList.parentElement)
+let childList1=document.getElementById("second-child")
+console.log(childList1.parentNode)
+```
+
+- On browser console
+
+![alt text](image-26.png)
+
+- `parentElement`: Returns the parent element of the current node, but it excludes non-element nodes like text or comment nodes.
+- `parentNode`: Returns the parent node, which could be an element or a document node (for example, document itself can be a parent).
+- The above output will mostly give you element tag, because an element tag can have child element or nodes thats why that element tag becomes the parent of that child element or nodes. Then why the need of `parentNode`? consider below code
+
+![alt text](image-27.png)
+
+- The above is one the exception and it will be used in the rare case.
+
+### 3. Traversing to Ancestor
+
 
 
 ![alt text](image-20.png)
