@@ -1036,6 +1036,337 @@ console.log(liveNodeList) //NodeList(4) [li.list-item, li.list-item, li.list-it
 - Live collections (`HTMLCollection` or Live `NodeList`) can lead to higher memory consumption and performance issues due to constant DOM monitoring.
 - Static collections (Static `NodeList`) are generally more efficient because they are snapshots and don’t track DOM changes.
 
+## Iterables
+
+- In JavaScript, an iterable is an object that can be looped over. It is a data type that can be iterated (looped) upon. For example, arrays and strings are iterables because they contain a collection of elements that can be looped over.
+- An iterable is any object that can be iterated over with constructs like `for...of`
+- Common iterables in JavaScript:
+  - Arrays
+  - Strings
+  - Sets
+  - Maps
+  - Typed Arrays
+  - Arguments object
+  - NodeList (e.g., what `document.querySelectorAll()` returns)
+
+### Array-Like Objects
+
+- **An array-like object is an object which have a length property and uses indexes to access items inside it**
+- **An array-like object is an object that looks like an array but doesn’t have all the built-in array methods** like `push()`, `pop()`. `NodeList` and `HTMLCollection` are array like object, they don't have built-in methods of array.
+
+#### Arrays
+
+- Earlier we have learned about basics of [array](https://github.com/codophilic/Learn-HTML-CSS-JS/blob/main/JS/BasicsOfJS.md#array)
+- Lets look at some other methods commonly used and different ways in which we can create an array
+- Different ways to create an array
+
+```
+const creation1=[1,2,3] //[1,2,3]
+console.log(creation1)
+
+//With new keyword (Constructor)
+const creation2= new Array() // Empty Array- []
+console.log(creation2)
+const creation3= new Array("Hi","Hello") //["Hi","Hello"]
+console.log(creation3)
+
+//Without new keyword
+const creation4= Array() //Empty Array- []
+console.log(creation4)
+const creation5=Array(1,2,3,4) //[1,2,3,4]
+console.log(creation5)
+
+//Size array
+const creation6= Array(3) //[],  it creates an array with a length of 4, but the elements are not initialized (hence they appear as "empty" slots). It is still expandable
+console.log(creation6) //(3) [empty × 3]
+creation6.push("Hi")
+console.log(creation6) //(4) [empty × 3, 'Hi']
+creation6[20]="Hello"
+console.log(creation6)
+
+/**
+ * When you assign a value to an index in a JavaScript array that is beyond its current length (`e.g., creation6[20] = "Hello"`), JavaScript will automatically expand the array to accommodate the new index. Any gaps between the existing elements and the new index will be filled with empty slots.
+ * JavaScript arrays are dynamically sized, which means they can grow or shrink as needed. When you assign a value to an index that is greater than the current length of the array, the array will automatically expand to that size.
+ * Why this behavior?
+ * This is a performance optimization in JavaScript. Instead of pre-allocating memory for all indices up to 20 when you assign creation6[20] = "Hello", JavaScript only creates the necessary storage for the existing elements and keeps gaps as uninitialized.
+ */
+
+/* Similarly the above code will work with `new` keyword */
+
+// Using Array.of
+const creation7=Array.of(1,2,3,4,5)
+console.log(creation7) //[1,2,3,4,5]
+
+//Using Array.from
+/**
+ * Array.from() is a method in JavaScript that creates a new array from an array-like or iterable object. 
+ * It’s useful when you need to work with objects that act like arrays but don’t have array methods.
+ * */
+const creation8 = Array.from("Hello")
+console.log(creation8) //(5) ['H', 'e', 'l', 'l', 'o']
+const creation9= Array.from(document.querySelectorAll("li")) //NodeList (array-like object)
+console.log(creation9)
+const creation10=Array.from(document.getElementsByTagName("li")) //HTMLCollection (array-like object)
+console.log(creation10)
+```
+
+- On browser console
+
+![alt text](image-38.png)
+
+- Array can store different datatype values
+
+```
+const creation10=Array.from(document.getElementsByTagName("li")) //HTMLCollection (array-like object)
+console.log(creation10)
+
+const objectVariable={
+    name: "Rahul",
+    BMI:{
+        height: "172cm",
+        weight: "68kgs"
+    }
+}
+const creation11=[1,"Hi",objectVariable,creation10]
+console.log(creation11)
+```
+
+- On browser console
+
+![alt text](image-39.png)
+
+- Multi-dimensional array
+
+```
+const creation12=[[1,2,3],[3,4,5],[6,7,8]]
+for(const i of creation12){
+    let singleLine="";
+    for(const j of i){
+        singleLine+=j+" "
+    }
+    console.log(singleLine)
+}
+
+Output:
+1 2 3
+4 5 6
+7 8 9
+```
+
+##### splice
+
+- The `splice()` method in JavaScript is used to add, remove, or replace elements in an array by modifying the original array.
+- Syntax
+
+```
+array.splice(start, deleteCount, item1, item2, ...);
+```
+
+- `start`: The index at which you want to start modifying the array.
+- `deleteCount`: The number of elements to remove from the array, starting from the start index. If `deleteCount` is 0, no elements are removed.
+- `item1, item2, ...`: (Optional) The elements to add to the array at the start index.
+
+- Below are examples
+
+```
+//Removing Elements
+let arr = ['a', 'b', 'c', 'd', 'e'];
+let removed = arr.splice(1, 2);  // Start at index 1, remove 2 elements
+console.log(arr);     // ['a', 'd', 'e']
+console.log(removed); // ['b', 'c']
+
+//Adding Elements
+arr = ['a', 'b', 'c'];
+arr.splice(1, 0, 'x', 'y');  // Start at index 1, remove 0, add 'x', 'y'
+console.log(arr);  // ['a', 'x', 'y', 'b', 'c']
+
+//Replacing Elements
+arr = ['a', 'b', 'c', 'd'];
+arr.splice(1, 2, 'x', 'y');  // Start at index 1, remove 2, add 'x', 'y'
+console.log(arr);  // ['a', 'x', 'y', 'd']
+
+//Negative Indexes
+/** When using negative indexes with splice(), the start index is counted from the end of the array. A negative index means "start this many positions from the end." */
+arr = ['a', 'b', 'c', 'd', 'e'];
+arr.splice(-2, 1);  // Start from 2nd-to-last element, remove 1 element
+console.log(arr);  // ['a', 'b', 'c', 'e']
+arr = ['a', 'b', 'c', 'd'];
+arr.splice(-1, 0, 'x');  // Start from last element, remove 0, add 'x'
+console.log(arr);  // ['a', 'b', 'c', 'x', 'd']
+```
+
+##### slice
+
+- The `slice()` method in JavaScript extracts a portion of an array and returns a new array without modifying the original array. It allows you to take a "slice" of the array based on the start and end positions you specify.
+- Syntax
+
+```
+array.slice(start, end);
+```
+
+- `start` (optional): The index at which to start extraction (inclusive). If omitted, it starts at index 0.
+- `end` (optional): The index at which to end extraction (exclusive). If omitted, it slices till the end of the array.
+
+```
+//Slice
+let arr1 = ['a', 'b', 'c', 'd', 'e'];
+let slicedArr = arr1.slice();  // Slices from index 1 to 3 (but excludes 3)
+console.log(slicedArr);  // ['b', 'c']
+console.log(arr1);        // ['a', 'b', 'c', 'd', 'e']  (Original array is unchanged)
+console.log(arr1.slice(1)) // ['b', 'c', 'd', 'e']
+console.log(arr1.slice(1, 3)) // ['b', 'c']
+```
+
+##### Merge Arrays
+
+- Concatenate arrays or merge multiple arrays elements
+
+```
+//Merge Arrays
+const creation13=[1,2,3]
+console.log(...creation13) // 1 2 3
+let creation14=[4,5,6]
+creation14=[...creation13,...creation14] //[1,2,3,4,5,6]
+console.log(creation14) //[1,2,3,4,5,6,1,2,3,4,5,6]
+creation14.push(7,8,9,10)
+console.log(creation14) //[1,2,3,4,5,6,1,2,3,4,5,6,7,8,9,10]
+```
+
+##### Index Of Element
+
+- We can find index of an element using `indexOf()` and `lastIndexOf()`.
+
+```
+//index of element
+const creation15=[100,200,300,400,500,600,700,100,400]
+console.log(creation15.indexOf(500)) //4
+console.log(creation15.lastIndexOf(700)) //6 (Searches from the end of the array and return indexes based non 0th position)
+console.log(creation15.indexOf(400)) //3 (finds the first occurence from the starting point of the array)
+console.log(creation15.lastIndexOf(100)) //6 (finds the first occurence from the end point of the array)
+
+/** 
+ * index of element does not work for object type element it only work for primitive elements
+ * Even though an object with the same properties exists in the array, indexOf returns -1. This is because the comparison is done by reference, not by value. The object passed to indexOf is a new object, so it is not the same object as the one in the array
+ * It uses strict equality (===) for comparison.
+ */
+const creation16=[{name:"ABC"},{name:"BCS"}] //Array of object
+console.log(creation16.indexOf({name:"ABC"})) //-1 (not found)
+```
+
+>[!NOTE]
+> - Both methods `indexOf()` and `lastIndexOf()` only works for primitive data type. For object data type we have `find()` method
+
+##### find
+
+- The `find()` method in JavaScript is used to search for the first element in an array that satisfies a provided a given function. It accepts a function. If no element matches the condition, `find()` returns `undefined`. The function which you will be defining must have boolean return type.
+
+```
+function checkElement8(i){
+    return i==8;
+}
+
+let creation17 = [5, 12, 8, 130, 44];
+let found = creation17.find(checkElement8);
+console.log(found);  // 8
+
+
+//Re-writing above code to below using arrow function
+console.log(creation17.find((i)=>i==12)); // 12
+console.log(creation17.find((i)=>i==20)); // undefined (not found)
+```
+
+- Another example
+
+```
+let creation17 = [5, 12, 8, 130, 44];
+console.log(creation17.find(i=>i%2==0)); //12, return the first even number 
+```
+
+- You can find the object as well
+
+```
+let creation18=[{name:"ABC",age:19},{name:"ABC",age:20}]
+console.log(creation18.find(i=>i.name=="ABC" && i.age==20)); //{name: 'ABC', age: 20}
+```
+
+- The `find()` method can take a function which can have upto 3 arguments.
+  - element: The current element being processed in the array.
+  - index (optional): The index of the current element being processed.
+  - array (optional): The entire array on which find() was called.
+
+```
+//find() with 2 Parameters
+console.log(creation17.find((element,i)=>{
+    console.log("Element "+element+", index "+i);
+}))
+/**
+ * Element 5, index 0
+Element 12, index 1
+Element 8, index 2
+Element 130, index 3
+Element 44, index 4
+ */
+
+//find() with 3 parameters
+console.log(creation17.find((element,i,arr)=>{
+    console.log(`Element: ${element}, Index: ${i}, Full Array: ${arr}`);
+}));
+
+/**
+ * Element: 5, Index: 0, Full Array: 5,12,8,130,44
+ Element: 12, Index: 1, Full Array: 5,12,8,130,44
+ Element: 8, Index: 2, Full Array: 5,12,8,130,44
+ Element: 130, Index: 3, Full Array: 5,12,8,130,44
+ Element: 44, Index: 4, Full Array: 5,12,8,130,44
+ */
+```
+
+- Typical use cases of 2 parameter and 3 parameter using `find()` function.
+
+
+```
+//2 Parameter
+let testResults = [true, true, false, true];
+let firstFail = testResults.find((result, index) => {
+  if (!result) {
+    console.log(`First failure found at index: ${index}`);
+    return true;
+  }
+});
+
+Output:
+First failure found at index: 2
+
+//3 Parameter
+let numbers = [1, 2, 4, 8, 16];
+
+let result = numbers.find((element, index, array) => {
+  // Initialize sumOfPrevious
+  let sumOfPrevious = 0;
+
+  // Calculate the sum of all previous elements manually
+  for (let i = 0; i < index; i++) {
+    sumOfPrevious += array[i]; // Add the previous elements to the sum
+  }
+
+  console.log(`Current element: ${element}, Sum of previous elements: ${sumOfPrevious}`);
+
+  // Return true if the current element is greater than the sum of previous elements
+  return element > sumOfPrevious;
+});
+
+console.log(`The first element greater than the sum of previous elements is: ${result}`);
+
+Output:
+Current element: 1, Sum of previous elements: 0
+Current element: 2, Sum of previous elements: 1
+Current element: 4, Sum of previous elements: 3
+Current element: 8, Sum of previous elements: 7
+Current element: 16, Sum of previous elements: 15
+The first element greater than the sum of previous elements is: 16
+```
+
+
 
 
 

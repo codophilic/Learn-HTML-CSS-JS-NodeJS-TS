@@ -1,6 +1,6 @@
 # JavaScript (JS)
 
-![alt text](image.png)
+![alt text](Images/basicofjs/image.png)
 
 - Let take a simple analogy.
 - HTML forms the skeleton of your web page, just like the framework of a building. It defines the structure and content. Each HTML element (like headings, paragraphs, images, links) is like a room or wall, giving shape and layout to your content.
