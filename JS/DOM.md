@@ -760,7 +760,7 @@ HTML Snip
 
 - Now the same JS Code will give output as `<header>..</header>`. **So using DOM traversal is efficient but you need to ensure modifying your HTML elements does not affect your traversal logics.**
 
-## Create/Append/Replace HTML Elements
+## Create/Append/Replace/Remove HTML Elements
 
 - Using DOM, JS can insert or append HTML elements inside the HTML page. There are two ways to achieve this
 
@@ -901,6 +901,35 @@ divContent.insertBefore(document.getElementById("ancestor"), newPara)
 - We can also perform replacement of contents using `replaceChild()` method.
 - If you wanna add multiple elements or nodes instead of using `appendChild()` you can use `append()` method.
 
+### Removing Elements
+
+- Consider below JS code which remove unordered list element from HTML
+
+```
+//Remove Elements
+const getULElement=document.querySelector("ul")
+getULElement.remove()
+```
+
+- On page.
+
+![alt text](image-36.png)
+
+- There is another way to achieve removing of elements via parent tag.
+
+```
+const getULElement=document.querySelector("ul")
+getULElement.parentElement.removeChild(getULElement)
+```
+
+- On page.
+
+![alt text](image-36.png)
+
+
+![alt text](image-37.png)
+
+
 ## Cloning DOM nodes
 
 - Cloning DOM nodes is done using the `cloneNode()` method. This method creates a copy of the selected DOM node. It accepts a single argument `true` or `false` that determines whether the children of the node should also be cloned.
@@ -938,6 +967,74 @@ document.body.appendChild(deepClone)
 
 <video controls src="20241005-1721-23.6581583.mp4" title="Title"></video>
 
+## HTMLCollection vs NodeList
+
+- `HTMLCollection`, only contains HTML elements. `NodeList` can contain any type of node (HTML elements, text nodes, comment nodes, etc.). It’s more generic.
+- Consider below HTML Snip and JS Code
+
+```
+HTML Snip
+    <div id="parentDiv">
+      <p id="first-child">First Child</p>
+      <!-- This is my Comment -->
+      <span id="second-child">Second Child</span>
+      <ul>
+        <li class="list-item"> Item 1 </li>
+        <li class="list-item"> Item 2 </li>
+        <li class="list-item">                        Item 3 </li>
+      </ul>
+      <div id="ancestor">
+        <div class="middle">
+            <p id="current">Current Node</p>
+        </div>
+    </div>
+
+JS Code
+console.log(document.getElementById("parentDiv").childNodes) //NodeList(11) [text, p#first-child, text, comment, text, span#second-child, text, ul, text, div#ancestor, text]
+console.log(document.getElementById("parentDiv").getElementsByTagName("p")) //HTMLCollection(2) [p#first-child, p#current]
+```
+
+- Methods like `getElementsByTagName` or `getElementsByClassName` return an `HTMLCollection`. Methods like `querySelectorAll` and `childNodes` return `NodeList` which consist of text, comments and element nodes.
+- Both `HTMLCollection` and `NodeList` are array-like in that they can be accessed by index (e.g., `collection[0]`), **but they are not true arrays**. They don't have array methods like `forEach` (though `NodeList` does in modern browsers) or `map`.
+- **`HTMLCollection` is typically live. This means if the DOM changes (e.g., elements are added or removed), the `HTMLCollection` is automatically updated to reflect those changes.**
+- Consider below code.
+
+```
+let liveHTMLListCollection=document.getElementsByTagName("li")
+console.log(liveHTMLListCollection) // HTMLCollection(3) [li.list-item, li.list-item, li.list-item]
+let newLiElement=document.createElement("li")
+newLiElement.textContent="Item 4"
+document.querySelector("ul").appendChild(newLiElement)
+console.log(liveHTMLListCollection) //HTMLCollection(4) [li.list-item, li.list-item, li.list-item, li]
+```
+
+- Whether you use `getElementsByTagName` or `getElementsByClassName` , the collection returned is always live, meaning it reflects changes to the DOM immediately without needing to re-query.
+- **`NodeList` can be static or live**. In the case of `querySelectorAll`, it returns a static `NodeList`, meaning it does not automatically update when the DOM changes. In the case of `document.getElementsByName()` and `childNodes`. the NodeList is live.
+- Below is example of static and live `NodeList`
+
+```
+//Static NodeList
+let staticNodeList=document.querySelectorAll("li") // NodeList(3) [li.list-item, li.list-item, li.list-item]
+console.log(staticNodeList)
+let newLiElement=document.createElement("li")
+newLiElement.textContent="Item 4"
+document.querySelector("ul").appendChild(newLiElement)
+console.log(staticNodeList) // NodeList(3) [li.list-item, li.list-item, li.list-item]
+
+//Live NodeList
+let liveNodeList=document.getElementsByName("lists")
+console.log(liveNodeList) //NodeList(3) [li.list-item, li.list-item, li.list-item]
+let newLiElement1=document.createElement("li")
+newLiElement1.textContent="Item 5"
+newLiElement1.setAttribute("name","lists")
+newLiElement1.className="list-item"
+document.querySelector("ul").appendChild(newLiElement1)
+console.log(liveNodeList) //NodeList(4) [li.list-item, li.list-item, li.list-item, li.list-item]
+```
+
+- **The main difference between an `HTMLCollection` and a `NodeList` is that one is live and one is static or live. This means that when an element is appended to the DOM, a live node will recognize the new element while a static node will not.**
+- Live collections (`HTMLCollection` or Live `NodeList`) can lead to higher memory consumption and performance issues due to constant DOM monitoring.
+- Static collections (Static `NodeList`) are generally more efficient because they are snapshots and don’t track DOM changes.
 
 
 
