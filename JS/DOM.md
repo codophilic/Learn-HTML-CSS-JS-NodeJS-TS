@@ -1366,14 +1366,88 @@ Current element: 16, Sum of previous elements: 15
 The first element greater than the sum of previous elements is: 16
 ```
 
-- 
+##### includes
+
+- The `includes()` method checks if an array contains a specified element or not. It perform **case-sensitive** Search
+
+```
+let creation18=[1,2,3,4,5,6,1,2]
+console.log(creation18.includes(4)) //true
+console.log(creation18.includes(10)) //false
+```
+
+- You can specify the starting index or from index element to begin the searching for an element
+
+```
+creation18.includes(1,5) //true
+creation18.includes(1,7) //false
+```
+
+- Lets add an object inside the array.
+
+```
+let obj={name:"ABC",age:21}
+creation18.push(obj)
+console.log(creation18.includes({name:"ABC",age:21})) //false
+```
+
+- So `includes()` method only works with primitive data types.
+
+>[!NOTE]
+> - `includes()` method also works with negative indexes (-1 starting from backwards)
 
 
+##### forEach
 
+- The `forEach()` method of Array instances executes a provided function once for each array element.
 
+```
+function squareNumbers(element){
+    console.log(element*element);
+}
 
+let creation19=[1,2,3,4,5];
+creation19.forEach(squareNumbers);
 
+Output:
+1
+4
+9
+16
+25
+```
 
+- Alternative is to use arrow function
+
+```
+let creation19=[1,2,3,4,5];
+creation19.forEach(i=>console.log(i*i));
+
+Output:
+1
+4
+9
+16
+25
+```
+
+- Just like `find()` method, the `forEach()` method requires a **callback function**. Similarly like `find()` it can accept atmost 3 parameters
+  - value: The value of the array element.
+  - index (optional): The index of the array element.
+  - array (optional): The array itself. 
+- Consider below example
+
+```
+creation19.forEach((currentElement,idx,AnyArr)=>{
+    console.log("Current Element: "+currentElement+", Index: "+idx+", Array: "+AnyArr)})
+
+Output:
+Current Element: 1, Index: 0, Array: 1,2,3,4,5
+Current Element: 2, Index: 1, Array: 1,2,3,4,5
+Current Element: 3, Index: 2, Array: 1,2,3,4,5
+Current Element: 4, Index: 3, Array: 1,2,3,4,5
+Current Element: 5, Index: 4, Array: 1,2,3,4,5
+```
 
 
 
