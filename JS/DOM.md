@@ -1366,6 +1366,7 @@ Current element: 16, Sum of previous elements: 15
 The first element greater than the sum of previous elements is: 16
 ```
 
+- 
 
 
 
