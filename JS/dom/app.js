@@ -183,7 +183,26 @@ console.log(creation17.find((element,i,arr)=>{
  Element: 44, Index: 4, Full Array: 5,12,8,130,44
  */
 
+//includes
+let creation18=[1,2,3,4,5,6,1,2]
+console.log(creation18.includes(4)) //true
+console.log(creation18.includes(10)) //false
+//based on starting index number 5 & 7
+creation18.includes(1,5) //true
+creation18.includes(1,7) //false
+let obj={name:"ABC",age:21}
+creation18.push(obj)
+console.log(creation18.includes({name:"ABC",age:21})) //false
 
+function squareNumbers(element){
+    console.log(element*element);
+}
+
+let creation19=[1,2,3,4,5];
+creation19.forEach(squareNumbers);
+creation19.forEach(i=>console.log(i*i));
+creation19.forEach((currentElement,idx,AnyArr)=>{
+    console.log("Current Element: "+currentElement+", Index: "+idx+", Array: "+AnyArr)})
 
 const h1ElementNode=document.getElementById("header1id")
 const divElementNode=document.getElementById("myDiv")
