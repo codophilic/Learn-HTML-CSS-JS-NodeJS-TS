@@ -1399,7 +1399,7 @@ console.log(creation18.includes({name:"ABC",age:21})) //false
 
 ##### forEach
 
-- The `forEach()` method of Array instances executes a provided function once for each array element.
+- The `forEach()` method is an iterative method. The `forEach()` method of Array instances executes a provided function once for each array element. It does not affects the current array. The `forEach()` method is not executed for empty elements. The defined function may or may not have `return` keyword. `forEach()` always returns `undefined`. `forEach()` always returns undefined and is not chainable.
 
 ```
 function squareNumbers(element){
@@ -1448,6 +1448,12 @@ Current Element: 3, Index: 2, Array: 1,2,3,4,5
 Current Element: 4, Index: 3, Array: 1,2,3,4,5
 Current Element: 5, Index: 4, Array: 1,2,3,4,5
 ```
+
+##### map
+
+
+
+
 
 
 
