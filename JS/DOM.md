@@ -1481,7 +1481,7 @@ let creation21=[1000,320,300,200]
 console.log(creation21.sort()) //[ 1000, 200, 300, 320 ]
 ```
 
-- By default, it sorts the elements in the array in ascending order based on their string Unicode values. The function takes the inputs, converts them to strings, and then sorts them using Unicode values.
+- By default, it sorts the elements in the array in ascending order based on their **string Unicode values**. The function takes the inputs, converts them to strings, and then sorts them using Unicode values.
 
 ```
 const characters = [
@@ -1612,6 +1612,40 @@ console.log(numbers); // [ 2, 4, 1, 3 ]
 > - The `sort()` function sorts the array by applying a sorting algorithm. This could be the bubble sort, quick sort, heap sort, or mergesort algorithms, for example (there are more, too).
 > - The choice of algorithm may depend on factors such as the size of the array, the data types being sorted, and the engine's optimisation strategies.
 
+##### filter
+
+- The `filter()` method creates a new array containing elements that satisfy a specified condition. The `filter()` method skips empty elements and **does not change the original array.** `filter()` method has similar arguments with `find()` method it accepts a callback function and other arguments like index and the current array.
+
+```
+let filtered = [24, 33, 16, 40].filter((i)=>i>18);
+console.log(filtered); //[24,33,40]
+```
+
+- The `filter()` method includes the only elements in the result array if they satisfy the test in the callback function. 
+
+##### reduce
+
+- The `reduce()` method in JS is used to accumulate or reduce an array into a single value. It accepts a **callback funtion**, applies it to each element of the array and accepts a **initial value** as one of the parameter. Just like in `find()` method the **callback funtion**
+- Syntax
+
+```
+array.reduce(callback(accumulator, currentValue, index, array), initialvalue)
+```
+
+- `callback` (required): A function that is executed on each element of the array. It has the following parameters:
+  - `accumulator`: The accumulated result of previous iterations. This value is returned at the end.
+  - `currentValue`: The current element being processed in the array.
+  - `index` (optional): The index of the current element being processed. Starts from 0 if initialValue is provided, otherwise starts from 1.
+  - `array` (optional): The array on which reduce() was called.
+- `initialValue` (optional): The value to use as the first argument in the first call of the `callback`. If not provided, the first element of the array is used as the initial value, and `reduce()` starts at the second element.
+
+```
+let reduceArr=[1,2,3,4]
+const reduceSum=reduceArr.reduce((acc,i)=>acc+i)
+console.log(reduceSum) //10
+console.log(reduceArr.reduce((acc,i)=>acc+i,1000)) //1010
+console.log(reduceArr.reduce((maxi,i)=>(i>maxi?i:maxi),-Infinity)) //4 (Maximum Element)
+```
 
 
 
