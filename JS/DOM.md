@@ -1629,11 +1629,11 @@ console.log(filtered); //[24,33,40]
 - Syntax
 
 ```
-array.reduce(callback(accumulator, currentValue, index, array), initialvalue)
+array.reduce(callback(previousValue, currentValue, index, array), initialvalue)
 ```
 
 - `callback` (required): A function that is executed on each element of the array. It has the following parameters:
-  - `accumulator`: The accumulated result of previous iterations. This value is returned at the end.
+  - `previousValue`: The accumulated result of previous iterations or first element. This value is returned at the end.
   - `currentValue`: The current element being processed in the array.
   - `index` (optional): The index of the current element being processed. Starts from 0 if initialValue is provided, otherwise starts from 1.
   - `array` (optional): The array on which reduce() was called.
