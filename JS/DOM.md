@@ -1474,6 +1474,143 @@ console.log(creation21) //[ 5, 7, 11, 17, 25 ]
 
 ##### sorting and reversing
 
+- Arrays can be sorted and reversed using `sort()` and `reverse()` method. The default sorting is string based.
+
+```
+let creation21=[1000,320,300,200]
+console.log(creation21.sort()) //[ 1000, 200, 300, 320 ]
+```
+
+- By default, it sorts the elements in the array in ascending order based on their string Unicode values. The function takes the inputs, converts them to strings, and then sorts them using Unicode values.
+
+```
+const characters = [
+  "Nebula",
+  "Thanos",
+  "Star Lord",
+  "Groot",
+  "Rocket",
+  "Drax",
+  "Gamora",
+];
+
+console.log(characters.sort())
+
+Output:
+[
+  'Drax',
+  'Gamora',
+  'Groot',
+  'Nebula',
+  'Rocket',
+  'Star Lord',
+  'Thanos'
+]
+```
+
+- Now lets say you wanna sort in a custom order, you need to provide a **Compare function** to the `sort()` method.
+
+```
+//Sorting using Compare Function (Sorting in Ascending Order)
+let creation21=[1000,320,300,200]
+console.log(creation21.sort((a,b)=>{
+  if(a>b){
+    return 1 //return positive value, the second element is placed before the first element
+  }else if(a===b){
+    return 0 // No change in position
+  }
+  return -1 //return negative value, the second element is placed after the first element
+}));
+
+Output:
+[ 200, 300, 320, 1000 ]
+```
+
+- Another examples of sorting
+
+```
+let creation21=[1000,320,300,200]
+console.log(creation21.sort((a,b)=>{
+  if(a>b){
+    return -1 //return positive value, the first element is placed before the second element
+  }else if(a===b){
+    return 0 // No change in position
+  }
+  return 1 //return negative value, the first element is placed after the second element
+}));
+
+Output:
+[ 1000, 320, 300, 200 ]
+
+const users = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 20 },
+  { name: 'Charlie', age: 30 }
+];
+users.sort((a, b) => a.age - b.age);
+console.log(users);
+// Sorted by age:
+// [{ name: 'Bob', age: 20 }, { name: 'Alice', age: 25 }, { name: 'Charlie', age: 30 }]
+
+
+//Sorting based on user who are doctors 
+const names = ["Mike Smith", "Dr. Johnson", "John Doe", "Dr. Williams"];
+names.sort((a, b) => {
+  if (a.startsWith("Dr.") && !b.startsWith("Dr.")) {
+    return -1;
+  } else if (!a.startsWith("Dr.") && b.startsWith("Dr.")) {
+    return 1;
+  } else {
+    return a.localeCompare(b); // sort alphabetically
+  }
+});
+
+console.log(names);
+
+// Output:
+//["Dr. Johnson", "Dr. Williams", "John Doe", "Mike Smith"];
+
+const items = ["b", "3", "a", "2", "c", "1"];
+
+items.sort((a, b) => {
+  const aIsNumber = !isNaN(a); // isNaN = is Not a Number
+  const bIsNumber = !isNaN(b);
+
+  if (aIsNumber && !bIsNumber) {
+    return -1; // numbers should be sorted before letters
+  } else if (!aIsNumber && bIsNumber) {
+    return 1; // letters should be sorted after numbers
+  } else if (aIsNumber && bIsNumber) {
+    return a - b; // sort numbers numerically
+  } else {
+    return a.localeCompare(b); // sort letters alphabetically
+  }
+});
+
+console.log(items);
+
+// Output
+//["1", "2", "3", "a", "b", "c"];
+```
+
+- `reverse()` method reverses the order of elements in the array in place and returns the modified array.
+
+```
+let creation22=[1,2,3,4,5]
+console.log(creation22.reverse()) //[5,4,3,2,1]
+```
+
+- Combine sorting and reversing
+
+```
+const numbers = [3, 1, 4, 2];
+numbers.sort((a, b) => a*b).reverse();
+console.log(numbers); // [ 2, 4, 1, 3 ]
+```
+
+>[!NOTE]
+> - The `sort()` function sorts the array by applying a sorting algorithm. This could be the bubble sort, quick sort, heap sort, or mergesort algorithms, for example (there are more, too).
+> - The choice of algorithm may depend on factors such as the size of the array, the data types being sorted, and the engine's optimisation strategies.
 
 
 
