@@ -242,6 +242,18 @@ console.log(reduceSum) //10
 console.log(reduceArr.reduce((acc,i)=>acc+i,1000)) //1010
 console.log(reduceArr.reduce((maxi,i)=>(i>maxi?i:maxi),-Infinity)) //4 (Maximum Element)
 
+const grades = [
+  { grade: 90, weight: 0.5 },
+  { grade: 80, weight: 0.3 },
+  { grade: 85, weight: 0.2 },
+];
+const weightedAvg = grades.reduce((acc, curr) => acc + curr.grade * curr.weight, 0);
+console.log(weightedAvg); // 86
+
+const words = ['Reduce', 'is', 'powerful'];
+const sentence = words.reduce((acc, curr) => acc + ' ' + curr);
+console.log(sentence); // "Reduce is powerful"
+
 const h1ElementNode=document.getElementById("header1id")
 const divElementNode=document.getElementById("myDiv")
 
