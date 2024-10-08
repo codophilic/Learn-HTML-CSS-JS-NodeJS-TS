@@ -208,6 +208,29 @@ const creation20=[1,2,3,4,5]
 const newCreation20=creation20.map(i=>i*i);
 console.log(newCreation20) //[ 1, 4, 9, 16, 25 ]
 
+let creation21=[1000,320,300,200]
+console.log(creation21.sort()) //[ 1000, 200, 300, 320 ]
+
+//Sorting using Compare Function (Sorting in Ascending Order)
+console.log(creation21.sort((a,b)=>{
+  if(a>b){
+    return 1 //return positive value, the second element is placed before the first element
+  }else if(a===b){
+    return 0 // No change in position
+  }
+  return -1 //return negative value, the second element is placed after the first element
+}));
+
+//Sorting using Compare Function (Sorting in descending Order)
+console.log(creation21.sort((a,b)=>{
+  if(a>b){
+    return -1 //return positive value, the first element is placed before the second element
+  }else if(a===b){
+    return 0 // No change in position
+  }
+  return 1 //return negative value, the first element is placed after the second element
+}));
+
 const h1ElementNode=document.getElementById("header1id")
 const divElementNode=document.getElementById("myDiv")
 
