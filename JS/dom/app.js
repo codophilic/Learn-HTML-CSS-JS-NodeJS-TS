@@ -231,6 +231,17 @@ console.log(creation21.sort((a,b)=>{
   return 1 //return negative value, the first element is placed after the second element
 }));
 
+//Filtering
+let filtered = [24, 33, 16, 40].filter((i)=>i>18);
+console.log(filtered);
+
+//reduce
+let reduceArr=[1,2,3,4]
+const reduceSum=reduceArr.reduce((acc,i)=>acc+i)
+console.log(reduceSum) //10
+console.log(reduceArr.reduce((acc,i)=>acc+i,1000)) //1010
+console.log(reduceArr.reduce((maxi,i)=>(i>maxi?i:maxi),-Infinity)) //4 (Maximum Element)
+
 const h1ElementNode=document.getElementById("header1id")
 const divElementNode=document.getElementById("myDiv")
 
