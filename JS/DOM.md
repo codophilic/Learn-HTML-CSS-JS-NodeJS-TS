@@ -1451,6 +1451,32 @@ Current Element: 5, Index: 4, Array: 1,2,3,4,5
 
 ##### map
 
+- The `map()` function in JS is used to create a new array by applying a **callback** function to each element of an existing array. It does not modify the original array but instead returns a transformed version of that array.
+
+```
+const creation20=[1,2,3,4,5]
+const newCreation20=creation20.map(i=>i*i);
+console.log(newCreation20) //[ 1, 4, 9, 16, 25 ]
+```
+
+- The function can transform each element and return values of that function is collected into the new array.
+- Just like `find()` function it can accept 3 arguments, current value, index of that value and array on which map was called.
+
+```
+let creation21=creation20.map((element,index) => element*index)
+console.log(creation21) //[ 0, 2, 6, 12, 20 ]
+creation21=creation20.map((element,index,orgArr)=>element*index+orgArr.length);
+console.log(creation21) //[ 5, 7, 11, 17, 25 ]
+```
+
+>[!NOTE]
+> - `forEach()` is used to execute a function on each element of an array, it does not return and collect values , it returns `undefined`. `map()` is used to transform an array by applying a function to each element. It creates a **new array** with results of applying the provided function.
+
+##### sorting and reversing
+
+
+
+
 
 
 
