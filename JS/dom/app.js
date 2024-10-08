@@ -204,6 +204,10 @@ creation19.forEach(i=>console.log(i*i));
 creation19.forEach((currentElement,idx,AnyArr)=>{
     console.log("Current Element: "+currentElement+", Index: "+idx+", Array: "+AnyArr)})
 
+const creation20=[1,2,3,4,5]
+const newCreation20=creation20.map(i=>i*i);
+console.log(newCreation20) //[ 1, 4, 9, 16, 25 ]
+
 const h1ElementNode=document.getElementById("header1id")
 const divElementNode=document.getElementById("myDiv")
 
