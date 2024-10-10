@@ -1,4 +1,6 @@
-# DOM (Document Object Model)
+# JavaScript Concepts
+
+## DOM (Document Object Model)
 
 - Lets understand DOM via an analogy.
 - Imagine, the DOM is like a blueprint of the house. It represents the layout of the house showing where the different rooms are located like hall, bedrooms (1/2/3 BHK), kitchen area, washrooms, guest rooms, walls, doors etc...
@@ -6,7 +8,7 @@
 - CSS is the paint, furniture, and decor that makes the house look beautiful. CSS adds visual styling to the structure, just like paint, furniture, and decorations make a house look nicer.
 - JavaScript is like the electrical system, but also the controls. It can turn things on or off (like lights or fans)
 
-## DOM Definition
+### DOM Definition
 
 - **The DOM is the browser’s way of turning the text-based HTML code (the tags and elements in the HTML) into a system of objects (things that JavaScript can understand and manipulate).**
 - The DOM is what's responsible for converting this textual markup into a system of objects that we can easily work with in a programming language, most commonly JavaScript.
@@ -87,7 +89,7 @@ The DOM is essentially a representation of the HTML document in the browser that
 
 - If you see , the document object has list of different properties.
 
-## Window Object
+### Window Object
 
 - **The window object is the global object that represents the current window or tab of your browser where your webpage is displayed.**
 - Everything that runs in your webpage, including JavaScript, exists inside the window.
@@ -115,11 +117,11 @@ The DOM is essentially a representation of the HTML document in the browser that
 
 ![alt text](image-6.png)
 
-## Nodes vs Elements
+### Nodes vs Elements
 
 - In JavaScript, when working with the DOM (Document Object Model), you often come across terms like nodes and elements. Though they seem similar, there is a difference between the two.
 
-### What is a Node?
+#### What is a Node?
 
 - In the DOM, everything is a node. A node is a basic unit in the DOM tree. It can represent different things in the document, including:
   - HTML elements (like `<div>`, `<p>`, etc.)
@@ -128,14 +130,14 @@ The DOM is essentially a representation of the HTML document in the browser that
   - Comments in the HTML
 - So, the term "node" is a generic term for anything in the DOM tree.
 
-#### Types of Nodes:
+##### Types of Nodes:
 
 - Element nodes: These represent HTML elements, like `<div>`, `<h1>`, `<p>`.
 - Text nodes: These represent the text inside an element. For example, in `<p>Hello</p>`, the text "Hello" is a text node.
 - Comment nodes: Represent HTML comments, like `<!-- This is a comment -->`.
 - Attribute nodes: Represent attributes of elements, like `class="header"` in `<div class="header">`.
 
-#### nodeType
+##### nodeType
 
 - The `nodeType` property in JavaScript tells you what kind of node you're dealing with in the DOM. Remember, in the DOM, everything (HTML tags, text, comments, etc.) is a node. Each type of node has a different `nodeType` value, which is a number that helps us identify the type of node.
 - Consider below html file
@@ -189,14 +191,14 @@ childElementsOfDiv.forEach(i=>{
 - Different [nodeType](https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType)
 
 
-### What is an Element?
+#### What is an Element?
 
 - An element is a specific type of node that represents an HTML element (like `<div>`, `<h1>`, `<img>`, etc.). In the DOM, elements are more specific than nodes because they always correspond to HTML tags.
 - **Node is the broader term: everything (HTML elements, text, comments, attributes) is a node in the DOM. Element is a specific type of node that represents HTML elements.**
 
 ![alt text](image-7.png)
 
-## Query Selectors
+### Query Selectors
 
 - When we learned CSS, there is a concept called CSS Selectors.
 <br>
@@ -390,7 +392,7 @@ childElementsOfDiv.forEach(i=>{
 
 ![alt text](image-12.png)
 
-## Attribute vs Property
+### Attribute vs Property
 
 - Attributes are defined in the HTML itself. They are part of the HTML tag and are used for initial values.
 - Properties are part of the DOM (Document Object Model). Once the HTML is loaded into the browser, elements become objects with properties. Properties can change over time and may not always match the attribute values from the HTML. Properties are accessed directly on the element object in JavaScript.
@@ -489,7 +491,7 @@ console.log(inputElement.getAttribute('value')); // "initial value"
 
 ![alt text](image-17.png)
 
-## Parent, Child, Descendent and Ancestor
+### Parent, Child, Descendent and Ancestor
 
 - Think of HTML elements like members of a family tree:
     - Parent: This is like a parent in a family. It’s the direct element that holds or wraps other elements inside it.
@@ -543,11 +545,11 @@ console.log(divParentvar.contains(aDescendantvar)); // Outputs: true
 ![alt text](image-19.png)
 
 
-## DOM Traversal
+### DOM Traversal
 
 - Traversing the DOM in JavaScript refers to navigating between nodes in the DOM tree. You can traverse from a specific node to its parent, siblings, and child nodes. The DOM provides various properties for these traversals, and each has specific differences.
 
-### 1. Traversing to Child Elements/nodes
+#### 1. Traversing to Child Elements/nodes
 
 - Consider below HTML snippet
 
@@ -643,7 +645,7 @@ This is a test.
 ```
 
 
-### 2. Traversing to Parent Elements/nodes
+#### 2. Traversing to Parent Elements/nodes
 
 - Consider below code for the same above HTML
 
@@ -667,7 +669,7 @@ console.log(childList1.parentNode)
 
 - The above is one the exception and it will be used in the rare case.
 
-### 3. Traversing to Ancestor
+#### 3. Traversing to Ancestor
 
 - Consider below HTML & JS Code
 
@@ -691,7 +693,7 @@ console.log(currentNode.closest('#ancestor')); // <div id="ancestor">
 
 - `closest()`: This method returns the closest ancestor of the current element (or the element itself) that matches the selector you pass in. It traverses upwards through the DOM hierarchy
 
-### 4. Traversing to Siblings
+#### 4. Traversing to Siblings
 
 - In the below HTML snip, `<p>`, `<span>`, `<ul>` and `<div id="ancestor">` they all belong to same parent `<div id="parentDiv">` and thus becomes siblings.
 
@@ -733,7 +735,7 @@ console.log(secondChild.previousElementSibling);  // <p id="first-child">
 
 ![alt text](image-20.png)
 
-### DOM Traversal vs Query Selectors
+#### DOM Traversal vs Query Selectors
 
 - When we have query selector which will share us the element when why the need of DOM traversal? **DOM traversal is useful when you already have a reference to a node and want to navigate relative to it (e.g., finding parent or sibling elements), which is efficient since you're moving through a small part of the DOM. In contrast, query selectors (`querySelector`, `querySelectorAll`) search the entire document, which can be slower, especially in large DOM trees. DOM traversal is often faster for local navigation, while query selectors are useful for finding elements globally but might impact performance if overused. Using DOM traversal methods can help optimize operations that involve nearby elements.**
 - Consider below HTML snip and JS Code.
@@ -760,7 +762,7 @@ HTML Snip
 
 - Now the same JS Code will give output as `<header>..</header>`. **So using DOM traversal is efficient but you need to ensure modifying your HTML elements does not affect your traversal logics.**
 
-## Create/Append/Replace/Remove HTML Elements
+## Create/Append/Replace/Remove HTML Elements using JS
 
 - Using DOM, JS can insert or append HTML elements inside the HTML page. There are two ways to achieve this
 
@@ -2052,10 +2054,154 @@ obj1 = null;  // The object is no longer referenced
 ![alt text](image-46.png)
 
 
+## OOP (Object-Oriented Programming)
+
+### Object
+
+- We learned earlier that **`an object is a data structure that can hold multiple values in the form of key-value pairs `**. Objects are a way to represent real-world entities or concepts. Think of them as a collection of properties (characteristics) and methods (actions) that define an object.
+- Real-world examples:
+  - A car:
+    - Properties: `color`, `make`, `model`, `year`
+    - Methods: `startEngine()`, `accelerate()`, `brake()`
+  - A person:
+    - Properties: `name`, `age`, `gender`, `occupation`
+    - Methods: `greet()`, `walk()`, `talk()`
 
 
+```
+// Car object
+let car = {
+  color: "red",
+  make: "Toyota",
+  model: "Corolla",
+  year: 2022,
+  startEngine: function() {
+    console.log("Engine started");
+  },
+  accelerate: function() {
+    console.log("Car accelerating");
+  },
+  brake: function() {
+    console.log("Car braking");
+  }
+};
+```
+
+- The DOM elements, nodes , collections like array , map and set all are **objects** in JS. Objects in JavaScript can have properties and methods. Arrays, Maps, Sets, DOM elements, and nodes all have properties and methods that are tied to their prototypes. These objects inherit from their respective prototypes (`Array.prototype`, `Map.prototype`, `Set.prototype`, `Node.prototype`, etc.), which in turn inherit from `Object.prototype`, making them all part of the object hierarchy.
 
 
+*We will learn about prototype later*
 
 
+- In JavaScript **except from primitive values everything is object**.
 
+![alt text](image-47.png)
+
+#### CRUD on Object
+
+- Consider below code for creating a property and accessing it.
+
+```
+console.log(car.color) //red (Accessing property)
+car.brand="TATA" // Adding a new Property
+console.log(car)
+```
+
+- On browser console
+
+![alt text](image-48.png)
+
+- Updating property
+
+```
+car.year=2024 //updating a property
+console.log(car)
+```
+
+- On browser console
+
+![alt text](image-49.png)
+
+- Deleting property
+
+```
+car.startEngine=undefined //Deleting a property using undefined (null won't work)
+delete car.model //Deleting a property
+console.log(car)
+```
+
+- On browser console
+
+![alt text](image-50.png)
+
+#### Type of Object keys
+
+- In JS, you can make your key as a string and can access it just like an array index, but instead of specifying index number you need to specify the string key.
+
+```
+let StringKeys={
+  "First name": "ABC",
+  "Last name": "XYZ"
+}
+console.log(StringKeys["First name"]) //ABC
+```
+
+- Using this way you can introduce special characters in your object keys.
+- Similarly your object keys can be **positive numbers either float or integers (including) but cannot be negative**. Behind the scene it will be coerced into String.
+
+```
+let NumberKyes={
+  1.5: "Hi",
+  0: "Hello"
+}
+console.log(NumberKyes[0]) //Hello
+```
+
+#### Order of Object Keys
+
+- Consider below code
+
+```
+let OrderingOfKeys={
+  2: "Hi",
+  1: "Hello",
+  "First": 1,
+  greet: function(){
+    console.log("Greetings!")
+  },
+  "a": "ABC"
+}
+console.log(OrderingOfKeys)
+```
+
+- On browser console, if you see the ordering of elements are not consistant.
+
+![alt text](image-51.png)
+
+- The ordering of object keys follows a specific pattern. When iterating over or accessing the keys of an object, JavaScript orders them in the following way:
+  - Integer-like keys (numeric keys) are sorted in ascending order.
+  - String keys are displayed in the order they were added (insertion order).
+  - Symbol keys (if any) are iterated last, in the order of insertion.
+
+#### Setting Keys Dynamically
+
+- You can dynamically set keys and values in an object using bracket notation (`[]`)
+- Consider below Code.
+
+```
+let first_name="A Person First Name"
+let PersonObject={
+  [first_name]: "ABC",
+  lastName: "XYZ"
+}
+console.log(PersonObject)
+console.log(PersonObject[first_name]) //ABC
+```
+
+- On browser console.
+
+![alt text](image-52.png)
+
+- This can be use full when you wanted to have a key based on user-defined input. It’s particularly useful when you don't know the property name ahead of time or when the key is generated dynamically, stored in a variable, or contains special characters.
+- Dot notation (`object.key`) is used when you know the exact key name and it is a valid identifier (without spaces, starting with a letter, etc.).
+- Bracket notation (`object[key]`) is useful when the key is dynamic (e.g., stored in a variable), or when it contains special characters or spaces.

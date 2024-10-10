@@ -618,3 +618,63 @@ obj1 = null;  // The object is no longer referenced
 // obj1 will be automatically removed from the WeakSet by the garbage collector
 
 
+// Car object
+let car = {
+  color: "red",
+  make: "Toyota",
+  model: "Corolla",
+  year: 2022,
+  startEngine: function() {
+    console.log("Engine started");
+  },
+  accelerate: function() {
+    console.log("Car accelerating");
+  },
+  brake: function() {
+    console.log("Car braking");
+  }
+};
+
+
+console.log(car.color) //red (Accessing property)
+car.brand="TATA" // Adding a new Property
+console.log(car)
+
+car.year=2024 //updating a property
+console.log(car)
+
+car.startEngine=undefined //Deleting a property using undefined (null won't work)
+delete car.model //Deleting a property
+console.log(car)
+
+let StringKeys={
+  "First name": "ABC",
+  "Last name": "XYZ"
+}
+console.log(StringKeys["First name"]) //ABC
+
+let NumberKyes={
+  1.5: "Hi",
+  0: "Hello"
+}
+console.log(NumberKyes[0]) //Hello
+
+let OrderingOfKeys={
+  2: "Hi",
+  1: "Hello",
+  "First": 1,
+  greet: function(){
+    console.log("Greetings!")
+  },
+  "a": "ABC"
+}
+console.log(OrderingOfKeys)
+
+
+let first_name="A Person First Name"
+let PersonObject={
+  [first_name]: "ABC",
+  lastName: "XYZ"
+}
+console.log(PersonObject)
+console.log(PersonObject[first_name]) //ABC
