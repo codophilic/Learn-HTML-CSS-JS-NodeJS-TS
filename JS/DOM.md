@@ -1663,6 +1663,174 @@ const sentence = words.reduce((acc, curr) => acc + ' ' + curr);
 console.log(sentence); // "Reduce is powerful"
 ```
 
+##### split & join
+
+- `split()` method: It is used to split a string into an array of substrings based on a specified delimiter (separator). You can specify any character or string as the delimiter, or you can split the string by each character if no delimiter is provided.
+
+```
+let strWord = "Hello, world!";
+let stringSplitOfArrays = strWord.split(", ");
+console.log(stringSplitOfArrays); // Output: ["Hello", "world!"]
+console.log(strWord.split("")); // Output: ['H', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!']
+console.log(strWord.split()); // Output: ['Hello, world!']
+```
+
+- `join()` method: It is used to join all elements of an array into a single string. You can specify a separator that will be placed between the elements of the array in the resulting string. If no separator is provided, it defaults to a comma.
+
+```
+stringSplitOfArrays = ["Hello", "world!"];
+strWord = stringSplitOfArrays.join(" ");
+console.log(strWord); // Output: "Hello world!"
+console.log(stringSplitOfArrays.join()) //Output: Hello,world!
+```
+
+##### Spread Operator (...)
+
+- Earlier we had learned about `...` as **rest operator** which allows you to represent an indefinite number of arguments as an array for a function.
+- The spread operator (`...`) in JavaScript allows you to spread out the elements of an array, object, or other iterable into individual elements.
+
+```
+let SpreadArr=[1,2,3]
+console.log(...SpreadArr) // 1 2 3
+```
+
+- You can copy elements or merge multiple arrays.
+
+```
+let SpreadArr=[1,2,3]
+console.log(...SpreadArr) // 1 2 3
+let SpreadArr1 = [4,5,6,7];
+let SpreadArr2 = [...SpreadArr,...SpreadArr1]; // Copying
+console.log(SpreadArr2); // Output: [1,2,3,4,5,6,7]
+```
+
+- If you wanted to find a minimum or maximum number from the array, JS gives you a in-built library `Math.min` and `Math.max`. It accepts standlone elements. It cannot accept directly a array. So here we can use spread operator to give standlone elements to the method.
+
+```
+console.log(Math.min(1,2,3,4)) //1
+console.log(Math.max(1,2,3,4)) //4
+console.log(Math.min(...[1,2,3,4])) //1
+console.log(Math.max(...[1,2,3,4])) //4
+```
+
+- Lets create an array with objects and copy those object using spread operator.
+
+```
+let ObjectSpreadArr1=[{name:"ABC",age:19},{name:"XYZ",age:20}]
+let ObjectSpreadArr2=[...ObjectSpreadArr1]
+console.log(ObjectSpreadArr2)
+```
+
+- On console
+
+![alt text](image-40.png)
+
+
+- Now if we modify the property of object, the changes property will be reflected in both the array.
+
+```
+let ObjectSpreadArr1=[{name:"ABC",age:19},{name:"XYZ",age:20}]
+let ObjectSpreadArr2=[...ObjectSpreadArr1]
+console.log(ObjectSpreadArr2)
+
+ObjectSpreadArr1[0].age=91
+console.log(ObjectSpreadArr1)
+console.log(ObjectSpreadArr2)
+```
+
+- On console
+
+![alt text](image-41.png)
+
+- This is because when we copied elements from one array to another array, we are not creating new objects instead we are copying the memory addresses of it. So the copied element into the new array is still point the same object's memory address. Now consider below code.
+
+```
+let ObjectSpreadArr3=[...ObjectSpreadArr1.map(i=>{
+
+    return {name:i.name,
+      age:i.age
+    }
+
+})]
+
+ObjectSpreadArr1[0].age=991
+console.log(ObjectSpreadArr1)
+console.log(ObjectSpreadArr3)
+```
+
+- On browser console
+
+![alt text](image-42.png)
+
+- Here using `map()` method we are creating new object which will have new memory address, so changing an object's property in one array will won't affect other array.
+
+##### Arrays Destructing
+
+- Array destructuring allows you to unpack values from arrays (or objects) into individual variables. It provides a concise way to extract multiple values from an array at once.
+
+```
+//Array Destructing
+let arrdes = [10, 20, 30];
+let [x, y, z] = arrdes;
+
+console.log(x); // Output: 10
+console.log(y); // Output: 20
+console.log(z); // Output: 30
+```
+
+- The array is unpacked from left to right. The first variable (e.g., `x`) gets the first element from the array. The second variable (e.g., `y`) gets the second element from the array. And so on...
+- If you want to skip certain elements in the array, you can leave a blank space with a comma.
+
+```
+let [x1,,z1]=arrdes
+console.log(x1)//10
+console.log(z1)//30
+```
+
+- If the array doesn't have enough elements, you can assign default values to variables.
+
+```
+let [x2,y2=100]=arrdes
+console.log(x2)//10
+console.log(y2)//100
+```
+
+- You can also use the rest operator (`...`) to collect the remaining elements into a new array.
+
+```
+let [x3,...restElements]=arrdes
+console.log(x3)//10
+console.log(restElements)//[20,30]
+```
+
+- Array destructuring can be nested to extract values from arrays inside arrays.
+
+```
+let arrb = [10, [20, 30]];
+let [a, [b, c]] = arrb;
+
+console.log(a); // Output: 10
+console.log(b); // Output: 20
+console.log(c); // Output: 30
+```
+
+- You can further destructure the properties of each object directly.
+
+```
+const users = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 30 },
+  { name: 'Charlie', age: 35 }
+];
+
+// Destructure to get specific properties
+const [{ name: firstName }, { age: secondUserAge }] = users;
+
+console.log(firstName);      // Output: Alice
+console.log(secondUserAge);  // Output: 30
+```
+
+
 
 
 

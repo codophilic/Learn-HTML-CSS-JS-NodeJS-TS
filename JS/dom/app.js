@@ -184,7 +184,7 @@ console.log(creation17.find((element,i,arr)=>{
  */
 
 //includes
-let creation18=[1,2,3,4,5,6,1,2]
+creation18=[1,2,3,4,5,6,1,2]
 console.log(creation18.includes(4)) //true
 console.log(creation18.includes(10)) //false
 //based on starting index number 5 & 7
@@ -253,6 +253,79 @@ console.log(weightedAvg); // 86
 const words = ['Reduce', 'is', 'powerful'];
 const sentence = words.reduce((acc, curr) => acc + ' ' + curr);
 console.log(sentence); // "Reduce is powerful"
+
+//Split and Join
+let strWord = "Hello, world!";
+let stringSplitOfArrays = strWord.split(", ");
+console.log(stringSplitOfArrays); // Output: ["Hello", "world!"]
+console.log(strWord.split("")); // Output: ['H', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!']
+console.log(strWord.split()); // Output: ['Hello, world!']
+
+stringSplitOfArrays = ["Hello", "world!"];
+strWord = stringSplitOfArrays.join(" ");
+console.log(strWord); // Output: "Hello world!"
+console.log(stringSplitOfArrays.join()) //Output: Hello,world!
+
+//Spread Operator
+let SpreadArr=[1,2,3]
+console.log(...SpreadArr) // 1 2 3
+
+let SpreadArr1 = [4,5,6,7];
+let SpreadArr2 = [...SpreadArr,...SpreadArr1]; // Copying
+console.log(SpreadArr2); // Output: [1,2,3,4,5,6,7]
+
+console.log(Math.min(1,2,3,4)) //1
+console.log(Math.max(1,2,3,4)) //4
+console.log(Math.min(...[1,2,3,4])) //1
+console.log(Math.max(...[1,2,3,4])) //4
+
+let ObjectSpreadArr1=[{name:"ABC",age:19},{name:"XYZ",age:20}]
+let ObjectSpreadArr2=[...ObjectSpreadArr1]
+console.log(ObjectSpreadArr2)
+
+ObjectSpreadArr1[0].age=91
+console.log(ObjectSpreadArr1)
+console.log(ObjectSpreadArr2)
+
+let ObjectSpreadArr3=[...ObjectSpreadArr1.map(i=>{
+
+    return {name:i.name,
+      age:i.age
+    }
+
+})]
+
+ObjectSpreadArr1[0].age=991
+console.log(ObjectSpreadArr1)
+console.log(ObjectSpreadArr3)
+
+//Array Destructing
+let arrdes = [10, 20, 30];
+let [x, y, z] = arrdes;
+
+console.log(x); // Output: 10
+console.log(y); // Output: 20
+console.log(z); // Output: 30
+
+let [x1,,z1]=arrdes
+console.log(x1)//10
+console.log(z1)//30
+
+let [x2,y2=100]=arrdes
+console.log(x2)//10
+console.log(y2)//100
+
+let [x3,...restElements]=arrdes
+console.log(x3)//10
+console.log(restElements)//[20,30]
+
+let arrb = [10, [20, 30]];
+let [a, [b, c]] = arrb;
+
+console.log(a); // Output: 10
+console.log(b); // Output: 20
+console.log(c); // Output: 30
+
 
 const h1ElementNode=document.getElementById("header1id")
 const divElementNode=document.getElementById("myDiv")
