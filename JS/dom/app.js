@@ -470,3 +470,151 @@ console.log(liveNodeList) //NodeList(4) [li.list-item, li.list-item, li.list-it
 const getULElement=document.querySelector("ul")
 getULElement.parentElement.removeChild(getULElement)
 
+//Map
+// Creating a map
+let myMap = new Map();
+
+// Or initializing with key-value pairs
+let initializedMap = new Map([
+  ['name', 'Alice'],
+  ['age', 25],
+  [{ city: 'NY' }, 'Object as key']
+]);
+console.log(initializedMap)
+
+myMap.set('name', 'ABC');
+myMap.set('age', 24);
+myMap.set({ city: 'NY' }, 'New York');
+myMap.set("New Key","New Value")
+
+console.log(myMap);// Output: Map { 'name' => 'ABC', 'age' => 25, { city: 'NY' } => 'New York','New Key' => 'New Value' }
+
+//Get value based on key name
+console.log(myMap.get('name'));  // Output: ABC
+console.log(myMap.get('age'));   // Output: 25
+//If the key does not exist, get() will return undefined.
+console.log(myMap.get('unknown'));  // Output: undefined
+
+//Checking for Key Existence
+console.log(myMap.has('name'));  // Output: true
+console.log(myMap.has('gender'));  // Output: false
+
+//Deleting Key
+myMap.delete('age');
+console.log(myMap);  // Output: Map { 'name' => 'ABC', { city: 'NY' } => 'New York', 'New Key' => 'New Value'}
+
+//Size of Collection
+console.log(myMap.size);  // Output: 3
+
+//Clear Collection
+myMap.clear();
+console.log(myMap);  // Output: Map {}
+
+myMap = new Map([
+  ['name', 'Alice'],
+  ['age', 25],
+  ['country', 'USA']
+]);
+//Iterating over Map
+myMap.forEach((value, key) => {
+  console.log(`${key}: ${value}`);
+});
+
+// Output:
+// name: Alice
+// age: 25
+// country: USA
+
+for(const [key,value] of myMap.entries()){
+  console.log(key,value)
+}
+
+//Output:
+// name Alice
+// age 25
+// country USA
+
+//Get Keys only
+for(const key of myMap.keys()){
+  console.log(key)
+}
+
+//Output:
+// name
+// age
+// country
+
+//Get Values only
+for(const values of myMap.values()){
+  console.log(values)
+}
+
+//Output:
+// Alice
+// 25
+// USA
+
+
+//Set
+let mySet = new Set([1, 2, 3, 3, 4]);  // Duplicate '3' will be removed
+console.log(mySet);  // Output: Set(4) {1, 2, 3, 4}
+mySet.add(5) //Adding Element
+mySet.add(6) //Adding Element
+mySet.add(7) //Adding Element
+mySet.add(1) //Adding Element
+console.log(mySet) //Set(7) {1, 2, 3, 4, 5, 6, 7}
+
+
+console.log(mySet.has(2));  // Output: true
+console.log(mySet.has(50));  // Output: false
+
+mySet.delete(2); //Deleting Element
+console.log(mySet);  // Output: Set(6) {1, 3, 4, 5, 6, 7}
+
+mySet.clear(); //Clearing Elements
+console.log(mySet);  // Output: Set { }
+
+mySet = new Set();
+mySet.add(1);
+mySet.add(2);
+mySet.add(3);
+mySet.add(4);
+console.log(mySet.size);  // Output: 4 (Size of Set collection)
+
+// Using forEach method
+mySet.forEach(item => {
+  console.log(item);  // Output: 1, 2, 3, 4(each on a new line)
+});
+
+console.log(mySet.values()) //SetIterator {1, 2, 3, 4}
+
+for(const i of mySet.entries()){
+  console.log(i)
+}
+
+obj = { name: 'Alice' };
+let weakMap = new WeakMap();
+
+weakMap.set(obj, 'Employee');
+
+console.log(weakMap.get(obj));  // Output: Employee
+
+obj = null;  // Now there are no references to the object
+
+// The object and its corresponding value will be garbage collected automatically
+
+let obj1 = { id: 1 };
+let obj2 = { id: 2 };
+let weakSet = new WeakSet();
+
+
+weakSet.add(obj1);
+weakSet.add(obj2);
+
+console.log(weakSet.has(obj1));  // Output: true
+
+obj1 = null;  // The object is no longer referenced
+
+// obj1 will be automatically removed from the WeakSet by the garbage collector
+
+

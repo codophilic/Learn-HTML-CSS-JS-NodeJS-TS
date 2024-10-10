@@ -1830,11 +1830,226 @@ console.log(firstName);      // Output: Alice
 console.log(secondUserAge);  // Output: 30
 ```
 
+#### Map
+
+- A Map is a collection of key-value pairs where both keys and values can be of any data type (objects, primitives, etc.). Unlike plain objects, Map maintains the insertion order of its elements and treats all keys as unique. It can we initialized by passing an array of key-pairs, so there will be multiple arrays for multiple key-pairs.
+
+```
+// Creating a map
+let myMap = new Map();
+
+// Or initializing with key-value pairs
+let initializedMap = new Map([
+  ['name', 'Alice'],
+  ['age', 25],
+  [{ city: 'NY' }, 'Object as key']
+]);
+console.log(initializedMap)
+```
+
+- On browser
+
+![alt text](image-43.png)
+
+- You can add or update a key-value pair in the map using the `.set()` method.
+
+```
+myMap.set('name', 'ABC');
+myMap.set('age', 24);
+myMap.set({ city: 'NY' }, 'New York');
+myMap.set("New Key","New Value")
+
+console.log(myMap);// Output: Map { 'name' => 'ABC', 'age' => 25, { city: 'NY' } => 'New York','New Key' => 'New Value' }
+```
+
+- On browser console
+
+![alt text](image-44.png)
+
+- Below are other operations which can be performed with Map
+
+```
+//Get value based on key name
+console.log(myMap.get('name'));  // Output: ABC
+console.log(myMap.get('age'));   // Output: 25
+//If the key does not exist, get() will return undefined.
+console.log(myMap.get('unknown'));  // Output: undefined
+
+//Checking for Key Existence
+console.log(myMap.has('name'));  // Output: true
+console.log(myMap.has('gender'));  // Output: false
+
+//Deleting Key
+myMap.delete('age');
+console.log(myMap);  // Output: Map { 'name' => 'ABC', { city: 'NY' } => 'New York', 'New Key' => 'New Value'}
+
+//Size of Collection
+console.log(myMap.size);  // Output: 3
+
+//Clear Collection
+myMap.clear();
+console.log(myMap);  // Output: Map {}
+
+myMap = new Map([
+  ['name', 'Alice'],
+  ['age', 25],
+  ['country', 'USA']
+]);
+//Iterating over Map
+myMap.forEach((value, key) => {
+  console.log(`${key}: ${value}`);
+});
+
+// Output:
+// name: Alice
+// age: 25
+// country: USA
+
+for(const [key,value] of myMap.entries()){
+  console.log(key,value)
+}
+
+//Output:
+// name Alice
+// age 25
+// country USA
+
+//Get Keys only
+for(const key of myMap.keys()){
+  console.log(key)
+}
+
+//Output:
+// name
+// age
+// country
+
+//Get Values only
+for(const values of myMap.values()){
+  console.log(values)
+}
+
+//Output:
+// Alice
+// 25
+// USA
+```
 
 
+#### Set
 
+- A Set is a collection of unique values, meaning it cannot contain duplicate elements. Sets are a part of the ES6 (ECMAScript 2015) standard, and they allow you to store any type of value (primitives or objects).
 
+```
+let mySet = new Set([1, 2, 3, 3, 4]);  // Duplicate '3' will be removed
+console.log(mySet);  // Output: Set(4) {1, 2, 3, 4}
+mySet.add(5) //Adding Element
+mySet.add(6) //Adding Element
+mySet.add(7) //Adding Element
+mySet.add(1) //Adding Element
+console.log(mySet) //Set(7) {1, 2, 3, 4, 5, 6, 7}
+```
 
+- We can check if a element exist or not in the set collection.
+
+```
+console.log(mySet.has(2));  // Output: true
+console.log(mySet.has(50));  // Output: false
+```
+
+- There are other operations which can be used with Set
+
+```
+mySet.delete(2); //Deleting Element
+console.log(mySet);  // Output: Set(6) {1, 3, 4, 5, 6, 7}
+
+mySet.clear(); //Clearing Elements
+console.log(mySet);  // Output: Set { }
+
+mySet = new Set();
+mySet.add(1);
+mySet.add(2);
+mySet.add(3);
+mySet.add(4);
+console.log(mySet.size);  // Output: 4 (Size of Set collection)
+
+// Using forEach method
+mySet.forEach(item => {
+  console.log(item);  // Output: 1, 2, 3 (each on a new line)
+});
+
+console.log(mySet.values()) //SetIterator {1, 2, 3, 4}
+```
+
+- Now consider below code
+
+```
+for(const i of mySet.entries()){
+  console.log(i)
+}
+```
+
+- On browser we can see an array with same elements
+
+![alt text](image-45.png)
+
+- Why so?  internally, **the Set API is designed to be consistent with Map and Array iterators**, which return key-value pairs in array. The Set data structure only stores values (not key-value pairs like Map). So, when you use `.entries()` on a Set, it returns the value twice in each array element ([value, value])
+- So, when iterating over the Set with `entries()`, you always get two identical values in each iteration because a Set does not have a separate key and value. Instead of `entries()` you can use `values()`
+
+### Map vs Object
+
+| **Feature/Aspect**    | **Map**                                                                                           | **Object**                                                                                                        |
+|-----------------------|---------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| **Key Types**         | Keys can be any data type (objects, functions, primitives).                                       | Keys are typically strings or symbols (although non-string keys are converted to strings).                        |
+| **Order of Elements** | Preserves the insertion order of key-value pairs.                                                 | Does not guarantee the order of keys (although ES6+ tries to maintain insertion order in some cases).             |
+| **Iteration**         | Direct methods (for...of, `.keys()`, `.values()`, `.entries()` for easy iteration).                     | Requires manual iteration using for...in (which may include prototype chain) or `Object.keys()`/`Object.values()`    |
+| **Performance**       | Map is optimized for frequent additions, deletions, and retrievals, especially with many entries. | Slower for adding/removing properties as the size of the object grows (especially if not purely dictionary-like). |
+
+### WeekSet and WeekMap
+
+- WeakMap and WeakSet are specialized versions of Map and Set, but they work with "weak" references to objects. This means that if the object used as a key in a WeakMap or as a value in a WeakSet is no longer referenced anywhere else, it can be garbage-collected (automatically removed from memory), which helps with memory management.
+- Example of WeakMap
+
+```
+let obj = { name: 'Alice' };
+let weakMap = new WeakMap();
+
+weakMap.set(obj, 'Employee');
+
+console.log(weakMap.get(obj));  // Output: Employee
+
+obj = null;  // Now there are no references to the object
+
+// The object and its corresponding value will be garbage collected automatically
+```
+
+- In this case, once `obj` is set to `null` (or no longer referenced), the entry in WeakMap is removed automatically by the garbage collector.
+- Like WeakMap, if the object added to the WeakSet is no longer referenced elsewhere in the program, it is automatically removed from the WeakSet.
+
+```
+let obj1 = { id: 1 };
+let obj2 = { id: 2 };
+let weakSet = new WeakSet();
+
+weakSet.add(obj1);
+weakSet.add(obj2);
+
+console.log(weakSet.has(obj1));  // Output: true
+
+obj1 = null;  // The object is no longer referenced
+
+// obj1 will be automatically removed from the WeakSet by the garbage collector
+```
+
+- WeakMap and WeakSet automatically remove entries if the object is no longer referenced.
+
+>[!NOTE]
+> - **You cannot iterate** over WeakMap or WeakSet (no `.forEach()`, `.keys()`, or `.entries()`).
+> - Unlike Map and Set, **they can only store objects (not strings or numbers)**.
+
+### Summary
+
+![alt text](image-46.png)
 
 
 
