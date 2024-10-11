@@ -1765,6 +1765,32 @@ console.log(ObjectSpreadArr3)
 ![alt text](image-42.png)
 
 - Here using `map()` method we are creating new object which will have new memory address, so changing an object's property in one array will won't affect other array.
+- Now consider below nested object code
+
+```
+let NestedSpreadObject={
+  name: "ABC",
+  hobbies:["Cycling","Dancing","Singing"],
+  age:24
+}
+
+//Copying Objects
+let NestedSpreadObject1=NestedSpreadObject
+
+// Changing the age value in first object
+NestedSpreadObject.age="42"
+
+console.log(NestedSpreadObject1.age) //42 (Since sharing the same memory references for the same object)
+
+let NestedSpreadObject2={...NestedSpreadObject}
+
+// Changing the age value in first object
+NestedSpreadObject.age="22"
+
+console.log(NestedSpreadObject2.age) //42 (Since a new object is created and copied the existing object details with new memory references)
+```
+
+-  When you're using the assignment operator (`=`) to attempt to copy an object, what **you're actually copying is the memory address, not the object itself.**
 
 ##### Arrays Destructing
 
