@@ -678,3 +678,16 @@ let PersonObject={
 }
 console.log(PersonObject)
 console.log(PersonObject[first_name]) //ABC
+
+let chainingObjects={
+  name:{
+    family_name:{
+      first_name: "ABC",
+      last_name: "XYZ"
+    }
+  }
+}
+
+//Chaining methods
+console.log(chainingObjects.name.family_name.first_name) //ABC
+
