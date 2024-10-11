@@ -2205,3 +2205,52 @@ console.log(PersonObject[first_name]) //ABC
 - This can be use full when you wanted to have a key based on user-defined input. It’s particularly useful when you don't know the property name ahead of time or when the key is generated dynamically, stored in a variable, or contains special characters.
 - Dot notation (`object.key`) is used when you know the exact key name and it is a valid identifier (without spaces, starting with a letter, etc.).
 - Bracket notation (`object[key]`) is useful when the key is dynamic (e.g., stored in a variable), or when it contains special characters or spaces.
+
+#### Chaining Property or Method Chaining
+
+- Method chaining is a technique where you combine individual methods in a single line of code to form a chain of actions. Each method in the chain performs a specific function, but when combined together, they create a powerful sequence of actions that can accomplish complex tasks with just one line of code.
+
+```
+let chainingObjects={
+  name:{
+    family_name:{
+      first_name: "ABC",
+      last_name: "XYZ"
+    }
+  }
+}
+
+//Chaining methods
+console.log(chainingObjects.name.family_name.first_name) //ABC
+```
+
+- Another example
+
+```
+// Method chaining with string.
+let myStr = ' - Hello-world. '
+
+// Without method chaining:
+myStr = myStr.toLowerCase()
+myStr = myStr.replace(/-/g, ' ')
+myStr = myStr.trim()
+
+// With method chaining:
+myStr = myStr.toLowerCase().replace(/-/g, ' ').trim()
+
+// Alternative with method chaining and multiple lines:
+myStr = myStr
+  .toLowerCase()
+  .replace(/-/g, ' ')
+  .trim()
+
+// Log the value of "myStr" variable.
+console.log(myStr)
+// Output:
+// 'hello world.'
+```
+
+- Method chaining help you write more readable code by eliminating unnecessary variables and reducing the amount of code you have to write. Instead of storing each step value into variables, it perform execution sequentially and stores the value into one variable, thus improve performance by reducing the memory needed to run a code since it reduces the number of times you need to access an object.
+
+
+
