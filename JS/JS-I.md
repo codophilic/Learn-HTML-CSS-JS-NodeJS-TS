@@ -1791,6 +1791,21 @@ console.log(NestedSpreadObject2.age) //42 (Since a new object is created and cop
 ```
 
 -  When you're using the assignment operator (`=`) to attempt to copy an object, what **you're actually copying is the memory address, not the object itself.**
+-  But when we change the nested object value, it affects other variables. Incase of nested object , for them, no new objects are created they still refer the same memory address.
+
+```
+NestedSpreadObject.hobbies.push("Acting")
+console.log(NestedSpreadObject2.hobbies) //[ 'Cycling', 'Dancing', 'Singing', 'Acting' ]
+```
+
+- In such case , to create a new array we can again use spread operator
+
+```
+let NestedSpreadObject3={...NestedSpreadObject,hobbies:[...NestedSpreadObject.hobbies]}
+NestedSpreadObject.hobbies.push("Playing")
+console.log(NestedSpreadObject.hobbies) //[ 'Cycling', 'Dancing', 'Singing', 'Acting', 'Playing' ]
+console.log(NestedSpreadObject3.hobbies) //[ 'Cycling', 'Dancing', 'Singing', 'Acting' ]
+```
 
 ##### Arrays Destructing
 
@@ -2277,6 +2292,7 @@ console.log(myStr)
 ```
 
 - Method chaining help you write more readable code by eliminating unnecessary variables and reducing the amount of code you have to write. Instead of storing each step value into variables, it perform execution sequentially and stores the value into one variable, thus improve performance by reducing the memory needed to run a code since it reduces the number of times you need to access an object.
+
 
 
 
