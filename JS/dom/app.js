@@ -711,3 +711,10 @@ let NestedSpreadObject2={...NestedSpreadObject}
 NestedSpreadObject.age="22"
 
 console.log(NestedSpreadObject2.age) //42 (Since a new object is created and copied the existing object details with new memory references)
+NestedSpreadObject.hobbies.push("Acting")
+console.log(NestedSpreadObject2.hobbies) //[ 'Cycling', 'Dancing', 'Singing', 'Acting' ]
+
+let NestedSpreadObject3={...NestedSpreadObject,hobbies:[...NestedSpreadObject.hobbies]}
+NestedSpreadObject.hobbies.push("Playing")
+console.log(NestedSpreadObject.hobbies) //[ 'Cycling', 'Dancing', 'Singing', 'Acting', 'Playing' ]
+console.log(NestedSpreadObject3.hobbies) //[ 'Cycling', 'Dancing', 'Singing', 'Acting' ]
