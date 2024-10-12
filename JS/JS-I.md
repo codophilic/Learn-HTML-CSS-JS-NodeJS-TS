@@ -2294,5 +2294,98 @@ console.log(myStr)
 - Method chaining help you write more readable code by eliminating unnecessary variables and reducing the amount of code you have to write. Instead of storing each step value into variables, it perform execution sequentially and stores the value into one variable, thus improve performance by reducing the memory needed to run a code since it reduces the number of times you need to access an object.
 
 
+#### Object Destructing
+
+- Similarly like we have Array destructing property of array, where we fetch values from the array into variable, object destructing fetches the keys from the object name.
+- Consider below code.
+
+```
+
+let objDes={
+  name: "ABC",
+  age: 20,
+  info:{
+    fname: "ABC",
+    lname: "XYZ"
+  }
+}
+
+const { name, age , ...remainingObjectDes} = objDes;
+console.log(name); //ABC
+console.log(age); //20
+console.log(remainingObjectDes) // info:  {fname: 'ABC', lname: 'XYZ'}
+```
+
+- Here we need to specify the **key** name. If you wanna store your key's value into a different variable you can do it like below
+
+```
+let objDes={
+  name: "ABC",
+  age: 20,
+  info:{
+    fname: "ABC",
+    lname: "XYZ"
+  }
+}
+
+const { name: objName, age: objAge} = objDes;
+console.log(objName); //ABC
+console.log(objAge); //20
+```
+
+- This is how we give **alias name to your destructured variables**. You can use destructing variables into loops
+
+```
+
+const usersList = [
+  { 
+      'name': 'Alex',
+      'address': '15th Park Avenue',
+      'age': 43
+  },
+  { 
+      'name': 'Bob',
+      'address': 'Canada',
+      'age': 53
+  },
+  { 
+      'name': 'Carl',
+      'address': 'Bangalore',
+      'age': 26
+  }
+];
+
+for(let { name, age } of usersList) {
+  console.log(`${name} is ${age} years old!`);
+}
+
+
+Output:
+Alex is 43 years old!
+Bob is 53 years old!
+Carl is 26 years old!
+```
+
+#### Checking Key in Object
+
+- To check if a specify key property exists or not in the object
+
+```
+let chkObj={
+  objectKey1: 1,
+  objectKey2: 2
+}
+
+if('objectKey1' in chkObj){
+  console.log("Property Exists") //Property Exists
+}
+
+if(chkObj.objectKey3 == undefined){
+  console.log("Property does not Exists") //Property does not Exists
+}
+```
+
+- If the property does not there and if you are trying to access it using the object name JS will give you `undefined`.
+
 
 

@@ -718,3 +718,66 @@ let NestedSpreadObject3={...NestedSpreadObject,hobbies:[...NestedSpreadObject.ho
 NestedSpreadObject.hobbies.push("Playing")
 console.log(NestedSpreadObject.hobbies) //[ 'Cycling', 'Dancing', 'Singing', 'Acting', 'Playing' ]
 console.log(NestedSpreadObject3.hobbies) //[ 'Cycling', 'Dancing', 'Singing', 'Acting' ]
+
+//Object Destructing
+let objDes={
+  name: "ABC",
+  age: 20,
+  info:{
+    fname: "ABC",
+    lname: "XYZ"
+  }
+}
+
+const { name, age , ...remainingObjectDes} = objDes;
+console.log(name); //ABC
+console.log(age); //20
+console.log(remainingObjectDes) // info:  {fname: 'ABC', lname: 'XYZ'}
+
+const { name: objName, age: objAge} = objDes;
+console.log(objName); //ABC
+console.log(objAge); //20
+
+const usersList = [
+  { 
+      'name': 'Alex',
+      'address': '15th Park Avenue',
+      'age': 43
+  },
+  { 
+      'name': 'Bob',
+      'address': 'Canada',
+      'age': 53
+  },
+  { 
+      'name': 'Carl',
+      'address': 'Bangalore',
+      'age': 26
+  }
+];
+
+for(let { name, age } of usersList) {
+  console.log(`${name} is ${age} years old!`);
+}
+
+/**
+ * Output:
+ * Alex is 43 years old!
+ * Bob is 53 years old!
+ * Carl is 26 years old!
+ */
+
+//Checking Key in Object
+
+let chkObj={
+  objectKey1: 1,
+  objectKey2: 2
+}
+
+if('objectKey1' in chkObj){
+  console.log("Property Exists") //Property Exists
+}
+
+if(chkObj.objectKey3 == undefined){
+  console.log("Property does not Exists") //Property does not Exists
+}
