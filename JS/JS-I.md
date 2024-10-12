@@ -2648,3 +2648,192 @@ console.log(personInfo.lastName);   // Output: Smith
 - The getter computes the `fullName` whenever it's accessed (without needing a separate `fullName` property). The setter allows updating both `firstName` and `lastName` by assigning a new value to `fullName`.
 - Getters are used for reading data. Setters are used for writing or modifying data. Getters and setters allow you to customize the behavior of object properties.
 - With the help of getters and setters you can define validation in the method, like specific authorities must have access or specific condition should be met before updating value.
+
+### What is OOP?
+
+- So when a car was introduce, a blueprint of a car was prepared, like what could be requirements to built a car? , this included color, Engine, cylinder and etc..
+- So imagine referring this blue print, there is a Ferrari car, so what could be its properties? color - red, Engine - 3902 cc, No. of cylinder - 4 and so on.. what could be his behavior? so the behaviors - Start engine, Accelerate, Brake, Turn, Park.
+- **Class**: Is the blueprint to built a car.
+- **Object**: Is Ferrari
+- **Properties**: Is Ferrari properties
+- **Method**: Is Ferrari behavior.
+- So OOP basically organize your code structure by defining a class which acts as a blueprint. It consists a set of properties (data) and methods (behaviors). It provides a general template for what an object can be and do.
+- To use the class, you create or instantiate an object. The object is a specific instance of the class, with its own customized properties using the properties of class (like a red Ferrari with a 3902 cc engine) and access to the methods defined in the class.
+
+![alt text](image-58.png)
+
+- OOP (Object-Oriented Programming) is a programming paradigm that organizes code by creating objects that represent real-world things, like cars, people. These objects have properties (attributes) and methods (behaviors or actions) that define what they are and what they can do.
+- Consider below code
+
+```
+// Define a Car class (the blueprint)
+class Car{
+
+
+  //Properties of Car Class
+  engine;
+  NumberOfCylinders=4; //Default 4 cylinder.
+  color;
+
+  //Methods of Car Class
+  // Method to display car details (behavior)
+  CarDefinition(){
+    console.log("Color - "+this.color+", Engine: "+this.engine+", Number Of Cylinders: "+this.NumberOfCylinders)
+  }
+
+  startEngine(){
+    console.log("Starting Engine") //Starting Engine
+  }
+
+  ApplyingBreaks(){
+    console.log("Applying Breaks")
+  }
+
+  Accelerating(){
+    console.log("Accelerating car")
+  }
+}
+
+// Create an instance (object) of the Car class
+const Ferrari = new Car();
+Ferrari.color="red"
+Ferrari.NumberOfCylinders=6
+Ferrari.engine="Super"
+Ferrari.CarDefinition()
+Ferrari.startEngine()
+Ferrari.Accelerating()
+Ferrari.ApplyingBreaks()
+```
+
+- On browser console
+
+![alt text](image-59.png)
+
+- If you see , the code looks readable. If you wanna create another instance of class or object you can similarly do it
+
+```
+const Lamborghini = new Car();
+Lamborghini.color="yellow"
+Lamborghini.NumberOfCylinders=5
+Lamborghini.engine="Super"
+```
+
+- If we don’t use OOP, we might end up with repetitive code and less organized structures. Without classes and objects, every car, person, or idea would need its own separate functions and properties, even if they’re very similar.
+
+```
+const FerrariColor = "red";
+const FerrariEngine = "Super";
+const FerrariNoOfCylinders = 6;
+
+const LamborghiniColor = "Yellow";
+const LamborghiniEngine = "Super";
+const LamborghiniNoOfCylinders = 5;
+
+function CarDefinition(Color, Engine, NoOfCylinders) {
+  return `${Color} ${Engine}, NoOfCylinders: ${NoOfCylinders}`;
+}
+
+console.log(CarDefinition(FerrariColor, FerrariEngine, FerrariNoOfCylinders));  //Output: red Super, NoOfCylinders: 6
+console.log(CarDefinition(LamborghiniColor, LamborghiniEngine, LamborghiniNoOfCylinders)); //Output: Yellow Super, NoOfCylinders: 5
+```
+
+- **Without OOP**:
+  - More Repetition: Every new car requires new variables for the color, Number of cylinder, and Engine. The code becomes more cluttered and harder to manage as more cars are added.
+  - Lack of Structure: There’s no clear relationship between cars and their details.
+
+
+#### Why Use OOP?
+
+- Reusability: You can reuse the class blueprint to create as many objects as you need, without repeating code.
+- Organization: Classes make your code more organized and easier to understand.
+- Modularity: You can add new functionality to a class without affecting other parts of the program.
+- Maintainability: If you need to change or update the logic for all car objects, you just update the class.
+
+
+### Constructor
+
+- A constructor is a special method in a class used to initialize objects when they are created. It sets up the initial values for the object's properties. The constructor is called automatically when you create a `new` instance of the class using the new keyword.
+
+```
+// Define a Car class (the blueprint)
+class Car{
+
+  //Properties of Car Class
+  engine;
+  NumberOfCylinders=4; //Default 4 cylinder.
+  color;
+
+  constructor(engine,NumberOfCylinders,color){
+    //this references the class Properties
+    this.engine=engine; 
+    this.NumberOfCylinders=NumberOfCylinders
+    this.color=color
+  }
+
+  //Methods of Car Class
+  // Method to display car details (behavior)
+  CarDefinition(){
+    console.log("Color - "+this.color+", Engine: "+this.engine+", Number Of Cylinders: "+this.NumberOfCylinders)
+  }
+
+  startEngine(){
+    console.log("Starting Engine") //Starting Engine
+  }
+
+  ApplyingBreaks(){
+    console.log("Applying Breaks")
+  }
+
+  Accelerating(){
+    console.log("Accelerating car")
+  }
+}
+
+// Create an instance (object) of the Car class
+const Ferrari = new Car("Super",6,"red");
+Ferrari.CarDefinition()
+Ferrari.startEngine()
+Ferrari.Accelerating()
+Ferrari.ApplyingBreaks()
+
+Output:
+Color - red, Engine: Super, Number Of Cylinders: 6
+Starting Engine
+Accelerating car
+Applying Breaks
+```
+
+- Using constructor we initialize all the require class properties rather then setting one by one which is done in the previous code. The keyword `this` inside the constructor refers to the new object being created, allowing you to assign properties to it.
+- When we add constructor the declaring **Property becomes optional**. The above `Car` class can be re-written as
+
+```
+// Define a Car class (the blueprint)
+class Car{
+
+  constructor(engine,NumberOfCylinders,color){
+    //this references the class Properties
+    this.engine=engine; 
+    this.NumberOfCylinders=NumberOfCylinders
+    this.color=color
+  }
+
+  //Methods of Car Class
+  // Method to display car details (behavior)
+  CarDefinition(){
+    console.log("Color - "+this.color+", Engine: "+this.engine+", Number Of Cylinders: "+this.NumberOfCylinders)
+  }
+
+  startEngine(){
+    console.log("Starting Engine") //Starting Engine
+  }
+
+  ApplyingBreaks(){
+    console.log("Applying Breaks")
+  }
+
+  Accelerating(){
+    console.log("Accelerating car")
+  }
+}
+```
+

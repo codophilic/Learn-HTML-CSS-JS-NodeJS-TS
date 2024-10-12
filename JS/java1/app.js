@@ -855,3 +855,44 @@ personInfo.fullName = "Jane Smith";
 console.log(personInfo.fullName);  // Output: Jane Smith
 console.log(personInfo.firstName);  // Output: Jane
 console.log(personInfo.lastName);   // Output: Smith
+
+// Define a Car class (the blueprint)
+class Car{
+
+  //Properties of Car Class
+  engine;
+  NumberOfCylinders=4; //Default 4 cylinder.
+  color;
+
+  constructor(engine,NumberOfCylinders,color){
+    //this references the class Properties
+    this.engine=engine; 
+    this.NumberOfCylinders=NumberOfCylinders
+    this.color=color
+  }
+
+  //Methods of Car Class
+  // Method to display car details (behavior)
+  CarDefinition(){
+    console.log("Color - "+this.color+", Engine: "+this.engine+", Number Of Cylinders: "+this.NumberOfCylinders)
+  }
+
+  startEngine(){
+    console.log("Starting Engine") //Starting Engine
+  }
+
+  ApplyingBreaks(){
+    console.log("Applying Breaks")
+  }
+
+  Accelerating(){
+    console.log("Accelerating car")
+  }
+}
+
+// Create an instance (object) of the Car class
+const Ferrari = new Car("Super",6,"red");
+Ferrari.CarDefinition()
+Ferrari.startEngine()
+Ferrari.Accelerating()
+Ferrari.ApplyingBreaks()
