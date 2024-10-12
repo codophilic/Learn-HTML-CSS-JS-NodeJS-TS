@@ -781,3 +781,77 @@ if('objectKey1' in chkObj){
 if(chkObj.objectKey3 == undefined){
   console.log("Property does not Exists") //Property does not Exists
 }
+
+// "use strict";
+
+// function show(){
+//   console.log(this)
+// }
+
+// show(); //undefined
+
+const person = {
+  name: 'Alice',
+  greet() {
+      console.log('Hello, ' + this.name);
+  }
+};
+person.greet(); // Hello, Alice
+
+const {greet} = person
+let {greet:newGreet} = person
+newGreet= newGreet.bind(person)
+newGreet(); // Hello, Alice
+greet(); // Hello, 
+
+greet.call(person); // Hello, Alice
+greet.apply(person); //Hello, Alice
+
+const ButtonHandler=document.getElementById("myButton");
+
+/**
+ * Trigger function when clicked on Button
+ */
+ButtonHandler.addEventListener("click",()=>{
+  console.log(this)
+})
+
+const outerObject = {
+  name: "outer",
+  logThis() {
+    document.getElementById("myButton").addEventListener("click", () => {
+      console.log(this);  // Refers to 'outerObject', not the button element
+    });
+  }
+};
+
+outerObject.logThis();
+
+//getters and setters
+const personInfo = {
+  firstName: "John",
+  lastName: "Doe",
+  
+  // Getter to retrieve full name
+  get fullName() {
+    return this.firstName + " " + this.lastName;
+  },
+  
+  // Setter to update first and last name together
+  set fullName(name) {
+    const parts = name.split(" ");
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  }
+};
+
+// Accessing fullName using the getter
+console.log(personInfo.fullName);  // Output: John Doe
+
+// Updating fullName using the setter
+personInfo.fullName = "Jane Smith";
+
+// Accessing updated fullName
+console.log(personInfo.fullName);  // Output: Jane Smith
+console.log(personInfo.firstName);  // Output: Jane
+console.log(personInfo.lastName);   // Output: Smith

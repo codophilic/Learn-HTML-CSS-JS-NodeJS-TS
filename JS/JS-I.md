@@ -2387,5 +2387,264 @@ if(chkObj.objectKey3 == undefined){
 
 - If the property does not there and if you are trying to access it using the object name JS will give you `undefined`.
 
+#### this 
+
+- The `this` keyword in JavaScript refers to the object it belongs to. It has different values depending on where and how it is used.
+
+##### In Global context
+
+- When used in the global context, outside of any function or object, this refers to the global object. 
+
+```
+console.log(this)
+```
+
+- On browser console
+
+![alt text](image-53.png)
+
+- Here when we print `this` in console, it refers to the global `window` object.
+
+##### In a Function Context in Non-Strict Mode
+
+- In a regular function, this refers to the global object (window in a browser).
+
+```
+function show() {
+    console.log(this);
+}
+show();
+```
+
+![alt text](image-54.png)
+
+##### In a Function Context Using Strict Mode
+
+- When we apply, strict mode using `use strict`, `this` keyword will be undefined.
+
+```
+"use strict";
+
+function show(){
+  console.log(this)
+}
+
+show(); //undefined
+```
+
+##### In Method Context
+
+- When a function is part of an object, we call it a method. In methods, `this` refers to the object the method is called on.
+
+```
+const person = {
+    name: 'Alice',
+    greet: function() {
+        console.log('Hello, ' + this.name);
+    }
+};
+person.greet(); // Hello, Alice
+```
+
+- `person` is an object which is calling function `greet()`, so `this` refers `person`. So just like when we access object key `person.name`, inside the `greet` function we access it using `this.name`.
+- The above function can be re-written as short hand by removing `function()` like below
+
+```
+const person = {
+    name: 'Alice',
+    greet() {
+        console.log('Hello, ' + this.name);
+    }
+};
+person.greet(); // Hello, Alice
+```
+
+- Now consider below code, here we are using object destructing
+
+```
+const person = {
+  name: 'Alice',
+  greet() {
+      console.log('Hello, ' + this.name);
+  }
+};
+person.greet(); // Hello, Alice
+const {greet} = person
+greet(); // Hello,
+```
+
+- Earlier `person` was the object because it was getting referred, now before the `greet()` function there is no reference (`undefined`) thats why , `this.name` is empty.
+- Here the `person` is not used.
+
+```
+const person = {
+  name: 'Alice',
+  greet() {
+      console.log('Hello, ' + this.name);
+  }
+};
+
+let {greet:newGreet} = person
+newGreet= newGreet.bind(person)
+newGreet(); // Hello, Alice
+greet(); // Hello,
+```
+
+- Here we have `bind` the object with the method, so whenever the method is called in future, the `person` object is associated it with or pre-configured with it.
 
 
+##### call and apply
+
+- The above code can be reduce using `call()` or `apply()`. `bind()` prepare the function with values for future execution whereas `call()` or `apply()` executes the function immediately with given value.
+
+```
+const person = {
+  name: 'Alice',
+  greet() {
+      console.log('Hello, ' + this.name);
+  }
+};
+
+greet.call(person); // Hello, Alice
+greet.apply(person); //Hello, Alice
+```
+
+- The difference between `call()` and `apply()` lies in how arguments are passed to the function.
+  - `call(thisArg, arg1, arg2, ...)`: You pass arguments individually.
+  - `apply(thisArg, [argArray])`: You pass arguments as an array.
+- See the below example
+
+```
+function introduce(greeting, punctuation) {
+  console.log(greeting + ", I am " + this.name + punctuation);
+}
+
+const person1 = { name: "Alice" };
+const person2 = { name: "Bob" };
+
+// Using call (pass arguments separately)
+introduce.call(person1, "Hello", "!");  // Output: Hello, I am Alice!
+introduce.call(person2, "Hi", ".");     // Output: Hi, I am Bob.
+
+// Using apply (pass arguments as an array)
+introduce.apply(person1, ["Hello", "!"]);  // Output: Hello, I am Alice!
+introduce.apply(person2, ["Hi", "."]);     // Output: Hi, I am Bob.
+```
+
+##### In Event Handler
+
+- Consider below HTML and JS code
+
+```
+HTML Code Snip
+  <button id="myButton">Click Me</button>
+
+
+JS Code
+const ButtonHandler=document.getElementById("myButton");
+
+/**
+ * Trigger function when clicked on Button
+ */
+ButtonHandler.addEventListener("click",function(){
+  console.log(this)
+})
+```
+
+- On browser console
+
+![alt text](image-55.png)
+
+- When you use a regular function as an event handler, `this` refers to the HTML element that received the event. When the button is clicked, `this` inside the regular function refers to the button element because that's where the event occurred.
+
+##### In Arrow Function
+
+- Consider the same above code for HTML and JS, instead of using regular function we will use arrow function
+
+```
+HTML Code Snip
+  <button id="myButton">Click Me</button>
+
+
+JS Code
+const ButtonHandler=document.getElementById("myButton");
+
+/**
+ * Trigger function when clicked on Button
+ */
+ButtonHandler.addEventListener("click",()=>{
+  console.log(this)
+})
+```
+
+- On click, the browser console gives **window** object and not the button element
+
+![alt text](image-56.png)
+
+- Why so? **Arrow functions do not create their own `this` context**. **Instead, they inherit this from the surrounding scope where they are defined**.
+- Every regular function created with the `function` keyword has its own `this` binding, so in the end it ensures that `this` inside of that function is bound to something, it's bound to whatever is responsible for executing the function. Now arrow functions don't bind `this` to anything.
+- The arrow function inside `addEventListener` does not have its own `this`. It inherits `this` from the surrounding scope, which is the global scope (in a browser, that's the `Window` object).
+- Consider below code
+
+```
+const outerObject = {
+  name: "outer",
+  logThis() {
+    document.getElementById("myButton").addEventListener("click", () => {
+      console.log(this);  // Refers to 'outerObject', not the button element
+    });
+  }
+};
+```
+
+- On browser console we get
+
+![alt text](image-57.png)
+
+- In this code, the arrow function is written inside `logThis`. Therefore, `this` inside the arrow function refers to whatever `this` was when `logThis` was called. In `logThis`, this refers to `outerObject`, because that's the object that called the method (`outerObject.logThis()`).
+- When the arrow function is triggered by clicking the button, it doesn't change `this` to the button element (as it would with a regular function). Instead, it sticks to what `this` was in the outer scope (which is `outerObject`).
+- Since `logThis` is called by `outerObject.logThis()`, the value of `this` is `outerObject`.
+-  The normal functions have their scope bound by default to the global one. The arrow functions, on the other hand, do not have their own `this` but instead inherit it from the parent scope. As a result, rather than binding their own `this`, the arrow functions inherit the `this` from the parent scope. **This process is called lexical scoping.**
+
+>[!TIP]
+> - Since `this` has multiple behaviors , to identify what does `this` is referencing we can do `console.log(this)`.
+
+#### Getters and Setters
+
+- Getters and setters in JavaScript are special methods that allow you to access and modify the properties of an object in a controlled way. They are part of object-oriented programming and help you define how object properties are accessed or updated without directly manipulating them.
+  - Getters: Used to access (or `get`) the value of a property.
+  - Setters: Used to modify (or `set`) the value of a property.
+
+```
+const personInfo = {
+  firstName: "John",
+  lastName: "Doe",
+  
+  // Getter to retrieve full name
+  get fullName() {
+    return this.firstName + " " + this.lastName;
+  },
+  
+  // Setter to update first and last name together
+  set fullName(name) {
+    const parts = name.split(" ");
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  }
+};
+
+// Accessing fullName using the getter
+console.log(personInfo.fullName);  // Output: John Doe
+
+// Updating fullName using the setter
+personInfo.fullName = "Jane Smith";
+
+// Accessing updated fullName
+console.log(personInfo.fullName);  // Output: Jane Smith
+console.log(personInfo.firstName);  // Output: Jane
+console.log(personInfo.lastName);   // Output: Smith
+```
+
+- The getter computes the `fullName` whenever it's accessed (without needing a separate `fullName` property). The setter allows updating both `firstName` and `lastName` by assigning a new value to `fullName`.
+- Getters are used for reading data. Setters are used for writing or modifying data. Getters and setters allow you to customize the behavior of object properties.
+- With the help of getters and setters you can define validation in the method, like specific authorities must have access or specific condition should be met before updating value.
