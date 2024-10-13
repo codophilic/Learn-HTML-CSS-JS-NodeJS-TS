@@ -3003,3 +3003,453 @@ Objects Up till now created - 0
 
 ![alt text](image-61.png)
 
+### Inheritance
+
+- Inheritance is a mechanism that allows one class to inherit properties and methods from another class creating a parent-child class relationship.
+
+```
+// Parent class: Animal
+class Animal {
+
+  // Instance method available to all animals
+  walk() {
+      console.log(`Animal walks`);
+  }
+}
+
+// Child class: Dog
+class Dog extends Animal {
+
+  // Override the parent method
+  bark() {
+      console.log(`Dog barks.`);
+  }
+}
+
+// Example usage:
+const animal = new Animal();
+animal.walk(); // Output: Animal Walks
+
+const myDog = new Dog();
+myDog.bark(); // Output: Dog barks.
+myDog.walk(); // Output: Animal Walks
+```
+
+- Here the class `Dog` inherits all the properties and methods of class `Animal`. Thats why **if we create object of child class (`Dog`) we can access methods of parent class (`Animal`) using child class object**. To inherit the property the child class must use the **extends** keyword followed by parent class name.
+- Inheritance allows you to create a new class that is based on an existing class. The new class (child) inherits properties and methods from the parent class, but can also have its own unique properties and methods.
+- **Multiple inheritance (inheriting from more than one class or parent) is not directly supported. A class can only extend one parent class using the `extends` keyword**. 
+- We can access static property and methods of **parent class** using **child class name**.
+
+```
+// Parent class: Animal
+class Animal {
+
+  static life=true;
+
+  // Instance method available to all animals
+  walk() {
+      console.log(`Animal walks`);
+  }
+
+  static lives(){
+    console.log("Animal is alive");
+  }
+}
+
+// Child class: Dog
+class Dog extends Animal {
+
+  // Override the parent method
+  bark() {
+      console.log(`Dog barks.`);
+  }
+}
+
+console.log(Dog.life); //Output: True
+console.log(Dog.lives()) //Output: Animal is alive"
+```
+
+### Super 
+
+- The `super()` keyword (or method) is used in class inheritance to call methods or constructors of the parent class. When a class extends another class (inheritance), `super()`allows you to access and use the properties and methods of the parent class within the child class.
+- Calling parent constructor
+
+```
+// Parent class
+class Animal {
+    constructor(name) {
+        this.name = name; // Instance property for the Animal class
+    }
+
+    // Method of the parent class
+    speak() {
+        console.log(`${this.name} makes a sound.`);
+    }
+}
+
+// Child class (Dog) that extends Animal
+class Dog extends Animal {
+    constructor(name, breed) {
+        // Call the parent class (Animal) constructor with super()
+        super(name); // 'name' is passed to Animal's constructor
+        this.breed = breed; // Additional property specific to Dog
+    }
+
+    // Override the speak method, but call parent method using super
+    speak() {
+        super.speak(); // Call the parent's speak method
+        console.log(`${this.name} barks.`);
+    }
+}
+
+// Example usage
+const myDog = new Dog("Dog", "Golden Retriever");
+myDog.speak(); 
+
+Output: 
+Dog makes a sound.
+Dog barks.
+```
+
+- We use `super(name)` to call the constructor of the parent class (`Animal`), so **`this.name` is properly initialized in the parent class**. Without calling `super(name)`, the child class wouldn’t be able to initialize the properties of the parent class (`this.name` in parent class).
+- Now since the name got initialize in parent class, when we call the method of parent class `super.speak();` , we get the output `Dog makes a sound`.
+- `super()` can only be used in classes that extend another class. You cannot use `super()` in a class that doesn't have a parent.
+- Another example
+
+```
+class Parent {
+    constructor() {
+        console.log("Parent constructor");
+    }
+}
+
+class Child extends Parent {
+    constructor() {
+        // Must call super() before using 'this' in the child constructor
+        super();
+        console.log("Child constructor");
+    }
+}
+
+const obj = new Child(); 
+
+Output: 
+Parent constructor
+Child constructor
+```
+
+- If we can access methods of parent class using `super.methodName()`, similarly we can access parent class property right like `super.propertyName`? No, you need to refer `this.propertyName` of your parent class
+
+```
+// Parent class: Animal
+class Animal {
+    constructor(name) {
+        this.name = name; // Property of the parent class
+    }
+
+    // Method of the parent class
+    speak() {
+        console.log(`${this.name} makes a sound.`);
+    }
+}
+
+// Child class: Dog
+class Dog extends Animal {
+    constructor(name, breed) {
+        // Call the parent class constructor
+        super(name); // Passes 'name' to the Animal constructor
+        this.breed = breed; // Additional property specific to Dog
+    }
+
+    // Accessing the parent class property using 'super'
+    showDetails() {
+        console.log(`Dog's name is ${super.name} and breed is ${this.breed}.`);
+    }
+}
+
+// Create an instance of Dog
+const myDog = new Dog("Buddy", "Golden Retriever");
+
+myDog.showDetails(); 
+
+Output:
+Dog's name is undefined and breed is Golden Retriever.
+```
+
+- Consider below JS code
+
+```
+class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+class Dog extends Animal {
+    constructor(name, breed) {
+        // Trying to use 'this' before calling super() will cause an error
+        this.breed = breed; // ❌ This will throw a ReferenceError!
+        super(name); // This should be called first to initialize the parent class
+    }
+}
+
+const myDog = new Dog("Buddy", "Golden Retriever"); // ReferenceError
+
+Output:
+ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor
+```
+
+- Why so `super()` must be called before `this`? 
+  - The `super()` function is used to call the parent class's constructor, which initializes the parent class's properties.
+  - Only after calling `super()` does the `this` keyword become available and can be used to set up properties specific to the child class.
+  - This is required because `this` refers to the current instance, and that **instance is not fully constructed until the parent class's constructor has been called**
+
+
+### Method Overriding
+
+- Method overriding in JavaScript occurs when a child class (subclass) defines a method with the same name as a method in its parent class (superclass). The method in the child class overrides or replaces the method from the parent class.
+
+```
+// Parent class: Animal
+class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+
+    // Method in the parent class
+    speak() {
+        console.log(`${this.name} makes a sound.`);
+    }
+}
+
+// Child class: Dog
+class Dog extends Animal {
+    constructor(name, breed) {
+        super(name); // Call parent constructor to initialize 'name'
+        this.breed = breed;
+    }
+
+    // Overriding the parent class's speak method
+    speak() {
+        console.log(`${this.name} barks.`);
+    }
+}
+
+// Example usage:
+const myAnimal = new Animal("Some Animal");
+myAnimal.speak(); 
+
+const myDog = new Dog("Buddy", "Golden Retriever");
+myDog.speak();    //Dog Speak methods override the Animal Speak method
+
+Output:
+Some Animal makes a sound.
+Buddy barks.
+```
+
+### Method Overloading (Not Supported)
+
+- **In JavaScript method overloading is not supported**. Why so? in a language like java, for instance, the compiler will check the number and types of parameters passed to a function and match it with the function signature. In JavaScript however, type checking of parameters doesn't happen at compile time. In fact, the parameters won't be type checked even at run time unless they are actually used, and even then the type checking is extremely relaxed.
+- JavaScript intended to be used **only for adding some minimal interactivity to a page**, instead of the large complex apps we write with it today. 
+- You can have some work rounds like using **rest operator** or like below
+
+```
+class Calculator {
+    // Method with dynamic behavior based on arguments
+    calculate(a, b, operation) {
+        // Check if only two arguments are passed (overloaded method 1)
+        if (arguments.length === 2) {
+            return a + b; // Default to adding the two numbers
+        }
+
+        // If three arguments are passed (overloaded method 2)
+        if (arguments.length === 3 && operation === "multiply") {
+            return a * b; // Perform multiplication
+        }
+
+        // Handle unknown operations or cases
+        return "Invalid operation or number of arguments!";
+    }
+}
+
+// Example usage:
+const calc = new Calculator();
+
+// Calling calculate method with 2 arguments (addition)
+console.log(calc.calculate(3, 4)); // Output: 7 (3 + 4)
+
+// Calling calculate method with 3 arguments (multiplication)
+console.log(calc.calculate(3, 4, "multiply")); // Output: 12 (3 * 4)
+
+// Invalid case (unknown operation)
+console.log(calc.calculate(3, 4, "subtract")); // Output: Invalid operation or number of arguments!
+```
+
+
+### Private Property and Methods
+
+- Up till now we have worked with public property and methods which were accessible outside the class.
+- Private properties and methods in a class are those that cannot be accessed or modified from outside the class. In JavaScript, you can declare private properties and methods in classes using the `#` (hash) symbol as a prefix.
+
+```
+class Person {
+    // Private property
+    #age = 30;
+
+    constructor(name) {
+        this.name = name; // Public property
+    }
+
+    // Private method
+    #getAge() {
+        return this.#age;
+    }
+
+    // Public method that uses the private method
+    introduce() {
+        console.log(`Hi, my name is ${this.name} and I am ${this.#getAge()} years old.`);
+    }
+}
+
+// Create an instance of Person
+const person = new Person("John");
+
+person.introduce(); // Output: Hi, my name is John and I am 30 years old.
+
+// Trying to access private properties or methods directly (this will cause an error)
+console.log(person.#age);    // ❌ SyntaxError: Private field '#age' must be declared in an enclosing class
+person.#getAge();            // ❌ SyntaxError: Private field '#getAge' must be declared in an enclosing class
+```
+
+
+- Private properties and methods are not accessible outside the class. Child classes cannot directly access private properties or methods of the parent class. **Private members help with encapsulation**, ensuring that certain parts of the class are hidden and not modified directly.
+- Encapsulation ensures that certain functionality remains hidden, even from child classes, preserving the internal workings of the parent class.
+
+>[!NOTE]
+> - Private property and methods must be declare within a class, declaring any variable or function as private will give error (`Private field '#privateVar' must be declared in an enclosing class`)
+
+### Pseudo-Private Property and Methods
+
+- Pseudo-private properties and method in JavaScript are same private properties and methods but it does not follow strict enforcement of access. Pseudo-private property and method are false private and can be accessible within the class, outside the class even in child class.
+- Pseudo-private properties are typically indicated by prefixing the property name with an underscore (`_`).
+
+```
+class Person {
+    constructor(name, age) {
+        this.name = name; // Public property
+        this._age = age;  // Pseudo-private property
+    }
+
+    // Method to access the pseudo-private property
+    getAge() {
+        return this._age;
+    }
+
+    // Method to update the pseudo-private property
+    setAge(newAge) {
+        this._age = newAge;
+    }
+
+    _display(){
+        console.log("Display")
+    }
+}
+
+// Example usage
+const john = new Person("John Doe", 30);
+
+console.log(john.name);  // Output: John Doe
+console.log(john._age);   // Output: 30 (but should be avoided!)
+
+john.setAge(31);          // Update the age
+console.log(john.getAge()); // Output: 31
+
+john._display() //Display
+```
+
+- Then whats the use of it? when we have private and public? it's just a convention that should signal something! It does NOT technically prevent access. To make developer discipline while accessing property or method making them alert that it is a private. Pseudo-private properties use a naming convention (like prefixing with `_`) to indicate that a property is intended to be private, but this is not enforced by the language.
+- Pseudo-privates are useful in scenarios where you want to signal to other developers that a property should be treated as private, while still allowing flexibility for direct access if necessary.
+
+### instanceof
+
+- The `instanceof` operator in JavaScript is used to check whether an object is an instance of a particular class. It returns a boolean value (`true` or `false`), indicating whether the object is an instance of the specified type.
+
+```
+// Define a class
+class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+// Create an instance of Animal
+const dog = new Animal("Buddy");
+
+// Check if 'dog' is an instance of Animal
+console.log(dog instanceof Animal); // Output: true
+
+// Check if 'dog' is an instance of Object
+console.log(dog instanceof Object); // Output: true (Every thing is Object in JS)
+
+// Check against an unrelated class
+class Cat {}
+
+const kitty = new Cat();
+console.log(kitty instanceof Animal); // Output: false
+```
+
+### Object or Property Descriptor 
+
+- In JavaScript, object descriptors (or property descriptors) provide a way to describe the characteristics of an object’s properties. They define how the properties behave, including their configurability, enumerability, writability, and value.
+- On browser console we have create a simple object variable.
+
+<video controls src="2024-2.mp4" title="title"></video>
+
+- When we use `getOwnPropertyDescriptors()` we get the descriptors for a particular object. JavaScript uses object descriptors automatically when you create properties on objects, and they determine how those properties behave.
+- When you create an object in JavaScript, each property of that object has a set of characteristics defined by an object descriptor. These characteristics include:
+  - **Value**: The actual value stored in the property.
+  - **Writable**: Determines whether the property’s value can be updated.
+  - **Enumerable**: Determines whether the property will show up in loops (like `for...in`).
+  - **Configurable**: Determines whether the property descriptor can be changed or the property can be deleted.
+- Except for the value, default all other descriptor have `true` value. Lets say you wanna ensure that your property must not be edited by other developer , you can make `Writable=false`.
+
+```
+const obj = {};
+Object.defineProperty(obj, 'key', {
+    value: 42,
+    writable: false // Making it non-writable
+});
+obj.key = 100; // Fails silently (or throws an error in strict mode)
+console.log(obj.key); // Output: 42
+```
+
+- If `enumerable` is `true`, the property will show up in loops, like `for...in`. If `false`, it won't.
+
+```
+const obj = {
+    name: "ABC"
+};
+Object.defineProperty(obj, 'key', {
+    value: 42,
+    enumerable: false // Making it non-enumerable
+});
+console.log(obj); // Output: { name: 'ABC' }
+for (let prop in obj) {
+    console.log(prop); // name, because 'key' is non-enumerable
+}
+```
+
+- If `configurable` is `true`, you can delete the property or change its descriptor. If `false`, you cannot change the property descriptor or delete it.
+
+```
+const obj = {};
+Object.defineProperty(obj, 'key', {
+    value: 42,
+    configurable: false // Making it non-configurable
+});
+delete obj.key; // Fails silently (or throws an error in strict mode)
+console.log(obj.key); // Output: 42
+```
+
+- Object descriptors allow you to control how properties behave, providing better encapsulation and abstraction. You can hide internal details and expose only necessary interfaces to users of the object. You can prevent changes to properties that should remain constant, like constants or configuration settings. Each property can have characteristics like `value`, `writable`, `enumerable`, and `configurable`, which you can set manually using `Object.defineProperty()` to control the property's behavior
+

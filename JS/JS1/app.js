@@ -967,3 +967,180 @@ const Cob2= new CountOfObjects("Cob2");
 Cob1.display("Message Given From Object 2")
 // Both objects access the static property via the class
 console.log("Objects Up till now created - "+CountOfObjects.objectsGotCreated); // Accesses the static property with class name
+
+
+// Parent class: Animal
+class Animal {
+
+  static life=true;
+
+  // Instance method available to all animals
+  walk() {
+      console.log(`Animal walks`);
+  }
+
+  static lives(){
+    console.log("Animal is alive");
+  }
+}
+
+// Child class: Dog
+class Dog extends Animal {
+
+  // Override the parent method
+  bark() {
+      console.log(`Dog barks.`);
+  }
+}
+
+// Example usage:
+const animal = new Animal();
+animal.walk(); // Output: Animal Walks
+
+const myDog = new Dog();
+myDog.bark(); // Output: Dog barks.
+myDog.walk(); // Output: Animal Walks
+console.log(Dog.life); //True
+console.log(Dog.lives()) //Animal is alive"
+
+class Animal1 {
+  #species = "Mammal"; // Private property
+
+  constructor(name) {
+      this.name = name; // Public property
+  }
+
+  // Private method
+  #getSpecies() {
+      return this.#species;
+  }
+
+  // Public method that uses the private method
+  introduce() {
+      console.log(`Hi, my name is ${this.name}, and I am a ${this.#getSpecies()}.`);
+  }
+}
+
+// Child class: Dog
+class Dog1 extends Animal1 {
+  constructor(name, breed) {
+      super(name);
+      this.breed = breed;
+  }
+
+  // Child class method
+  showDetails() {
+      console.log(`${this.name} is a ${this.breed}.`);
+
+      // Trying to access the private method or property of the parent class
+      // console.log(this.#getSpecies()); // ❌ SyntaxError: Private field '#getSpecies' must be declared in an enclosing class
+  }
+}
+
+// Create an instance of Dog
+const myDog1 = new Dog1("Buddy", "Golden Retriever");
+
+myDog1.introduce();   // Output: Hi, my name is Buddy, and I am a Mammal.
+myDog1.showDetails(); // Output: Buddy is a Golden Retriever.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
