@@ -2837,3 +2837,60 @@ class Car{
 }
 ```
 
+### Connecting Multiple Classes 
+
+- Lets create a `Person` class.
+
+```
+// First Class: Person
+class Person {
+  constructor(name, age) {
+      this.name = name; // 'this' refers to the current instance of Person being created
+      this.age = age;
+  }
+
+  greet() {
+      // 'this' here refers to the current instance of Person calling this method
+      console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+  }
+}
+```
+
+- The `Person` class has properties `name` and `age`, which are set using the `this` keyword. Here, `this` refers to the specific instance of `Person` being created.
+
+```
+// Example Usage:
+// Create a person instance
+const john = new Person("John Doe", 30);
+```
+
+- So here `john` becomes the `this`. The `this` keyword inside the Person class refers to the instance that is being created, which in this case is the object stored in the `john` variable. 
+- A `new` instance of `Person` is created, and the `constructor` is called with the arguments `John Doe` and `30`. Inside the `constructor`, `this` refers to the instance that is being created (which is the object `john`). So, `this.name = name` sets `john.name` to `John Doe`, and `this.age = age` sets `john.age` to `30`.
+- Each `Person` can have multiple Teachers, so lets create a class of `Teacher`.
+
+```
+// Second Class: Teacher (uses a Person object)
+class Teacher {
+  constructor(person, subject) {
+      this.person = person; // 'this' refers to the current instance of Teacher being created
+      this.subject = subject;
+  }
+
+  introductionOfTeacher() {
+      console.log(`I teach ${this.subject}.`); // 'this' refers to the current Teacher object
+      const PersonBtn=document.getElementById("personIntroduce");
+      PersonBtn.addEventListener("click",this.person.greet)
+  }
+}
+
+// Example Usage:
+// Create a person instance
+const john = new Person("John Doe", 30);
+
+// Create a teacher instance, passing the person instance to the constructor
+const mathTeacher = new Teacher(john, "Math");
+mathTeacher.introductionOfTeacher()
+```
+
+- The `Teacher` class has a `person` property, which holds a reference to an instance of `Person` which are created. So here we have one instance `john`. The another property is `subject`.
+- Here, when the method `introductionOfTeacher()` teacher introduces herself, now there is an HTML button when click then only person introduces itself.
