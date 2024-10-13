@@ -920,7 +920,7 @@ class Teacher {
   introductionOfTeacher() {
       console.log(`I teach ${this.subject}.`); // 'this' refers to the current Teacher object
       const PersonBtn=document.getElementById("personIntroduction");
-      PersonBtn.addEventListener("click",this.person.greet)
+      PersonBtn.addEventListener("click",this.person.greet.bind(this.person))
   }
 }
 
@@ -933,3 +933,37 @@ const john = new Person("John Doe", 30);
 const mathTeacher = new Teacher(john, "Math");
 mathTeacher.introductionOfTeacher()
 
+
+class CountOfObjects{
+ 
+  //Static Property
+  static objectsGotCreated=0;
+
+  //Instance Property
+  name;
+  constructor(name){
+    this.name=name; // 'this' refers to the specific instance of Object name being created
+    CountOfObjects.objectsGotCreated+=1;  // Accessing the static property using Class name (CountOfObjects) to track how many Object have been created
+  }
+
+  //Static method
+  static classDisplay(){
+    console.log("A Common Static Method") // Accesses the static property
+  }
+
+  //Instance method
+  display(msg){
+    console.log(`A Object (${this.name}) method displaying - ${msg}`); // Works on individual name of instances
+  }
+};
+
+CountOfObjects.classDisplay();
+console.log("Objects Up till now created - "+CountOfObjects.objectsGotCreated); 
+
+const Cob1= new CountOfObjects("Cob1");
+Cob1.display("Message Given From Object 1")
+CountOfObjects.classDisplay(); // Accesses the static method with class name
+const Cob2= new CountOfObjects("Cob2");
+Cob1.display("Message Given From Object 2")
+// Both objects access the static property via the class
+console.log("Objects Up till now created - "+CountOfObjects.objectsGotCreated); // Accesses the static property with class name

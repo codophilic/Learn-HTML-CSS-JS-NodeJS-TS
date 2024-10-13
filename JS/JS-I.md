@@ -2893,4 +2893,113 @@ mathTeacher.introductionOfTeacher()
 ```
 
 - The `Teacher` class has a `person` property, which holds a reference to an instance of `Person` which are created. So here we have one instance `john`. The another property is `subject`.
+- The `Teacher` class uses an instance of the `Person` class thus `Teacher` class and `Person` class are connected.
 - Here, when the method `introductionOfTeacher()` teacher introduces herself, now there is an HTML button when click then only person introduces itself.
+
+
+<video controls src="2024-1.mp4" title="title"></video>
+
+- If you see, when we clicked on `Introduce Person` button, we did not details of `john` why so? when an event handler (like `addEventListener`) is triggered, the `this` context inside the handler refers **to the element that triggered the event** (in this case, `PersonBtn`). To ensure that the `greet()` method refers to the `person` object you **need to bind `this.person` explicitly** using `.bind(this.person)`.
+- Updated `introductionOfTeacher()` method
+
+```
+  introductionOfTeacher() {
+      console.log(`I teach ${this.subject}.`); // 'this' refers to the current Teacher object
+      const PersonBtn=document.getElementById("personIntroduction");
+      PersonBtn.addEventListener("click",this.person.greet.bind(this.person))
+  }
+```
+
+- Now when we click on button `Introduce Person` we get the `person` details.
+
+![alt text](image-60.png)
+
+### Static Properties and Method
+
+- Up till now all the Properties and Methods we saw were instance properties and method. These are dedicate to objects which are create using `new` keyword.
+- Static properties, fields, and methods are associated with a class itself, not with instances of the class. This means you can access static members without creating an object (or instance) of the class.
+- Lets see an example
+
+```
+
+class CountOfObjects{
+ 
+  //Static Property
+  static objectsGotCreated=0;
+
+  //Instance Property
+  name;
+  constructor(name){
+    this.name=name; // 'this' refers to the specific instance of Object name being created
+    CountOfObjects.objectsGotCreated+=1;  // Accessing the static property using Class name (CountOfObjects) to track how many Object have been created
+  }
+
+  //Static method
+  static classDisplay(){
+    console.log("A Common Static Method") // Accesses the static property
+  }
+
+  //Instance method
+  display(msg){
+    console.log(`A Object (${this.name}) method displaying - ${msg}`); // Works on individual name of instances
+  }
+};
+
+const Cob1= new CountOfObjects("Cob1");
+Cob1.display("Message Given From Object 1")
+CountOfObjects.classDisplay(); // Accesses the static method with class name
+const Cob2= new CountOfObjects("Cob2");
+Cob1.display("Message Given From Object 2")
+
+// Both objects access the static property via the class
+console.log("Objects Up till now created - "+CountOfObjects.objectsGotCreated); // Accesses the static property with class name
+
+
+Output:
+A Object (Cob1) method displaying - Message Given From Object 1
+A Common Static Method
+A Object (Cob1) method displaying - Message Given From Object 2
+Objects Up till now created - 2
+```
+
+- Instance properties are specific to each object created from the class. Instance methods are functions that operate on individual instances of the class.
+- Static properties are values attached to the class, not to the individual instances. Static methods are functions that are called on the class itself, not on instances of the class.
+- Static Properties/Methods are accessed via `ClassName.propertyName` or `ClassName.methodName`. They do not require an instance of the class to be created or object to be created.
+
+
+```
+class CountOfObjects{
+ 
+  //Static Property
+  static objectsGotCreated=0;
+
+  //Instance Property
+  name;
+  constructor(name){
+    this.name=name; // 'this' refers to the specific instance of Object name being created
+    CountOfObjects.objectsGotCreated+=1;  // Accessing the static property using Class name (CountOfObjects) to track how many Object have been created
+  }
+
+  //Static method
+  static classDisplay(){
+    console.log("A Common Static Method") // Accesses the static property
+  }
+
+  //Instance method
+  display(msg){
+    console.log(`A Object (${this.name}) method displaying - ${msg}`); // Works on individual name of instances
+  }
+};
+
+CountOfObjects.classDisplay();
+console.log("Objects Up till now created - "+CountOfObjects.objectsGotCreated);
+
+Output:
+A Common Static Method
+Objects Up till now created - 0
+```
+
+- **Static properties and methods are shared across all objects of the class, but they are not actually attached to the objects themselves**. Instead, they belong to the class itself. When you define a static property or method, it’s accessible through the class, not through the individual instances (objects). All instances of the class can indirectly access the static properties or methods because those properties belong to the class.
+
+![alt text](image-61.png)
+
