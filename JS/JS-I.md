@@ -3453,3 +3453,8 @@ console.log(obj.key); // Output: 42
 
 - Object descriptors allow you to control how properties behave, providing better encapsulation and abstraction. You can hide internal details and expose only necessary interfaces to users of the object. You can prevent changes to properties that should remain constant, like constants or configuration settings. Each property can have characteristics like `value`, `writable`, `enumerable`, and `configurable`, which you can set manually using `Object.defineProperty()` to control the property's behavior
 
+### Constructor Function
+
+
+
+
