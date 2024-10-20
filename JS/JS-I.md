@@ -3455,6 +3455,59 @@ console.log(obj.key); // Output: 42
 
 ### Constructor Function
 
+- In JavaScript, a constructor function is a regular function used to create and initialize objects. Consider below example
+
+```
+function PersonInfo(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+let person1 = new PersonInfo("Alice", 25);
+console.log(person1.name); // Alice
+```
+
+- The key difference between a regular function and construction function is that, constructor function is intended to be used with the `new` keyword. When used with `new`, it constructs an object and initializes it using the constructor code.
+- When we create normal class in JS, behind the scenes, **classes utilize a concept of constructor functions**. In the past in Javascript and still today in many scripts you see out there, you will see constructor functions instead of classes being used. 
+- Now constructor functions are a special type of function that acts as a blueprint for objects, same as class does, that can hold and set up properties and methods just like a class and that can then be created with the `new` keyword.
+- Classes in JavaScript are a more modern way of creating objects, introduced in ES6. Behind the scenes, a class is essentially syntactic sugar over constructor functions. It provides a cleaner, more intuitive syntax to work with.
+- Lets say if we execute constructor function without `new` keyword, it will execute just like a normal function
+
+```
+function PersonInfo(name, age) {
+  this.name = name;
+  this.age = age;
+  this.greet=function(){
+    console.log("Greetings!!")
+  }
+}
+
+let person1 = PersonInfo("Alice", 25);
+console.log(person1) //undefined
+person1.greet() //Uncaught TypeError: PersonInfo.greet is not a function
+```
+
+- Why `undefined` ? because when we execute a normal function we expect something in return , since `PersonInfo` does not return anything we get `undefined` and on `undefined` we call are calling method `greet()`, we get an error.
+- So basically the `new` keyword acts a return statement for the constructor function `PersonInfo`. Internally the `new` keyword is constructing `this` with empty object and return `this`.
+
+```
+function PersonInfo(name, age) {
+  this={} //behind the scene it add all the method and properties into `this`
+  this.name = name;
+  this.age = age;
+  this.greet=function(){
+    console.log("Greetings!!")
+  }
+  return this;
+}
+```
+
+- When you use the `new` keyword with a constructor function, a `new` empty object is created. The `this` keyword within the constructor function is bound to the newly created object. It uses `this` to add properties and methods to the new object. The constructor function implicitly returns the newly created object via `this`.
+- The same process also occurs for a normal constructor function inside a class.
+
+### Prototype
+
+
 
 
 

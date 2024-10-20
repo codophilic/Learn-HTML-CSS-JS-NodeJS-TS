@@ -1043,6 +1043,17 @@ const myDog1 = new Dog1("Buddy", "Golden Retriever");
 myDog1.introduce();   // Output: Hi, my name is Buddy, and I am a Mammal.
 myDog1.showDetails(); // Output: Buddy is a Golden Retriever.
 
+function PersonInfo(name, age) {
+  this.name = name;
+  this.age = age;
+  this.greet=function(){
+    console.log("Greetings!!")
+  }
+}
+
+let person1 = new PersonInfo("Alice", 25);
+console.log(person1) //undefined
+person1.greet()
 
 
 
