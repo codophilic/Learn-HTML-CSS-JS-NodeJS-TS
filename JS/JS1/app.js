@@ -1043,6 +1043,8 @@ const myDog1 = new Dog1("Buddy", "Golden Retriever");
 myDog1.introduce();   // Output: Hi, my name is Buddy, and I am a Mammal.
 myDog1.showDetails(); // Output: Buddy is a Golden Retriever.
 
+//Constructor Function
+
 function PersonInfo(name, age) {
   this.name = name;
   this.age = age;
@@ -1055,27 +1057,229 @@ let person1 = new PersonInfo("Alice", 25);
 console.log(person1) //undefined
 person1.greet()
 
+//Prototype 
+
+const anyObj={
+  name: "ABC",
+  age:21
+}
+console.log(anyObj)
+
+const anyObj1={
+  address:"ABCD",
+  pin_code: 333
+}
+
+console.log(anyObj1.name); //undefined
+
+// The prototype of anyObj is Object.prototype
+console.log(Object.getPrototypeOf(anyObj) === Object.prototype);  // true
+
+const ArrProp=[1,2,3]
+console.log(Object.getPrototypeOf(ArrProp) === Array.prototype);  // true
+ArrProp.push(4);  // function push() {...} (inherited from Array.prototype)
+console.log(ArrProp) //Output: [1,2,3,4]
+
+function exampleFunction() {}
+console.log(Object.getPrototypeOf(exampleFunction) === Function.prototype);  // true
+
+function PersonConstProp(name) {
+  this.name = name;
+}
+
+const nameABC = new PersonConstProp("ABC");
+console.log(Object.getPrototypeOf(nameABC) === PersonConstProp.prototype);  // true
+
+function constructorFun(name){
+  this.name=name
+}
+
+constructorFun.prototype.greet=function(){
+  console.log("Greetings!!! from "+this.name)
+} // "greet" is attached to Person's prototype, shared by all instances
+
+const c1=new constructorFun("ABC")
+c1.greet() //Outputs: Greetings!! from ABC
+
+const c2=new constructorFun("DEF")
+c2.greet() //Outputs: Greetings!! from DEF
+
+console.log(c1.greet === c2.greet ) //Output: true // (shared method from prototype)
+
+// Check if the c1 object has its own greet property
+console.log(c1.hasOwnProperty("greet")); // Outputs: false
+
+function constructorFun1(name){
+  this.name=name,
+  this.greet=function(){
+    console.log("Greetings!!! from "+this.name)
+  }
+}
+
+const c3=new constructorFun1("XYZ")
+c3.greet() //Outputs: Greetings!! from XYZ
+
+const c4=new constructorFun1("UVW")
+c4.greet() //Outputs: Greetings!! from UVW
+
+console.log(c3.greet === c4.greet ) //Output: false // (not shared method from prototype)
+
+// Check if the c4 object has its own greet property
+console.log(c4.hasOwnProperty("greet")); // Outputs: true
+
+function PersonExample(name){
+  this.name=name,
+  this.greet=function(){
+    console.log("Greetings!!! from "+this.name)
+  }
+}
+
+const p = new PersonExample("ABC")
+p.greet() //Outputs: Greetings!!! from ABC
+// p.SayHello() // ERROR: Uncaught TypeError: p.SayHello is not a function
+console.log(p.toString()) //Output: [object Object]
+console.log(p)
+
+const arrProp = [1, 2, 3];
+console.log(arrProp.toString());  // "1,2,3" (from Object.prototype)
+
+console.log(Object.getPrototypeOf(arrProp) === Array.prototype);  // true
+console.log(Object.getPrototypeOf(Array.prototype) === Object.prototype);  // true
+
+console.log(Object.getPrototypeOf(arrProp) === Array.prototype);  // true
+console.log(arrProp.__proto__ === Array.prototype ) //true
+console.log(arrProp.__proto__.__proto__ === Object.prototype ) //true
+
+class GeneralAges{
+  displayAgees(){
+    
+  }
+}
+
+class PersonAges extends GeneralAges{
+  
+  constructor(name){
+    super()
+    this.name=name;
+  }
+
+  greet(){
+    console.log("Greetings!!")
+  }
+}
+
+const pa= new PersonAges("ABC");
+console.log(pa.__proto__)
 
 
 
+function replaceConstructor(name){
+  this.name=name;
+  this.greet=function(){
+    console.log("Greetings!!! from "+this.name)
+  }
+}
+console.log(replaceConstructor.prototype.constructor === replaceConstructor);  // true
+
+console.dir(replaceConstructor)
+
+replaceConstructor.prototype.newfunction=function(){
+    console.log("A new function")
+
+}
+
+console.log(replaceConstructor.prototype.constructor === replaceConstructor);  // false (the link is broken)
+
+console.dir(replaceConstructor)
+
+console.log(Object.prototype.__proto__)
+
+// Prototype with properties and methods
+
+// class ParentClass{
+//   parentShow(){
+
+//   }
+// }
+
+// class ChildClass extends ParentClass{
+//   user_name ="ABC"
+//   constructor(){
+//     super()
+//     this.age="27"
+//     /**
+//      * user_name="ABC" is same as this.name="ABC" inside constructor
+//      */
+//   }
+
+//   childShow(){
+//     console.log("Inside ChildClass")
+//   }
+// }
+
+
+// function ChildClass(){
+//   this.age="27",
+//   this.name="ABC"
+// }
+
+// ChildClass.prototype.childShow=function(){
+//   console.log("Inside ChildClass")
+// }
+
+// const cc = new ChildClass()
+// console.dir(cc)
+
+// const cc1 = new ChildClass()
+// console.log(cc.__proto__===cc1.__proto__) //Output: true
+
+
+class ChildClass{
+  constructor(){
+    this.name="ABC",
+    this.age="27"
+  }
+
+  greet = () => {
+    console.log("The greet function is not part of prototype it is present in each object instance")
+  }
+}
+
+const cc = new ChildClass()
+console.dir(cc)
 
 
 
+const animalVar = {
+  species: 'Mammal',
+};
 
+const dog = Object.create(animalVar);  // Create an object with `animal` as its prototype
+dog.breed = 'Golden Retriever';
 
+// Retrieve the prototype of `dog`
+const proto = Object.getPrototypeOf(dog);
 
+console.log(proto);  // Outputs: { species: 'Mammal' }
+console.log(proto === animalVar);  // true, because `animal` is the prototype of `dog`
 
+const bird = {
+  canFly: true,
+};
 
+const penguin = {
+  canFly: false,
+};
 
+// Set `bird` as the prototype of `penguin`
+Object.setPrototypeOf(penguin, bird);
 
+console.log(penguin.canFly);  // Outputs: false, because `penguin` overrides the `canFly` property
 
+// Now, change the `penguin` object to no longer override `canFly`
+delete penguin.canFly;  // Remove the `canFly` property from `penguin`
 
-
-
-
-
-
-
+console.log(penguin.canFly);  // Outputs: true, because it's now inherited from `bird`
 
 
 

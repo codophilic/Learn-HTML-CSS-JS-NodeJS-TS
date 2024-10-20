@@ -3467,7 +3467,7 @@ let person1 = new PersonInfo("Alice", 25);
 console.log(person1.name); // Alice
 ```
 
-- The key difference between a regular function and construction function is that, constructor function is intended to be used with the `new` keyword. When used with `new`, it constructs an object and initializes it using the constructor code.
+- The key difference between a regular function and constructor function is that, constructor function is intended to be used with the `new` keyword. When used with `new`, it constructs an object and initializes it using the constructor code.
 - When we create normal class in JS, behind the scenes, **classes utilize a concept of constructor functions**. In the past in Javascript and still today in many scripts you see out there, you will see constructor functions instead of classes being used. 
 - Now constructor functions are a special type of function that acts as a blueprint for objects, same as class does, that can hold and set up properties and methods just like a class and that can then be created with the `new` keyword.
 - Classes in JavaScript are a more modern way of creating objects, introduced in ES6. Behind the scenes, a class is essentially syntactic sugar over constructor functions. It provides a cleaner, more intuitive syntax to work with.
@@ -3505,9 +3505,540 @@ function PersonInfo(name, age) {
 - When you use the `new` keyword with a constructor function, a `new` empty object is created. The `this` keyword within the constructor function is bound to the newly created object. It uses `this` to add properties and methods to the new object. The constructor function implicitly returns the newly created object via `this`.
 - The same process also occurs for a normal constructor function inside a class.
 
-### Prototype
+## Prototype
+
+- When we create an object we always see something called prototype is always assigned to it right?
+
+```
+const anyObj={
+  name: "ABC",
+  age:21
+}
+console.log(anyObj)
+```
+
+- On browser console
+
+![alt text](image-62.png)
+
+- What is this prototype? in lame english definition a prototype is *`an original model on which something is patterned or a it is the original model, a sample which acts like base for future designs`*.
+- In JavaScript, a prototype is a mechanism by which objects inherit properties and methods from other objects. Think of it as a blueprint or a template that defines the structure and behavior of a particular type of object.
+- Okay, so as per it if we create two object like below, both can inherit each other property?
+
+```
+const anyObj={
+  name: "ABC",
+  age:21
+}
+console.log(anyObj)
+
+const anyObj1={
+  address:"ABCD",
+  pin_code: 333
+}
+
+console.log(anyObj1.name); //Output: undefined
+```
+
+- When we say prototype inherit properties and method of other objects it does not mean **it inherit two separate objects. They do not share or inherit properties from each other**. **In JavaScript, a prototype is a mechanism by which objects inherit properties and methods from their respective prototype objects (for above code case `Object.prototype`)**.
+
+```
+const anyObj = {
+  name: "ABC",
+  age: 21
+};
+
+// The prototype of anyObj is Object.prototype
+console.log(Object.getPrototypeOf(anyObj) === Object.prototype);  // true
+```
+
+- All regular objects (like `anyObj` and `anyObj1`) inherit from `Object.prototype`.
+- Arrays in JavaScript inherit from `Array.prototype`, which provides array-specific methods like `push()`, `map()`, `filter()`, etc.
+
+```
+const ArrProp=[1,2,3]
+console.log(Object.getPrototypeOf(ArrProp) === Array.prototype);  // true
+ArrProp.push(4);  // function push() {...} (inherited from Array.prototype)
+console.log(ArrProp) //Output: [1,2,3,4]
+```
+
+- The array `ArrProp` has access to methods like `push()` because it inherits from `Array.prototype`
+- When you create a function, it inherits from `Function.prototype`.
+
+```
+function exampleFunction() {}
+console.log(Object.getPrototypeOf(exampleFunction) === Function.prototype);  // true
+```
+
+- When you create an object using a constructor function, that object inherits from the constructor's prototype.
+
+```
+function PersonConstProp(name) {
+  this.name = name;
+}
+
+const nameABC = new PersonConstProp("ABC");
+console.log(Object.getPrototypeOf(nameABC) === PersonConstProp.prototype);  // true
+```
+
+- When you create an object using a constructor function or class, the newly created object automatically gets linked to the prototype of that constructor or class. For arrays and functions, JavaScript automatically associates them with `Array.prototype` or `Function.prototype`.
+- **In JavaScript, every object has a prototype**.
+
+### Why Prototype is required?
+
+- Without a prototype, if you have multiple objects, each one would need its own copy of methods, which is inefficient. Using prototypes, all objects can share common methods from their prototype. Consider below code.
+
+```
+function constructorFun(name){
+  this.name=name
+}
+
+constructorFun.prototype.greet=function(){
+  console.log("Greetings!!! from "+this.name)
+} // "greet" is attached to Person's prototype, shared by all instances
+
+const c1=new constructorFun("ABC")
+c1.greet() //Outputs: Greetings!! from ABC
+
+const c2=new constructorFun("DEF")
+c2.greet() //Outputs: Greetings!! from DEF
+
+console.log(c1.greet === c2.greet ) //Output: true // (shared method from prototype)
+```
+
+- `c1.greet` and `c2.greet` are pointing to the same method because it's defined on the prototype. This avoids duplication.
+
+```
+// Check if the c1 object has its own greet property
+console.log(c1.hasOwnProperty("greet")); // Outputs: false
+```
+
+- `c1` and `c2` object does not have its own property rather they inherit from their `constructorFun` prototype.
+- **Prototypes help in sharing methods or properties among multiple objects without duplicating them. This saves memory and allows objects to use common functionality.  When you create multiple objects from the same constructor function, each object doesn't need to have its own copy of the shared properties and methods. Instead, they can access them through the prototype chain, which saves memory.**
+- Now consider below code
+
+```
+function constructorFun1(name){
+  this.name=name,
+  this.greet=function(){
+    console.log("Greetings!!! from "+this.name)
+  }
+}
+
+const c3=new constructorFun1("XYZ")
+c3.greet() //Outputs: Greetings!! from XYZ
+
+const c4=new constructorFun1("UVW")
+c4.greet() //Outputs: Greetings!! from UVW
+
+console.log(c3.greet === c4.greet ) //Output: false // (not shared method from prototype)
+
+// Check if the c4 object has its own greet property
+console.log(c4.hasOwnProperty("greet")); // Outputs: true
+```
+
+- If you observe the above code, here the properties and method are not from prototype. Instead each object has this method. Why so? **when you create an object using an object literal (`{}`) or a constructor function, its properties and methods do not automatically become part of the prototype. Instead, these properties and methods are directly attached to the object itself, and they are not shared with other objects**.
+- **When you define a method on the prototype of a constructor (e.g., `constructorFun.prototype.greet`), that method is shared by all objects created using that constructor. All instances of that constructor can access the same shared method via the prototype, which is memory-efficient**.
+- By default, properties and methods of an object are not on the prototype: When you create an object using a constructor or literal, its properties (like `name` in the example) are directly attached to the object itself, not the prototype. Each object has its own copy of these properties.
+
+```
+Prototype Example
+
+// Method defined on the prototype (shared by all instances)
+function Dog(breed) {
+  this.breed = breed;
+}
+
+// Shared method on Dog's prototype
+Dog.prototype.bark = function() {
+  console.log(`${this.breed} barks!`);
+};
+
+let husky = new Dog("Husky");
+let labrador = new Dog("Labrador");
+
+console.log(husky.bark === labrador.bark);  // true (shared method)
+
+
+Object Example
+function Cat(name) {
+  this.name = name;
+  this.meow = function() {  // Each cat gets its own version of the method
+    console.log(`${this.name} says meow!`);
+  };
+}
+
+let tom = new Cat("Tom");
+let jerry = new Cat("Jerry");
+
+console.log(tom.meow === jerry.meow);  // false (different instances of the method)
+```
+
+- When you assign a value using `ObjectName.prototype`, it will replace the default prototype object, including the constructor reference. Consider below example
+
+```
+function replaceConstructor(name){
+  this.name=name;
+  this.greet=function(){
+    console.log("Greetings!!! from "+this.name)
+  }
+}
+console.log(replaceConstructor.prototype.constructor === replaceConstructor);  // true
+console.dir(replaceConstructor)
+```
+
+- On browser console
+
+![alt text](image-67.png)
+
+- Now if we use `replaceConstructor.prototype` it will replace the constructor function by `newFunction`
+
+```
+replaceConstructor.prototype={
+  newfunction(){
+    console.log("A new function")
+  }
+}
+
+console.log(replaceConstructor.prototype.constructor === replaceConstructor);  // false (the link is broken)
+
+console.dir(replaceConstructor)
+```
+
+- On browser console
+
+![alt text](image-68.png)
+
+- Thats why we need to use `replaceConstructor.prototype.newfunction` it will have the constructor function as well as the new function
+
+```
+replaceConstructor.prototype.newfunction=function(){
+    console.log("A new function")
+
+}
+
+console.log(replaceConstructor.prototype.constructor === replaceConstructor);  // true
+
+console.dir(replaceConstructor)
+```
+
+- On browser console
+
+
+![alt text](image-69.png)
+
+
+### Fallback in Prototype
+
+- If a property or method is not found on the object itself, JavaScript will "fall back" to checking the object's prototype for that property.
+- Consider below code
+
+```
+function PersonExample(name){
+  this.name=name,
+  this.greet=function(){
+    console.log("Greetings!!! from "+this.name)
+  }
+}
+
+const p = new PersonExample("ABC")
+p.greet() //Outputs: Greetings!!! from ABC
+p.SayHello() // ERROR: Uncaught TypeError: p.SayHello is not a function
+```
+
+- There is no `SayHello()` method, so JS first check whether the method is present inside the `PersonExample` constructor function if not found it checks the method in its respective prototype (`Object.prototype`).
+- When we execute the below code
+
+```
+console.log(p.toString()) //Output: [object Object]
+```
+
+- Even `toString()` method is not defined under the `PersonExample` constructor function, but it is defined inside its prototype.
+
+![alt text](image-64.png)
+
+- Every object in JavaScript by default has such a fallback object (i.e. a prototype object)
+
+
+![alt text](image-63.png)
+
+### Prototype Chaining
+
+- Even Prototype is an object, so just like every object has a prototype, does prototype also has prototype? yes, there is a chain of prototype. `Array.prototype`, `Function.prototype` etc..  inherits from `Object.prototype`.
+- `Object.prototype` is the root prototype, and it doesn’t have a prototype of its own. Properties like `toString()` and `hasOwnProperty()` are defined on `Object.prototype` and available to all objects.
+
+```
+const arrProp = [1, 2, 3];
+console.log(arrProp.toString());  // "1,2,3" (from Object.prototype)
+
+console.log(Object.getPrototypeOf(arrProp) === Array.prototype);  // true
+console.log(Object.getPrototypeOf(Array.prototype) === Object.prototype);  // true
+```
+
+<video controls src="2024-3.mp4" title="title"></video>
+
+- If a method or property is not found, JavaScript will continue to search up the prototype chain. To verify about your object's prototype you can use `__proto__` or `Object.getPrototypeOf`
+
+```
+console.log(Object.getPrototypeOf(arrProp) === Array.prototype);  // true
+console.log(arrProp.__proto__ === Array.prototype ) //true
+console.log(arrProp.__proto__.__proto__ === Object.prototype ) //true
+
+const obj = {
+  name: "John"
+};
+
+// Accessing the object's prototype using __proto__
+console.log(obj.__proto__ === Object.prototype);  // true
+```
+
+- The `__proto__` property forms a chain, known as the prototype chain. If you try to access a property on an object that doesn’t exist directly on that object, JavaScript will look up the prototype chain to find it.
+
+```
+const arr = [1, 2, 3];
+
+// Access the prototype of the array
+console.log(arr.__proto__ === Array.prototype);  // true
+
+// Access the prototype of Array.prototype (which is Object.prototype)
+console.log(arr.__proto__.__proto__ === Object.prototype);  // true
+
+// The top of the prototype chain, Object.prototype.__proto__ is null
+console.log(Object.prototype.__proto__ === null);  // true
+```
+
+>[!NOTE]
+> - The `__proto__` property is non-standard, but widely supported and still used. It's better practice to use `Object.getPrototypeOf()` to retrieve an object's prototype.
 
 
 
+![alt text](image-65.png)
 
+- Prototype chaining is also applicable when you extend another class
 
+```
+class GeneralAges{
+  displayAgees(){
+    
+  }
+}
+
+class PersonAges extends GeneralAges{
+  
+  constructor(name){
+    super()
+    this.name=name;
+  }
+
+  greet(){
+    console.log("Greetings!!")
+  }
+}
+
+const pa= new PersonAges("ABC");
+console.log(pa.__proto__)
+```
+
+- On browser console.
+
+![alt text](image-66.png)
+
+- Thats why we need to use `super()` to construct the parent prototype before creating instance of child objects.
+- **Every object inherits `Object.prototype` properties and methods and not `Object` properties and methods**. When we perform `console.dir(Object)` we get below output on the console.
+
+![alt text](image-70.png)
+
+- If you see `toString()` method is part of `Object.prototype` and not part of `Object`. The methods and properties like `assign`, `create` etc.. are static properties and methods which can be access via class (`Object`) name.
+
+### Prototype with Methods
+
+- Consider below code
+
+```
+
+class ParentClass{
+  parentShow(){
+
+  }
+}
+
+class ChildClass extends ParentClass{
+  user_name ="ABC"
+  constructor(){
+    super()
+    this.age="27"
+    /**
+     * user_name="ABC" is same as this.name="ABC" inside constructor
+     */
+  }
+
+  childShow(){
+    console.log("Inside ChildClass")
+  }
+}
+
+const cc = new ChildClass()
+console.dir(cc)
+```
+
+- On browser console
+
+![alt text](image-71.png)
+
+- If you observe carefully, parent class (`ParentClass`) becomes the prototype of child class (`ChildClass`) but still it has child class methods (`childShow`) and its constructor function. Why so? **because JS perform optimization**.
+- The idea here is that when we create instances of `ChildClass`, we may or may not have different property values. Now methods on the other hand typically are the same across all objects. The properties which in turn might hold dynamic data but your method logic typically does not changes from instances to instances of object.
+- Lets create another object and compare it prototypes.
+
+```
+const cc = new ChildClass()
+
+const cc1 = new ChildClass()
+console.log(cc.__proto__===cc1.__proto__) //Output: true
+```
+
+- **So the method logic typically does not change from object to object, it typically is the same and therefore Javascript adds a little optimization for us here. By adding the method to a prototype, it makes sure that when ever we create a new person object, we use the same prototype fallback object**.
+- It's a little optimization which leads to less objects being created, which means less memory usage an of course less performance impact. When you build enterprise applications you will be dealing with tons of object, thus JS provides class methods inside the prototype rather on individual objects.
+- Even if you see the `ParentClass` method `parentShow` is under Parent class prototype which is Object.
+- Consider below code.
+
+```
+function ChildClass(){
+  this.age="27",
+  this.name="ABC"
+}
+
+ChildClass.prototype.childShow=function(){
+  console.log("Inside ChildClass")
+}
+
+const cc = new ChildClass()
+console.dir(cc)
+
+const cc1 = new ChildClass()
+console.log(cc.__proto__===cc1.__proto__) //Output: true
+
+The Above Code is Equivalent to Below code
+
+class ChildClass{
+  user_name ="ABC"
+  constructor(){
+    super()
+    this.age="27"
+    /**
+     * user_name="ABC" is same as this.name="ABC" inside constructor
+     */
+  }
+
+  childShow(){
+    console.log("Inside ChildClass")
+  }
+}
+
+const cc = new ChildClass()
+console.dir(cc)
+
+const cc1 = new ChildClass()
+console.log(cc.__proto__===cc1.__proto__) //Output: true
+```
+
+- Using construction function name and prototype we can create prototype method which will be share among all the instance of that construction function. This is equivalent with the code written in class format definition, then whats the difference? whenever we create a new object instance in case of constructor function only below block is executed
+
+```
+function ChildClass(){
+  this.age="27",
+  this.name="ABC"
+}
+```
+
+- The method is still part of prototype and is shared among all objects. Whereas in case of classes the whole class definition is executed, thus construction function gives us slightly more performance than class.
+- Now consider below code
+
+```
+class ChildClass{
+  constructor(){
+    this.name="ABC",
+    this.age="27"
+  }
+
+  greet=function(){
+    console.log("The greet function is not part of prototype it is present in each object instance")
+  }
+}
+
+const cc = new ChildClass()
+console.dir(cc)
+```
+
+- On browser console
+
+![alt text](image-72.png)
+
+- If you see now the `greet()` method is part of `ChildClass` instance and not part of prototype. This means for each instance the `greet()` method is present. This may cause slightly performance and memory consumption impact.
+- The same logic is equivalent when you use arrow function instead of normal function
+
+```
+class ChildClass{
+  constructor(){
+    this.name="ABC",
+    this.age="27"
+  }
+
+  greet = () => {
+    console.log("The greet function is not part of prototype it is present in each object instance")
+  }
+}
+
+const cc = new ChildClass()
+console.dir(cc)
+```
+
+- On browser console
+
+![alt text](image-73.png)
+
+![alt text](image-74.png)
+
+### Prototype Getters and Setters
+
+- Consider below code
+
+```
+const animalVar = {
+  species: 'Mammal',
+};
+
+const dog = Object.create(animalVar);  // Create an object with `animal` as its prototype
+dog.breed = 'Golden Retriever';
+
+// Retrieve the prototype of `dog`
+const proto = Object.getPrototypeOf(dog);
+
+console.log(proto);  // Outputs: { species: 'Mammal' }
+console.log(proto === animalVar);  // true, because `animal` is the prototype of `dog`
+```
+
+- Here the `Object.getPrototypeOf` is same as `__proto__` gives info of prototype. `Object.getPrototypeOf()` is a clean, standard way to inspect an object's prototype, instead of using the older `__proto__` property.
+
+- Consider below code for setting prototype
+
+```
+const bird = {
+  canFly: true,
+};
+
+const penguin = {
+  canFly: false,
+};
+
+// Set `bird` as the prototype of `penguin`
+Object.setPrototypeOf(penguin, bird);
+
+console.log(penguin.canFly);  // Outputs: false, because `penguin` overrides the `canFly` property
+
+// Now, change the `penguin` object to no longer override `canFly`
+delete penguin.canFly;  // Remove the `canFly` property from `penguin`
+
+console.log(penguin.canFly);  // Outputs: true, because it's now inherited from `bird`
+```
+
+- `Object.setPrototypeOf()` lets you change an object's inheritance dynamically, which can be useful in scenarios where you need to adjust the behavior of objects at runtime
