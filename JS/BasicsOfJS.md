@@ -821,6 +821,8 @@ console.log(3 * '3') //Prints 9
 - There are two main types of type coercion in JavaScript:
 
     **1. Implicit Coercion (Automatic)**: This happens automatically when you perform operations between values of different types, and JavaScript tries to convert one type to another to make the operation work.
+
+
     **2. Explicit Coercion (Manual) or Type Conversion**: This happens when you intentionally convert a value from one type to another using functions or constructors like `Number()`, `String()`, etc.
 - **Explicit coercion** is synonymous with **type conversion**, while **implicit coercion** refers to **automatic type conversion** that JavaScript handles on its own
 
@@ -3336,7 +3338,7 @@ function4()
 
 ### Garbage Collector
 
-- Where JavaScript stores its memory. But the memory life cycle which we discussed previously, shows that there is one last step; releasing the memory when not in use. This process is handled automatically by JavaScript i.e the JavaScript garbage collector takes care of this.
+- In the memory life cycle which we discussed previously, shows that there is one last step; releasing the memory when not in use. This process is handled automatically by JavaScript i.e the JavaScript garbage collector takes care of this.
 - When an object in the heap is no longer referenced by any variable (i.e.,those variables in stack which has no references pointing to it ), it becomes eligible for garbage collection. The JavaScript engine’s garbage collector will automatically reclaim that memory, preventing memory leaks.
 - Consider below code
 
@@ -3426,62 +3428,3 @@ Heap and stack memory are internal to the V8 engine, but the V8 engine taps into
 - JavaScript execution involves RAM (system memory) for heap and stack management, not disk space. Browsers may use disk storage for things like caching, local storage, or cookies, but that's separate from the in-memory heap and stack used for code execution.
 - Online reference for [memory management](https://www.turing.com/kb/handling-memory-management-in-javascript#javascript-engine-storages-(stack-and-heap-memory))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### bind() method is pending to learn
-prepares your function for execution rather than execution 
-
-
-
-https://dev.to/arikaturika/how-web-browsers-work-part-1-with-illustrations-1nid
-https://www.freecodecamp.org/news/how-javascript-works-behind-the-scenes/#:~:text=js%20are%20examples%20of%20runtime,and%20manipulating%20the%20page%20structure.
-https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/Pages_sites_servers_and_search_engines
-https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/How_the_Web_works
-https://www.tutorialrepublic.com/javascript-tutorial/
-https://chatgpt.com/c/66fba1da-3bd4-8009-800e-6c4a949e7375
