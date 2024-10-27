@@ -63,7 +63,7 @@ The DOM is essentially a representation of the HTML document in the browser that
 - **DOM API are one of those Browser APIs**, the DOM API is one of the most important Browser APIs. It allows JavaScript to interact with the structure of a web page (HTML) by representing it as a set of objects. This lets you access, modify, add, or remove elements from the page dynamically. For example, methods like `document.getElementById()` or `document.createElement()` are part of the DOM API.
 - DOM is one of the built-in Browser APIs that JavaScript can use, just like these other APIs! The DOM API specifically handles interaction with the web page’s structure and content.
 
-![alt text](image-1.png)
+![alt text](Images/js1/image-1.png)
 
 - Consider below **index.html** file.
 
@@ -85,7 +85,7 @@ The DOM is essentially a representation of the HTML document in the browser that
 
 - Lets open developer tool console on chrome browser and type `console.dir(document)`
 
-![alt text](image-2.png)
+![alt text](Images/js1/image-2.png)
 
 - If you see , the document object has list of different properties.
 
@@ -96,26 +96,26 @@ The DOM is essentially a representation of the HTML document in the browser that
 - It contains properties, methods, and objects that you can use to control aspects of the webpage, like opening new tabs, displaying alerts, and even working with the DOM (your HTML).
 - On the browser console, type `window`.
 
-![alt text](image-3.png)
+![alt text](Images/js1/image-3.png)
 
 - You can different properties under it. If you go down a little you will find one property call `document`.
 
-![alt text](image-4.png)
+![alt text](Images/js1/image-4.png)
 
 - The `document` property is your DOM object. So window is your global object which consist of all other object. The `document` object represents the DOM (Document Object Model), which is the structure of your web page (HTML). The `document` object is part of the `window` object.
 - The `document` object is a property of the `window` object. When a web page loads, the browser creates the `window` object, and inside it, you also have access to the `document` object. This means you can access `document` like this: `window.document` (but most of the time, we just write `document` directly).
 - If you remember we use `alert()` function, even that is part of `window` global object.
 
-![alt text](image-5.png)
+![alt text](Images/js1/image-5.png)
 
 - In your JS file when you write `alert()` function, the browser loads and parses it with `window` like `window.alert()` and executes it. There are other couple of functions like `open()` which opens new tab.
 
-<video controls src="20241004-0921-03.6754013.mp4" title="Title"></video>
+<video controls src="Images/js1/20241004-0921-03.6754013.mp4" title="Title"></video>
 
 >[!IMPORTANT]
 > - The scope of `window` object is global but it is restricted to the current tab. If there are multiple tab open in your browser, you cannot access other tab using current tab `window` object.
 
-![alt text](image-6.png)
+![alt text](Images/js1/image-6.png)
 
 ### Nodes vs Elements
 
@@ -184,7 +184,7 @@ childElementsOfDiv.forEach(i=>{
 
 - On browser console. 
 
-![alt text](image-8.png)
+![alt text](Images/js1/image-8.png)
 
 - The `text` nodes have a node type number of 3 whereas node type number for `comment` is 8
 
@@ -196,7 +196,7 @@ childElementsOfDiv.forEach(i=>{
 - An element is a specific type of node that represents an HTML element (like `<div>`, `<h1>`, `<img>`, etc.). In the DOM, elements are more specific than nodes because they always correspond to HTML tags.
 - **Node is the broader term: everything (HTML elements, text, comments, attributes) is a node in the DOM. Element is a specific type of node that represents HTML elements.**
 
-![alt text](image-7.png)
+![alt text](Images/js1/image-7.png)
 
 ### Query Selectors
 
@@ -342,13 +342,13 @@ childElementsOfDiv.forEach(i=>{
 
 - On browser console.
 
-![alt text](image-9.png)
+![alt text](Images/js1/image-9.png)
 
-![alt text](image-13.png)
+![alt text](Images/js1/image-13.png)
 
 - We can run query selector on browser console as well.
 
-![alt text](image-10.png)
+![alt text](Images/js1/image-10.png)
 
 - Consider another example
 
@@ -386,11 +386,11 @@ childElementsOfDiv.forEach(i=>{
 
 - On browser console
 
-![alt text](image-11.png)
+![alt text](Images/js1/image-11.png)
 
 - You can also access the complete head and body using `document` object
 
-![alt text](image-12.png)
+![alt text](Images/js1/image-12.png)
 
 ### Attribute vs Property
 
@@ -457,39 +457,39 @@ console.log(inputElement.getAttribute('value')); // "initial value"
 
 - On browser console, the `Element` tab represent HTML tags and attributes.
 
-![alt text](image-14.png)
+![alt text](Images/js1/image-14.png)
 
 - Whereas in the console we have `document` and its object.
 
-![alt text](image-15.png)
+![alt text](Images/js1/image-15.png)
 
 - Lets clear the console, lets update the header content (`DOM Header`) to a new content (`My Header`). So this can be done by fetching the header id. Now using developer console, we will get object and object has properties. So using the property we will change it and check whether it reflects in the `Element` tab.
 
-<video controls src="20241004-1446-03.1161567.mp4" title="Title"></video>
+<video controls src="Images/js1/20241004-1446-03.1161567.mp4" title="Title"></video>
 
 - Now if you see , to fetch the `id` attribute, there is a property name `h1var.`**`id`**, so here the property name is same as attribute name (**1 (`id`):1 (variblename.`id`) name mapping**), now what happens if we change the **id value (`header1id`)**?
 
-<video controls src="20241004-1451-52.5361818.mp4" title="Title"></video>
+<video controls src="Images/js1/20241004-1451-52.5361818.mp4" title="Title"></video>
 
 - When we change the id value to a new value (`mynewheaderid`), it got reflected in the `Element` tab of developer tools. This states that **id attribute and id property are in live synchronization**.
 - Now similarly can we did for `id` can we do it for the class value (`domheader`)? lets see
 
-<video controls src="20241004-1500-40.0695842.mp4" title="Title"></video>
+<video controls src="Images/js1/20241004-1500-40.0695842.mp4" title="Title"></video>
 
 - If you see **there is live synchronization between class attribute and class property** by their name differ, for attribute we have `class="domheader"`, whereas for property we need to fetch using `classHeaderVar.header1id.`**`className`**. So the names are little bit different.
 - Now for `input` element we have a tag `value`, is there live synchronization for it as well? lets check
 
-<video controls src="20241004-1510-25.5601076.mp4" title="Title"></video>
+<video controls src="Images/js1/20241004-1510-25.5601076.mp4" title="Title"></video>
 
 - The element attribute and property names are same **but they are not synchronize**, it makes sense because suppose this html is exposed to user and user enters a value in the input, this would override the existing default value (`value="a default input msg"`). So whenever a user again open that same html file it would see the previous input entered by him/her instead of default value.
 - Hence, **Attributes and Properties may or may not have same name and it may or may not be live synchronization**.
 
 
-![alt text](image-16.png)
+![alt text](Images/js1/image-16.png)
 
 - You can also access HTML elements tag using property `getElementsByTagName`.
 
-![alt text](image-17.png)
+![alt text](Images/js1/image-17.png)
 
 ### Parent, Child, Descendent and Ancestor
 
@@ -540,9 +540,9 @@ console.log(divParentvar.contains(aDescendantvar)); // Outputs: true
 
 - On browser console
 
-![alt text](image-18.png)
+![alt text](Images/js1/image-18.png)
 
-![alt text](image-19.png)
+![alt text](Images/js1/image-19.png)
 
 
 ### DOM Traversal
@@ -589,7 +589,7 @@ console.log(parentDiv.lastElementChild);  // <ul>...</ul>
 
 - On browser console.
 
-![alt text](image-21.png)
+![alt text](Images/js1/image-21.png)
 
 - `childNodes`: Returns a `NodeList` of all child nodes (including elements, text nodes, and comments).
 - `children`: Returns an `HTMLCollection` of only the child element nodes (ignores text nodes or comments).
@@ -600,21 +600,21 @@ console.log(parentDiv.lastElementChild);  // <ul>...</ul>
 
 - If you see the output of `console.log(parentDiv.childNodes);` , you can see some `text` nodes inside the list. What are the?
 
-![alt text](image-22.png)
+![alt text](Images/js1/image-22.png)
 
 - Those are white-spaces of your html
 
-![alt text](image-23.png)
+![alt text](Images/js1/image-23.png)
 
 - When you see the content `data: "\n      "` , these contents are next line and white spaces mention in the red color on the image. These white spaces are automatically gets hide by the browser. These white spaces are still there in the DOM structure representing as text nodes.
 - In the HTML code for the list element `<li>`, we have added `              Item3`, now there are so many white spaces before the word `Item3` but on the page it is not visible to us. Because it gets hide by the browser.
 
-![alt text](image-24.png)
+![alt text](Images/js1/image-24.png)
 
 - Under the `Element` tab of browser console, when you type `white-space:pre` under the `Style` tab of `Element` you can see the whitespaces
 
 
-![alt text](image-25.png)
+![alt text](Images/js1/image-25.png)
 
 - The reason the browser automatically omits whitespace (such as spaces, tabs, and newlines) inside text nodes is that by default, the browser treats HTML in a way that normalizes or collapses whitespace. This behavior is part of the HTML/CSS rendering engine, which is designed to simplify and improve the layout of web pages.
 - In HTML, any sequence of whitespace characters (spaces, tabs, newlines) is collapsed into a single space when rendered in a browser. This means that no matter how many spaces you add between words or elements in the HTML, only one space will appear in the output.
@@ -659,13 +659,13 @@ console.log(childList1.parentNode)
 
 - On browser console
 
-![alt text](image-26.png)
+![alt text](Images/js1/image-26.png)
 
 - `parentElement`: Returns the parent element of the current node, but it excludes non-element nodes like text or comment nodes.
 - `parentNode`: Returns the parent node, which could be an element or a document node (for example, document itself can be a parent).
 - The above output will mostly give you element tag, because an element tag can have child element or nodes thats why that element tag becomes the parent of that child element or nodes. Then why the need of `parentNode`? consider below code
 
-![alt text](image-27.png)
+![alt text](Images/js1/image-27.png)
 
 - The above is one the exception and it will be used in the rare case.
 
@@ -689,7 +689,7 @@ console.log(currentNode.closest('#ancestor')); // <div id="ancestor">
 
 - On browser console.
 
-![alt text](image-28.png)
+![alt text](Images/js1/image-28.png)
 
 - `closest()`: This method returns the closest ancestor of the current element (or the element itself) that matches the selector you pass in. It traverses upwards through the DOM hierarchy
 
@@ -731,9 +731,9 @@ console.log(secondChild.previousElementSibling);  // <p id="first-child">
 
 - On browser console
 
-![alt text](image-29.png)
+![alt text](Images/js1/image-29.png)
 
-![alt text](image-20.png)
+![alt text](Images/js1/image-20.png)
 
 #### DOM Traversal vs Query Selectors
 
@@ -801,7 +801,7 @@ divContent.innerHTML="<h2> Hello </h2>"
 
 - On web page and developer tools
 
-![alt text](image-30.png)
+![alt text](Images/js1/image-30.png)
 
 - The below JS snip will append the `h2` element with current inner `div` elements. (`innerHTML +=`)
 
@@ -813,12 +813,12 @@ divContent.innerHTML+="<h2> Hello </h2>"
 
 - On web page and developer tools
 
-![alt text](image-31.png)
+![alt text](Images/js1/image-31.png)
 
 - **The `innerHTML` method replaces or appends the entire `div` contents**. How so?, run the same append snip on the browser console.
 
 
-<video controls src="20241005-1531-48.3138271.mp4" title="Title"></video>
+<video controls src="Images/js1/20241005-1531-48.3138271.mp4" title="Title"></video>
 
 - The flash indicates the entire inner elements are rendered.
 
@@ -850,12 +850,12 @@ divContent.insertAdjacentHTML('afterend', '<h3>After the div</h3>');
 
 - On browser console
 
-![alt text](image-32.png)
+![alt text](Images/js1/image-32.png)
 
 - It doesn't replace or re-render the entire content, only inserts at the specified position. You can choose exactly where to insert the new content relative to the existing element.
 
 
-<video controls src="20241005-1544-22.0294004.mp4" title="Title"></video>
+<video controls src="Images/js1/20241005-1544-22.0294004.mp4" title="Title"></video>
 
 >[!NOTE]
 > - Even though insertAdjacentHTML() is more efficient than innerHTML, it still poses a security risk for Cross-Site Scripting (XSS) attacks if you're inserting unsanitized and typo mistake may still occur.
@@ -874,7 +874,7 @@ divContent.appendChild(newPara)
 
 - On browser console
 
-![alt text](image-33.png)
+![alt text](Images/js1/image-33.png)
 
 - Now consider below JS code. (Just added 2 more lines to the above code)
 
@@ -889,7 +889,7 @@ divContent.insertBefore(document.getElementById("ancestor"), newPara)
 
 - On browser console
 
-![alt text](image-34.png)
+![alt text](Images/js1/image-34.png)
 
 - If you notice, earlier the content for the paragraph tag was `This is a new para from createElement()` , post code changes that got replaced to `This is a new para added before <div> by createElement()` instead of getting a new para element. Why so?
   - In the first line, `document.querySelector("p")` selects an existing `<p>` element from the DOM. You are not creating a new element with `createElement();` you are referencing an existing one.
@@ -915,7 +915,7 @@ getULElement.remove()
 
 - On page.
 
-![alt text](image-36.png)
+![alt text](Images/js1/image-36.png)
 
 - There is another way to achieve removing of elements via parent tag.
 
@@ -926,10 +926,10 @@ getULElement.parentElement.removeChild(getULElement)
 
 - On page.
 
-![alt text](image-36.png)
+![alt text](Images/js1/image-36.png)
 
 
-![alt text](image-37.png)
+![alt text](Images/js1/image-37.png)
 
 
 ## Cloning DOM nodes
@@ -963,11 +963,11 @@ document.body.appendChild(deepClone)
 
 - On browser console, all the child nodes got cloned when used `true` as arguments in `cloneNode()`
 
-![alt text](image-35.png)
+![alt text](Images/js1/image-35.png)
 
 - If `false` (default argument) is used, we get below page, just the `<div>` element got created
 
-<video controls src="20241005-1721-23.6581583.mp4" title="Title"></video>
+<video controls src="Images/js1/20241005-1721-23.6581583.mp4" title="Title"></video>
 
 ## HTMLCollection vs NodeList
 
@@ -1114,7 +1114,7 @@ console.log(creation10)
 
 - On browser console
 
-![alt text](image-38.png)
+![alt text](Images/js1/image-38.png)
 
 - Array can store different datatype values
 
@@ -1135,7 +1135,7 @@ console.log(creation11)
 
 - On browser console
 
-![alt text](image-39.png)
+![alt text](Images/js1/image-39.png)
 
 - Multi-dimensional array
 
@@ -1725,7 +1725,7 @@ console.log(ObjectSpreadArr2)
 
 - On console
 
-![alt text](image-40.png)
+![alt text](Images/js1/image-40.png)
 
 
 - Now if we modify the property of object, the changes property will be reflected in both the array.
@@ -1742,7 +1742,7 @@ console.log(ObjectSpreadArr2)
 
 - On console
 
-![alt text](image-41.png)
+![alt text](Images/js1/image-41.png)
 
 - This is because when we copied elements from one array to another array, we are not creating new objects instead we are copying the memory addresses of it. So the copied element into the new array is still point the same object's memory address. Now consider below code.
 
@@ -1762,7 +1762,7 @@ console.log(ObjectSpreadArr3)
 
 - On browser console
 
-![alt text](image-42.png)
+![alt text](Images/js1/image-42.png)
 
 - Here using `map()` method we are creating new object which will have new memory address, so changing an object's property in one array will won't affect other array.
 - Now consider below nested object code
@@ -1892,7 +1892,7 @@ console.log(initializedMap)
 
 - On browser
 
-![alt text](image-43.png)
+![alt text](Images/js1/image-43.png)
 
 - You can add or update a key-value pair in the map using the `.set()` method.
 
@@ -1907,7 +1907,7 @@ console.log(myMap);// Output: Map { 'name' => 'ABC', 'age' => 25, { city: 'NY' }
 
 - On browser console
 
-![alt text](image-44.png)
+![alt text](Images/js1/image-44.png)
 
 - Below are other operations which can be performed with Map
 
@@ -2034,7 +2034,7 @@ for(const i of mySet.entries()){
 
 - On browser we can see an array with same elements
 
-![alt text](image-45.png)
+![alt text](Images/js1/image-45.png)
 
 - Why so?  internally, **the Set API is designed to be consistent with Map and Array iterators**, which return key-value pairs in array. The Set data structure only stores values (not key-value pairs like Map). So, when you use `.entries()` on a Set, it returns the value twice in each array element ([value, value])
 - So, when iterating over the Set with `entries()`, you always get two identical values in each iteration because a Set does not have a separate key and value. Instead of `entries()` you can use `values()`
@@ -2092,7 +2092,7 @@ obj1 = null;  // The object is no longer referenced
 
 ### Summary
 
-![alt text](image-46.png)
+![alt text](Images/js1/image-46.png)
 
 
 ## OOP (Object-Oriented Programming)
@@ -2136,7 +2136,7 @@ let car = {
 
 - In JavaScript **except from primitive values everything is object**.
 
-![alt text](image-47.png)
+![alt text](Images/js1/image-47.png)
 
 #### CRUD on Object
 
@@ -2150,7 +2150,7 @@ console.log(car)
 
 - On browser console
 
-![alt text](image-48.png)
+![alt text](Images/js1/image-48.png)
 
 - Updating property
 
@@ -2161,7 +2161,7 @@ console.log(car)
 
 - On browser console
 
-![alt text](image-49.png)
+![alt text](Images/js1/image-49.png)
 
 - Deleting property
 
@@ -2173,7 +2173,7 @@ console.log(car)
 
 - On browser console
 
-![alt text](image-50.png)
+![alt text](Images/js1/image-50.png)
 
 #### Type of Object keys
 
@@ -2217,7 +2217,7 @@ console.log(OrderingOfKeys)
 
 - On browser console, if you see the ordering of elements are not consistant.
 
-![alt text](image-51.png)
+![alt text](Images/js1/image-51.png)
 
 - The ordering of object keys follows a specific pattern. When iterating over or accessing the keys of an object, JavaScript orders them in the following way:
   - Integer-like keys (numeric keys) are sorted in ascending order.
@@ -2241,7 +2241,7 @@ console.log(PersonObject[first_name]) //ABC
 
 - On browser console.
 
-![alt text](image-52.png)
+![alt text](Images/js1/image-52.png)
 
 - This can be use full when you wanted to have a key based on user-defined input. It’s particularly useful when you don't know the property name ahead of time or when the key is generated dynamically, stored in a variable, or contains special characters.
 - Dot notation (`object.key`) is used when you know the exact key name and it is a valid identifier (without spaces, starting with a letter, etc.).
@@ -2401,7 +2401,7 @@ console.log(this)
 
 - On browser console
 
-![alt text](image-53.png)
+![alt text](Images/js1/image-53.png)
 
 - Here when we print `this` in console, it refers to the global `window` object.
 
@@ -2416,7 +2416,7 @@ function show() {
 show();
 ```
 
-![alt text](image-54.png)
+![alt text](Images/js1/image-54.png)
 
 ##### In a Function Context Using Strict Mode
 
@@ -2553,7 +2553,7 @@ ButtonHandler.addEventListener("click",function(){
 
 - On browser console
 
-![alt text](image-55.png)
+![alt text](Images/js1/image-55.png)
 
 - When you use a regular function as an event handler, `this` refers to the HTML element that received the event. When the button is clicked, `this` inside the regular function refers to the button element because that's where the event occurred.
 
@@ -2579,7 +2579,7 @@ ButtonHandler.addEventListener("click",()=>{
 
 - On click, the browser console gives **window** object and not the button element
 
-![alt text](image-56.png)
+![alt text](Images/js1/image-56.png)
 
 - Why so? **Arrow functions do not create their own `this` context**. **Instead, they inherit this from the surrounding scope where they are defined**.
 - Every regular function created with the `function` keyword has its own `this` binding, so in the end it ensures that `this` inside of that function is bound to something, it's bound to whatever is responsible for executing the function. Now arrow functions don't bind `this` to anything.
@@ -2599,7 +2599,7 @@ const outerObject = {
 
 - On browser console we get
 
-![alt text](image-57.png)
+![alt text](Images/js1/image-57.png)
 
 - In this code, the arrow function is written inside `logThis`. Therefore, `this` inside the arrow function refers to whatever `this` was when `logThis` was called. In `logThis`, this refers to `outerObject`, because that's the object that called the method (`outerObject.logThis()`).
 - When the arrow function is triggered by clicking the button, it doesn't change `this` to the button element (as it would with a regular function). Instead, it sticks to what `this` was in the outer scope (which is `outerObject`).
@@ -2660,7 +2660,7 @@ console.log(personInfo.lastName);   // Output: Smith
 - So OOP basically organize your code structure by defining a class which acts as a blueprint. It consists a set of properties (data) and methods (behaviors). It provides a general template for what an object can be and do.
 - To use the class, you create or instantiate an object. The object is a specific instance of the class, with its own customized properties using the properties of class (like a red Ferrari with a 3902 cc engine) and access to the methods defined in the class.
 
-![alt text](image-58.png)
+![alt text](Images/js1/image-58.png)
 
 - OOP (Object-Oriented Programming) is a programming paradigm that organizes code by creating objects that represent real-world things, like cars, people. These objects have properties (attributes) and methods (behaviors or actions) that define what they are and what they can do.
 - Consider below code
@@ -2707,7 +2707,7 @@ Ferrari.ApplyingBreaks()
 
 - On browser console
 
-![alt text](image-59.png)
+![alt text](Images/js1/image-59.png)
 
 - If you see , the code looks readable. If you wanna create another instance of class or object you can similarly do it
 
@@ -2897,7 +2897,7 @@ mathTeacher.introductionOfTeacher()
 - Here, when the method `introductionOfTeacher()` teacher introduces herself, now there is an HTML button when click then only person introduces itself.
 
 
-<video controls src="2024-1.mp4" title="title"></video>
+<video controls src="Images/js1/2024-1.mp4" title="title"></video>
 
 - If you see, when we clicked on `Introduce Person` button, we did not details of `john` why so? when an event handler (like `addEventListener`) is triggered, the `this` context inside the handler refers **to the element that triggered the event** (in this case, `PersonBtn`). To ensure that the `greet()` method refers to the `person` object you **need to bind `this.person` explicitly** using `.bind(this.person)`.
 - Updated `introductionOfTeacher()` method
@@ -2912,7 +2912,7 @@ mathTeacher.introductionOfTeacher()
 
 - Now when we click on button `Introduce Person` we get the `person` details.
 
-![alt text](image-60.png)
+![alt text](Images/js1/image-60.png)
 
 ### Static Properties and Method
 
@@ -3001,7 +3001,7 @@ Objects Up till now created - 0
 
 - **Static properties and methods are shared across all objects of the class, but they are not actually attached to the objects themselves**. Instead, they belong to the class itself. When you define a static property or method, it’s accessible through the class, not through the individual instances (objects). All instances of the class can indirectly access the static properties or methods because those properties belong to the class.
 
-![alt text](image-61.png)
+![alt text](Images/js1/image-61.png)
 
 ### Inheritance
 
@@ -3403,7 +3403,7 @@ console.log(kitty instanceof Animal); // Output: false
 - In JavaScript, object descriptors (or property descriptors) provide a way to describe the characteristics of an object’s properties. They define how the properties behave, including their configurability, enumerability, writability, and value.
 - On browser console we have create a simple object variable.
 
-<video controls src="2024-2.mp4" title="title"></video>
+<video controls src="Images/js1/2024-2.mp4" title="title"></video>
 
 - When we use `getOwnPropertyDescriptors()` we get the descriptors for a particular object. JavaScript uses object descriptors automatically when you create properties on objects, and they determine how those properties behave.
 - When you create an object in JavaScript, each property of that object has a set of characteristics defined by an object descriptor. These characteristics include:
@@ -3519,7 +3519,7 @@ console.log(anyObj)
 
 - On browser console
 
-![alt text](image-62.png)
+![alt text](Images/js1/image-62.png)
 
 - What is this prototype? in lame english definition a prototype is *`an original model on which something is patterned or a it is the original model, a sample which acts like base for future designs`*.
 - In JavaScript, a prototype is a mechanism by which objects inherit properties and methods from other objects. Think of it as a blueprint or a template that defines the structure and behavior of a particular type of object.
@@ -3689,7 +3689,7 @@ console.dir(replaceConstructor)
 
 - On browser console
 
-![alt text](image-67.png)
+![alt text](Images/js1/image-67.png)
 
 - Now if we use `replaceConstructor.prototype` it will replace the constructor function by `newFunction`
 
@@ -3707,7 +3707,7 @@ console.dir(replaceConstructor)
 
 - On browser console
 
-![alt text](image-68.png)
+![alt text](Images/js1/image-68.png)
 
 - Thats why we need to use `replaceConstructor.prototype.newfunction` it will have the constructor function as well as the new function
 
@@ -3725,7 +3725,7 @@ console.dir(replaceConstructor)
 - On browser console
 
 
-![alt text](image-69.png)
+![alt text](Images/js1/image-69.png)
 
 
 ### Fallback in Prototype
@@ -3755,12 +3755,12 @@ console.log(p.toString()) //Output: [object Object]
 
 - Even `toString()` method is not defined under the `PersonExample` constructor function, but it is defined inside its prototype.
 
-![alt text](image-64.png)
+![alt text](Images/js1/image-64.png)
 
 - Every object in JavaScript by default has such a fallback object (i.e. a prototype object)
 
 
-![alt text](image-63.png)
+![alt text](Images/js1/image-63.png)
 
 ### Prototype Chaining
 
@@ -3775,7 +3775,7 @@ console.log(Object.getPrototypeOf(arrProp) === Array.prototype);  // true
 console.log(Object.getPrototypeOf(Array.prototype) === Object.prototype);  // true
 ```
 
-<video controls src="2024-3.mp4" title="title"></video>
+<video controls src="Images/js1/2024-3.mp4" title="title"></video>
 
 - If a method or property is not found, JavaScript will continue to search up the prototype chain. To verify about your object's prototype you can use `__proto__` or `Object.getPrototypeOf`
 
@@ -3812,7 +3812,7 @@ console.log(Object.prototype.__proto__ === null);  // true
 
 
 
-![alt text](image-65.png)
+![alt text](Images/js1/image-65.png)
 
 - Prototype chaining is also applicable when you extend another class
 
@@ -3841,12 +3841,12 @@ console.log(pa.__proto__)
 
 - On browser console.
 
-![alt text](image-66.png)
+![alt text](Images/js1/image-66.png)
 
 - Thats why we need to use `super()` to construct the parent prototype before creating instance of child objects.
 - **Every object inherits `Object.prototype` properties and methods and not `Object` properties and methods**. When we perform `console.dir(Object)` we get below output on the console.
 
-![alt text](image-70.png)
+![alt text](Images/js1/image-70.png)
 
 - If you see `toString()` method is part of `Object.prototype` and not part of `Object`. The methods and properties like `assign`, `create` etc.. are static properties and methods which can be access via class (`Object`) name.
 
@@ -3883,7 +3883,7 @@ console.dir(cc)
 
 - On browser console
 
-![alt text](image-71.png)
+![alt text](Images/js1/image-71.png)
 
 - If you observe carefully, parent class (`ParentClass`) becomes the prototype of child class (`ChildClass`) but still it has child class methods (`childShow`) and its constructor function. Why so? **because JS perform optimization**.
 - The idea here is that when we create instances of `ChildClass`, we may or may not have different property values. Now methods on the other hand typically are the same across all objects. The properties which in turn might hold dynamic data but your method logic typically does not changes from instances to instances of object.
@@ -3971,7 +3971,7 @@ console.dir(cc)
 
 - On browser console
 
-![alt text](image-72.png)
+![alt text](Images/js1/image-72.png)
 
 - If you see now the `greet()` method is part of `ChildClass` instance and not part of prototype. This means for each instance the `greet()` method is present. This may cause slightly performance and memory consumption impact.
 - The same logic is equivalent when you use arrow function instead of normal function
@@ -3994,9 +3994,9 @@ console.dir(cc)
 
 - On browser console
 
-![alt text](image-73.png)
+![alt text](Images/js1/image-73.png)
 
-![alt text](image-74.png)
+![alt text](Images/js1/image-74.png)
 
 ### Prototype Getters and Setters
 
@@ -4054,7 +4054,7 @@ console.log(penguin.canFly);  // Outputs: true, because it's now inherited from 
 
 - On browser, when we inspect elements tab
 
-![alt text](image-75.png)
+![alt text](Images/js1/image-75.png)
 
 - Now to access `data-name` and `data-age` we will use `dataset` in JS.
 
@@ -4082,7 +4082,7 @@ console.log(div.dataset.age); // Output: undefined
 
 - On browser, when we inspect elements tab
 
-![alt text](image-76.png)
+![alt text](Images/js1/image-76.png)
 
 - You can add multiple `-` (dash) in your attributes in HTML tag which can be access via camel case. Consider below HTML snip 
 
@@ -4160,7 +4160,7 @@ console.log(div.dataset.extraInfo) // Output: extra
 
 - View
 
-![alt text](image-77.png)
+![alt text](Images/js1/image-77.png)
 
 
 - Now using JS we can add content into the `template` tag
@@ -4182,7 +4182,7 @@ document.body.appendChild(cardContent);
 
 - View
 
-![alt text](image-78.png)
+![alt text](Images/js1/image-78.png)
 
 
 - Instead of creating HTML elements from scratch with JavaScript (e.g., `document.createElement`), you can define reusable HTML structures ahead of time and insert them as needed. Useful when rendering dynamic content like lists, cards, or repeated elements where you need a structured layout but want to fill in data later. Keeps the structure organized and easy to maintain, separating template HTML from actual rendered HTML.
@@ -4204,9 +4204,9 @@ document.head.append(createNewJSScript);
 
 - The existing **app.js** creates a JS scripts insert that script into the head of the document and it gets executed.
 
-![alt text](image-79.png)
+![alt text](Images/js1/image-79.png)
 
-![alt text](image-80.png)
+![alt text](Images/js1/image-80.png)
 
 - You can also call any other existing JS file script via code using the same approach.
 
@@ -4223,7 +4223,7 @@ alert("Hello This is a new JS Script file");
 - On browser
 
 
-![alt text](image-81.png)
+![alt text](Images/js1/image-81.png)
 
 
 ## Setting/Stopping Timers & Intervals
@@ -4246,7 +4246,7 @@ setTimeout(() => {
 - On browser console.
 
 
-<video controls src="2024-4.mp4" title="Title"></video>
+<video controls src="Images/js1/2024-4.mp4" title="Title"></video>
 
 
 - Lets see example of `setInterval`.
@@ -4261,7 +4261,7 @@ setInterval(() => {
 - On browser console
 
 
-<video controls src="2024-5.mp4" title="Title"></video>
+<video controls src="Images/js1/2024-5.mp4" title="Title"></video>
 
 
 - Lets see example of `clearTimeout`.
@@ -4442,49 +4442,3 @@ try {
   console.log(error.message); // "Invalid input provided."
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
