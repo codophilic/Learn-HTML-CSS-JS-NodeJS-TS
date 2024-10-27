@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>DOM</title>
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <title>Click Event Example</title>
+</head>
+<body>
+    <button id="myButton">Click Me</button>
+    <p id="message"></p>
 
-</template>
-  </body>
+    <script>
+        const btnClick = function(){
+            alert("Button was clicked");
+        }
+        const btn=document.getElementById("myButton")
+        btn.addEventListener("click",btnClick);
+
+        setTimeout(()=>{
+            btn.removeEventListener("click",btnClick);
+        },2000) //after 2 seconds btn click handler is removed
+
+    </script>
+</body>
 </html>
