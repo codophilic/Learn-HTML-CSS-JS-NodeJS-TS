@@ -1011,7 +1011,7 @@ console.log(liveHTMLListCollection) //HTMLCollection(4) [li.list-item, li.list-
 ```
 
 - Whether you use `getElementsByTagName` or `getElementsByClassName` , the collection returned is always live, meaning it reflects changes to the DOM immediately without needing to re-query.
-- **`NodeList` can be static or live**. In the case of `querySelectorAll`, it returns a static `NodeList`, meaning it does not automatically update when the DOM changes. In the case of `document.getElementsByName()` and `childNodes`. the NodeList is live.
+- **`NodeList` can be static or live**. In the case of `querySelectorAll`, it returns a static `NodeList`, meaning it does not automatically update when the DOM changes. In the case of `document.getElementsByName()` and `childNodes`. The `NodeList` is live.
 - Below is example of static and live `NodeList`
 
 ```
@@ -4042,3 +4042,449 @@ console.log(penguin.canFly);  // Outputs: true, because it's now inherited from 
 ```
 
 - `Object.setPrototypeOf()` lets you change an object's inheritance dynamically, which can be useful in scenarios where you need to adjust the behavior of objects at runtime
+
+## Dataset
+
+- In JavaScript, the `dataset` property allows you to interact with custom data attributes on HTML elements. These attributes start with `data-`, and you can use them to store small pieces of extra information directly in HTML, which JavaScript can easily read or update. 
+- Consider below HTML snip for `div`
+
+```
+  <div id="myDivDataset" data-name="John" data-age="30"></div>
+```
+
+- On browser, when we inspect elements tab
+
+![alt text](image-75.png)
+
+- Now to access `data-name` and `data-age` we will use `dataset` in JS.
+
+```
+const div = document.getElementById("myDivDataset");
+console.log(div.dataset.name); // Output: John
+console.log(div.dataset.age);  // Output: 30
+```
+
+- We can update, add or delete these `data-` attributes
+
+```
+//updating
+div.dataset.name = "Jane";
+console.log(div.dataset.name); // Output: Jane
+
+//adding
+div.dataset.city = "New York";
+console.log(div.dataset.city); // Output: New York
+
+//Deleting
+delete div.dataset.age;
+console.log(div.dataset.age); // Output: undefined
+```
+
+- On browser, when we inspect elements tab
+
+![alt text](image-76.png)
+
+- You can add multiple `-` (dash) in your attributes in HTML tag which can be access via camel case. Consider below HTML snip 
+
+```
+  <div id="myDivDataset" data-extra-info="extra" data-name="John" data-age="30"></div>
+```
+
+- JS script
+
+```
+console.log(div.dataset.extraInfo) // Output: extra
+```
+
+### What the need of Dataset attribute in HTML?
+
+- HTML data attributes are used to store extra information about an HTML element that may not be visible on the page. This information can be used by developers to perform specific actions or apply styling based on the attribute value.
+- Examples
+
+```
+<ul>
+        <li onclick="showDetails(this)" 
+            data-director-name="Christopher Nolan" 
+            data-released-year="2008">
+            The Dark Knight
+        </li>
+
+        <li onclick="showDetails(this)" 
+            data-director-name="Christopher Nolan" 
+            data-released-year="2010">
+            Inception
+        </li>
+
+        <li onclick="showDetails(this)" 
+            data-director-name="James Cameron" 
+            data-released-year="2009">
+            Avatar
+        </li>
+    </ul>
+
+
+<ul>
+  <li data-animal-type="bird">Owl</li>
+  <li data-animal-type="fish">Salmon</li>
+  <li data-animal-type="spider">Tarantula</li>
+</ul>
+```
+
+## Template 
+
+- The `<template>` tag in HTML is a special tag that defines a block of HTML code that you can prepare in advance but doesn’t display directly on the page. Instead, it holds content in the DOM (Document Object Model) that can later be accessed and added to the page as needed using JavaScript.
+- Consider below HTML code
+
+```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>DOM</title>
+  </head>
+  <body>
+    <header>DOM Traversal VS Query Selectors</header>
+    <script src="app.js" defer></script>
+  <!-- Template Definition -->
+  <template id="cardTemplate">
+    <div class="card">
+        <h2 class="title"></h2>
+        <p class="description"></p>
+    </div>
+</template>
+  </body>
+</html>
+```
+
+- View
+
+![alt text](image-77.png)
+
+
+- Now using JS we can add content into the `template` tag
+
+```
+//Template Tag
+const template = document.getElementById("cardTemplate");
+
+// Clone the content of the template
+const cardContent = template.content.cloneNode(true);
+
+// Modify content if needed
+cardContent.querySelector(".title").textContent = "Template Example";
+cardContent.querySelector(".description").textContent = "This is a description in a reusable card.";
+
+// Append to an element in the DOM
+document.body.appendChild(cardContent);
+```
+
+- View
+
+![alt text](image-78.png)
+
+
+- Instead of creating HTML elements from scratch with JavaScript (e.g., `document.createElement`), you can define reusable HTML structures ahead of time and insert them as needed. Useful when rendering dynamic content like lists, cards, or repeated elements where you need a structured layout but want to fill in data later. Keeps the structure organized and easy to maintain, separating template HTML from actual rendered HTML.
+- The `<template>` tag is used to store chunks of HTML markup you might want to reuse multiple times. The content inside `<template>` is not visible on the page until you programmatically insert it using JavaScript. This makes it different from regular HTML, which renders as soon as the page loads.
+
+## Creating JS Scripts using JS
+
+- Lets say during your code, you wanna create a JS script not manually by using your existing JS code.
+- Consider below JS Code.
+
+```
+App.js
+
+//Creating JS
+const createNewJSScript=document.createElement("script");
+createNewJSScript.textContent="alert('this is dynamically added')";
+document.head.append(createNewJSScript);
+```
+
+- The existing **app.js** creates a JS scripts insert that script into the head of the document and it gets executed.
+
+![alt text](image-79.png)
+
+![alt text](image-80.png)
+
+- You can also call any other existing JS file script via code using the same approach.
+
+```
+const insertingNewJSScript=document.createElement("script")
+insertingNewJSScript.src="newJs.js";
+insertingNewJSScript.defer=true
+document.head.append(insertingNewJSScript);
+
+newJs.js 
+alert("Hello This is a new JS Script file");
+```
+
+- On browser
+
+
+![alt text](image-81.png)
+
+
+## Setting/Stopping Timers & Intervals
+
+- In JavaScript, `setTimeout`, `setInterval`, `clearTimeout`, and `clearInterval` are functions used to control the timing of when code runs.
+- `setTimeout` is used to run a piece of code once after a specified delay (in milliseconds). It’s like a one-time timer.
+- `setInterval` is used to run a piece of code repeatedly at a specified interval. The code keeps running every `X` milliseconds until you stop it.
+- `clearTimeout` stops a setTimeout before it completes. It’s like canceling a scheduled one-time task.
+- `clearInterval` stops a setInterval so that the code stops repeating.
+
+- Lets see example of `setTimeout`.
+
+```
+setTimeout(() => {
+  console.log("Hello after 2 seconds");
+}, 2000); // This code runs after 2 seconds
+```
+
+- In this example, `Hello after 2 seconds` will display in the console after 2 seconds (`2000` milliseconds).
+- On browser console.
+
+
+<video controls src="2024-4.mp4" title="Title"></video>
+
+
+- Lets see example of `setInterval`.
+
+```
+setInterval(() => {
+  console.log("Hello every 3 seconds");
+}, 3000); // This code runs every 3 seconds
+```
+
+- In this example, `Hello every 3 seconds` will display in the console every 3 seconds until it’s stopped.
+- On browser console
+
+
+<video controls src="2024-5.mp4" title="Title"></video>
+
+
+- Lets see example of `clearTimeout`.
+
+```
+let timer = setTimeout(() => {
+    console.log("This won't display if we clearTimeout");
+}, 5000);
+
+clearTimeout(timer); // Cancels the timer, so the message won't appear
+```
+
+- Here we cancelled or stopped the `setTimeout` function provided for the interval given.
+- Similarly like `clearTimeout` we have `clearInterval` to stop or cancel interval.
+
+```
+let interval = setInterval(() => {
+    console.log("Repeating...");
+}, 2000);
+
+setTimeout(() => {
+    clearInterval(interval); // Stops the interval after 6 seconds
+    console.log("Interval stopped");
+}, 6000);
+```
+
+- These timing functions are helpful for managing delays, animations, repeated updates, or any situation where precise timing is needed in JavaScript.
+
+## Location and History
+
+- In JavaScript, the `window` object has one of these two properties, location and history, that help control the browser's URL, navigate between pages, and track browsing history.
+- `window.history`: The history object allows you to interact with the user’s browsing history, like moving back and forth between visited pages or manipulating the history stack.
+
+```
+// Go back to the previous page
+history.back();
+
+// Go forward to the next page
+history.forward();
+
+// Jump two pages back
+history.go(-2);
+
+// Push a new state with a different URL
+history.pushState({}, "New Page", "/new-page");
+
+// Replace the current state with a new URL
+history.replaceState({}, "Updated Page", "/updated-page");
+```
+
+- `window.location`: The location object provides details about the URL of the current page and methods for navigating to new pages, reloading, or modifying the URL.
+- Below are some common examples used
+
+```
+// Get the current page URL
+console.log(location.href); // e.g., "https://example.com/about?id=123"
+
+// Navigate to a new URL
+location.href = "https://example.com/contact";
+
+// Reload the page
+location.reload();
+
+// Change URL without adding to history (backward <- will be disable since re-directed to the new url https://example.com/home)
+location.replace("https://example.com/home");
+```
+
+## Date
+
+- The `Date` constructor is used to create a Date object, representing a specific point in time. With this object, you can easily manipulate dates, get current dates and times, calculate differences, format dates, and more.
+
+```
+const currentDate = new Date();
+console.log(currentDate); // Outputs: Sun Oct 27 2024 17:26:49 GMT+0530 (India Standard Time)
+
+//Parses a date string and creates a date.
+const dateFromString = new Date("2023-10-27");
+console.log(dateFromString); // Example: Fri Oct 27 2023 05:30:00 GMT+0530 (India Standard Time)
+
+//Pass individual components as numbers (Month is zero-indexed, where January is 0, so 11 -> December).
+const specificDate = new Date(2023, 11, 27, 15, 30, 0);
+console.log(specificDate); // Example: Wed Dec 27 2023 15:30:00 GMT+0530 (India Standard Time)
+
+//Provide the time in milliseconds since January 1, 1970 (UTC)
+const dateFromTimestamp = new Date(1698422400000);
+console.log(dateFromTimestamp); // Example date based on the timestamp (Fri Oct 27 2023 21:30:00 GMT+0530 (India Standard Time))
+```
+
+- JavaScript’s Date constructor can parse a wide range of date formats, such as:
+  - ISO Format: `YYYY-MM-DDTHH:MM:SSZ`
+  - Short Date Format: `YYYY-MM-DD`
+  - Date-Time Format: `Month DD, YYYY HH:MM:SS`
+
+```
+const validDate = new Date("October 27, 2023 15:30:00");
+console.log(validDate); // Example: Fri Oct 27 2023 15:30:00 GMT+0530 (India Standard Time)
+
+const invalidDate = new Date("Not a Date");
+console.log(invalidDate); // Invalid Date
+```
+
+- Calculating difference in days
+
+```
+const date1 = new Date("2024-10-27");
+const date2 = new Date("2023-10-27");
+
+const diffInMs = date1 - date2;
+const diffInDays = diffInMs / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+
+console.log(`Difference in days: ${diffInDays}`); // Output: 366 (for leap year)
+```
+
+- The `Date` constructor provides some in-built methods to get or set date units (`getFullYear(), getMonth(), getDate(), getHours(), getMinutes(), setFullYear(), setMonth(), setDate(), setHours(), etc.`)
+
+```
+const date = new Date("2023-10-27");
+date.setDate(date.getDate() + 5); // Add 5 days
+console.log(date); // Wed Nov 01 2023 05:30:00 GMT+0530 (India Standard Time)
+
+//Formatting dates
+const datef = new Date("2023-10-27");
+console.log(datef.toLocaleDateString()); // "10/27/2023" (based on locale)
+console.log(datef.toLocaleTimeString()); // "5:30:00 AM" (based on locale)
+```
+
+## Error
+
+- In JavaScript, the `Error` object represents an error that occurs during the execution of a program. It provides information about what went wrong, allowing you to handle errors more effectively. The `Error` object contains properties like `message` and `name`, which give details about the error, and it can be used to create custom error messages.
+
+```
+const error = new Error("Something went wrong!");
+console.log(error.message); // "Something went wrong!"
+console.log(error.name);    // "Error"
+```
+
+- You can throw error from a function using `throw` keyword
+
+```
+function checkAge(age) {
+  if (age < 18) {
+    throw new Error("Age must be 18 or older.");
+  }
+  return "Access granted.";
+}
+
+try {
+  console.log(checkAge(15));
+} catch (error) {
+  console.log(error.message); // "Age must be 18 or older."
+}
+```
+
+- Using `try-catch` you can print the message or stack trace
+
+```
+try {
+  throw new Error("Custom error occurred.");
+} catch (error) {
+  console.log(error.stack); // Shows the sequence of function calls that led to the error
+}
+```
+
+- Creating custom error 
+
+```
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
+
+try {
+  throw new ValidationError("Invalid input provided.");
+} catch (error) {
+  console.log(error.name);    // "ValidationError"
+  console.log(error.message); // "Invalid input provided."
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

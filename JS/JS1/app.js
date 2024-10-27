@@ -1282,6 +1282,114 @@ delete penguin.canFly;  // Remove the `canFly` property from `penguin`
 console.log(penguin.canFly);  // Outputs: true, because it's now inherited from `bird`
 
 
+//Dataset
+
+const div = document.getElementById("myDivDataset");
+console.log(div.dataset.name); // Output: John
+console.log(div.dataset.age);  // Output: 30
+
+//updating
+div.dataset.name = "Jane";
+console.log(div.dataset.name); // Output: Jane
+
+//adding
+div.dataset.city = "New York";
+console.log(div.dataset.city); // Output: New York
+
+//Deleting
+delete div.dataset.age;
+console.log(div.dataset.age); // Output: undefined
+
+console.log(div.dataset.extraInfo) // Output: extra
+
+//Template Tag
+const template = document.getElementById("cardTemplate");
+
+// Clone the content of the template
+const cardContent = template.content.cloneNode(true);
+
+// Modify content if needed
+cardContent.querySelector(".title").textContent = "Template Example";
+cardContent.querySelector(".description").textContent = "This is a description in a reusable card.";
+
+// Append to an element in the DOM
+document.body.appendChild(cardContent);
+
+// //Creating JS
+// const createNewJSScript=document.createElement("script");
+// createNewJSScript.textContent="alert('this is dynamically added')";
+// document.head.append(createNewJSScript);
+
+// const insertingNewJSScript=document.createElement("script")
+// insertingNewJSScript.src="newJs.js";
+// insertingNewJSScript.defer=true
+// document.head.append(insertingNewJSScript);
+
+// setTimeout(() => {
+//   console.log("Hello after 2 seconds");
+// }, 2000); // This code runs after 2 seconds
+
+// setInterval(() => {
+//   console.log("Hello every 3 seconds");
+// }, 3000); // This code runs every 3 seconds
+
+// let timer = setTimeout(() => {
+//   console.log("This won't display if we clearTimeout");
+// }, 5000);
+
+// clearTimeout(timer); // Cancels the timer, so the message won't appear
+
+// Dates
+
+const currentDate = new Date();
+console.log(currentDate); // Outputs: Sun Oct 27 2024 17:26:49 GMT+0530 (India Standard Time)
+
+//Parses a date string and creates a date.
+const dateFromString = new Date("2023-10-27");
+console.log(dateFromString); // Example: Fri Oct 27 2023 05:30:00 GMT+0530 (India Standard Time)
+
+//Pass individual components as numbers (Month is zero-indexed, where January is 0, so 11 -> December).
+const specificDate = new Date(2023, 11, 27, 15, 30, 0);
+console.log(specificDate); // Example: Wed Dec 27 2023 15:30:00 GMT+0530 (India Standard Time)
+
+//Provide the time in milliseconds since January 1, 1970 (UTC)
+const dateFromTimestamp = new Date(1698422400000);
+console.log(dateFromTimestamp); // Example date based on the timestamp (Fri Oct 27 2023 21:30:00 GMT+0530 (India Standard Time))
+
+const validDate = new Date("October 27, 2023 15:30:00");
+console.log(validDate); // Example: Fri Oct 27 2023 15:30:00 GMT+0530 (India Standard Time)
+
+const invalidDate = new Date("Not a Date");
+console.log(invalidDate); // Invalid Date
+
+const date1 = new Date("2024-10-27");
+const date2 = new Date("2023-10-27");
+
+const diffInMs = date1 - date2;
+const diffInDays = diffInMs / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+
+console.log(`Difference in days: ${diffInDays}`); // Output: 366 (for leap year)
+
+const date = new Date("2023-10-27");
+date.setDate(date.getDate() + 5); // Add 5 days
+console.log(date); // Wed Nov 01 2023 05:30:00 GMT+0530 (India Standard Time)
+
+//Formatting dates
+const datef = new Date("2023-10-27");
+console.log(datef.toLocaleDateString()); // "10/27/2023" (based on locale)
+console.log(datef.toLocaleTimeString()); // "5:30:00 AM" (based on locale)
+
+//Error
+const error = new Error("Something went wrong!");
+console.log(error.message); // "Something went wrong!"
+console.log(error.name);    // "Error"
+
+
+
+
+
+
+
 
 
 
