@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drag and Drop Example</title>
+<style>
+  .draggable {
+    width: 100px;
+    height: 100px;
+    background-color: lightblue;
+    margin: 20px;
+    cursor: grab;
+  }
+  
+  .droppable {
+    width: 150px;
+    height: 150px;
+    background-color: lightgray;
+    border: 2px dashed gray;
+    margin: 20px;
+  }
+  
+  .hover {
+    background-color: lightgreen; /* Highlight the drop target */
+  }
+</style>
+</head>
+<body>
+
+<div class="draggable" draggable="true" id="drag-item">Drag me</div>
+<div class="droppable" id="drop-target">Drop here</div>
+
+<script>
+  // Selecting elements
+  const dragItem = document.getElementById('drag-item');
+  const dropTarget = document.getElementById('drop-target');
+
+  // Handle drag start
+  dragItem.addEventListener('dragstart', (event) => {
+    event.dataTransfer.effectAllowed = 'move'; // Allow "move" action
+    event.dataTransfer.setData('text/plain', event.target.id); // Store item ID
+  });
+
+  // Handle drag over - must prevent default to allow drop
+  dropTarget.addEventListener('dragover', (event) => {
+    event.preventDefault(); // Necessary for allowing drop
+    dropTarget.classList.add('hover'); // Add hover effect
+  });
+
+  // Handle drag leave - when the item leaves the droppable area
+  dropTarget.addEventListener('dragleave', () => {
+    dropTarget.classList.remove('hover'); // Remove hover effect
+  });
+
+  // Handle drop
+  dropTarget.addEventListener('drop', (event) => {
+    event.preventDefault(); // Prevent default behavior
+    const data = event.dataTransfer.getData('text'); // Get stored data (item ID)
+    const draggedElement = document.getElementById(data); // Find dragged item
+    dropTarget.appendChild(draggedElement); // Move item to drop target
+    dropTarget.classList.remove('hover'); // Remove hover effect
+  });
+</script>
+
+</body>
+</html>

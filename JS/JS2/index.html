@@ -7,8 +7,48 @@
 <body>
     <button id="myButton">Click Me</button>
     <p id="message"></p>
-
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <button type="submit">Submit</button>
+      </form>
+      
+      <div id="parent">
+        <button id="child">Click Me</button>
+      </div>
+      <ul id="itemList">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
     <script>
+
+
+        // Default Bubbling Phase
+        // Adding event listeners to both parent and child elements
+        document.getElementById("parent").addEventListener("click", function() {
+        console.log("Parent Div Clicked - Bubbling Phase");
+        });
+
+        const childElement=document.getElementById("child")
+        childElement.addEventListener("click", function() {
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        console.log(this)
+        console.log("Button Clicked");
+        });
+
+        childElement.addEventListener("click", function() {
+        console.log("Button Clicked-1");
+        });
+
+        const form = document.getElementById("myForm");
+
+        form.addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevents the form from submitting
+        console.log("Form submission prevented! and performing validation or operation on form before submitting");
+        });
+
         const btnClick = function(){
             alert("Button was clicked");
         }
@@ -19,6 +59,24 @@
             btn.removeEventListener("click",btnClick);
         },2000) //after 2 seconds btn click handler is removed
 
+    //Calling Event handler on all the list items
+    const listitems=document.querySelectorAll("li");
+    listitems.forEach(i=>{
+        i.addEventListener("click",event=>{
+            console.log(event.target.textContent);
+        })
+    });
+
+    // Select the parent element (the <ul>)
+    const itemList = document.getElementById("itemList");
+
+    // Add one event listener to the <ul>
+    itemList.addEventListener("click", function(event) {
+      // Check if the clicked element is an <li>
+      if (event.target && event.target.nodeName === "LI") {
+        console.log("You clicked:", event.target.textContent);
+      }
+    });
     </script>
 </body>
 </html>
