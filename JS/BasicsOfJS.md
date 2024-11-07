@@ -1268,6 +1268,202 @@ function division(){
 
 <video controls src="Images/basicofjs/20241001-1819-50.3317326.mp4" title="Title"></video>
 
+## Numbers
+
+-  In JavaScript, all numbers are indeed **represented as 64-bit floating-point values**. This means every number, whether it's an integer or a decimal, is stored in the same 64-bit floating-point format, which uses binary under the hood.
+- **64-Bit Floating-Point Representation**: JavaScript uses a 64-bit format to represent numbers, which is divided as:
+  - 1 bit for the sign (positive or negative),
+  - 11 bits for the exponent,
+  - 52 bits for the fraction, also known as the significant or mantissa.
+- This format allows JavaScript to represent both very large and very small numbers with high precision, but it has limitations due to binary representation.
+- So the max value and min value in JS is
+
+```
+Number.MAX_SAFE_INTEGER
+=> 9007199254740991
+Number.MIN_SAFE_INTEGER
+=> -9007199254740991
+Number.MAX_VALUE
+=> 1.7976931348623157e+308
+Number.MIN_VALUE
+=> 5e-324
+Number.POSITIVE_INFINITY
+=> Infinity
+Number.NEGATIVE_INFINITY
+=> -Infinity
+Number.MAX_SAFE_INTEGER+1
+=> 9007199254740991 (gives same value when added more numbers)
+```
+
+- You can convert numbers to different bases using toString. For example:
+  - `toString(2)` converts the number to binary.
+  - `toString(10)` converts it to decimal (though decimal is the default if no argument is provided).
+  - `toString(16)` converts it to hexadecimal.
+
+- Examples
+
+```
+(4).toString(2)
+=> '100'
+(15).toString(16)
+=> 'f'
+```
+
+- Consider below code
+
+```
+console.log(0.2 + 0.4 === 0.6); // Output: false
+```
+
+- The result is `false` why so? internally, JavaScript uses binary for calculations. This is why some decimal numbers, like `0.2` and `0.4`, cannot be represented exactly in binary. For instance, `0.2 + 0.4` does not exactly equal `0.6` because `0.2` and `0.4` cannot be represented precisely in binary, resulting in tiny rounding errors.
+
+```
+0.2+0.4
+=> 0.6000000000000001
+```
+
+- When we convert `0.2` and `0.4` to binary (as JS perform calculation by converting decimal to binary) you get
+
+```
+0.2.toString(2)
+=> '0.001100110011001100110011001100110011001100110011001101'
+0.4.toString(2)
+=> '0.01100110011001100110011001100110011001100110011001101'
+```
+
+- Now when you convert these binary output value back into decimal using online tool you get values as 
+
+```
+0.001100110011001100110011001100110011001100110011001101 ===> 0.2000000000000000111
+0.01100110011001100110011001100110011001100110011001101 ===> 0.4000000000000000222
+```
+
+- Thats why we compare and we get `false` value.
+- To handle floating-point precision errors, JavaScript provides the `toFixed` method, which allows you to format a number to a fixed number of decimal places
+
+```
+// Using toFixed to round to two decimal places
+(0.2+0.4).toFixed(2)===0.6.toFixed(2) //true
+```
+
+- Consider below code
+
+```
+20.2.toString(2)
+=> '10100.001100110011001100110011001100110011001100110011' (decimal value is 20.19999999999999928946)
+20.2.toFixed(20)
+=> '20.19999999999999928946'
+```
+
+- When you call `.toFixed(20)`, JavaScript attempts to display `20.2` to `20` decimal places. However, it’s using the approximate value stored in memory, not the exact `20.2` as we would write it in decimal. This results in the actual value being output, which is `20.19999999999999928946`.
+
+### BigInt
+
+- `BigInt` is a special numeric data type that allows you to work with integers of arbitrary size. Unlike regular Number type values, which are limited to 64-bit floating-point precision, `BigInt` can represent whole numbers much larger than the safe integer limit (`Number.MAX_SAFE_INTEGER => 9007199254740991`).
+
+```
+console.log(Number.MAX_SAFE_INTEGER); // Output: 9007199254740991
+
+// Beyond this limit, JavaScript may not handle large numbers accurately
+console.log(9007199254740991 + 1); // Output: 9007199254740992
+console.log(9007199254740991 + 2); // Output: 9007199254740992 (Incorrect!)
+```
+- To handle such large integers precisely, JavaScript introduced `BigInt`.
+- There are two ways to create a BigInt in JavaScript:
+  - Appending `n` to the end of an integer literal or using `BigInt` function
+
+```
+const bigIntNum = 1234567890123456789012345678901234567890n;
+console.log(bigIntNum); // Output: 1234567890123456789012345678901234567890n
+
+const bigIntFromStr = BigInt("1234567890123456789012345678901234567890");
+console.log(bigIntFromStr); // Output: 1234567890123456789012345678901234567890n
+```
+
+- BigInt can represent very large integers without losing precision, which is useful in situations like cryptography, high-precision calculations, or financial applications.
+- **BigInt can only represent whole numbers. If you try to create a BigInt with a decimal, JavaScript will throw an error.**
+
+```
+const decimalBigInt = 1.5n; // Throws SyntaxError: Invalid or unexpected token
+```
+
+- You cannot mix BigInt with regular Number types in operations directly. For example, the following will throw an error
+
+```
+const bigIntNum = 10n;
+const regularNum = 5;
+console.log(bigIntNum + regularNum); // Throws TypeError, Cannot mix BigInt and other types, use explicit conversions
+```
+
+- However, you can explicitly convert `Number` to `BigInt` or vice versa if needed:
+
+```
+console.log(bigIntNum + BigInt(regularNum)); // Works
+console.log(Number(bigIntNum) + regularNum); // Works, but may lose precision
+```
+
+- You can use the standard arithmetic operators with BigInt (`+, -, *, /, %`), but **remember that division with BigInt will truncate (not round) to the nearest integer**
+
+```
+console.log(10n / 3n); // Output: 3n (no decimal part, truncated)
+```
+
+### Math
+
+- `Math` object includes many useful methods for performing mathematical operations, from simple rounding to complex trigonometric calculations. Here’s an overview of commonly used `Math` methods with examples.
+
+```
+// Rounds x to the nearest integer
+Math.round(4.7); // 5
+Math.round(4.4); // 4
+
+Math.floor(4.9); // 4
+Math.floor(-4.1); // -5
+
+Math.ceil(4.1); // 5
+Math.ceil(-4.9); // -4
+
+// Removes the decimal part, leaving only the integer part.
+Math.trunc(4.9); // 4
+Math.trunc(-4.9); // -4
+
+// Returns base raised to the power of exponent.
+Math.pow(2, 3); // 8 (2^3)
+Math.pow(5, 2); // 25 (5^2)
+
+Math.sqrt(25); // 5
+Math.sqrt(2);  // 1.4142135623730951
+
+// Returns the cube root of x
+Math.cbrt(27); // 3
+Math.cbrt(8);  // 2
+
+// Absolute
+Math.abs(-5) //5
+
+// Trignometery
+Math.sin(Math.PI / 2); // 1
+Math.sin(0); // 0
+
+Math.cos(0); // 1
+Math.cos(Math.PI); // -1
+
+Math.min(10, -5, 3, 7); // -5
+
+Math.max(10, -5, 3, 7); // 10
+
+Math.random(); // Example output: 0.726353276123
+
+Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
+
+// Returns the sign of x as -1 (negative), 1 (positive), or 0.
+Math.sign(-10); // -1
+Math.sign(0);   // 0
+Math.sign(10);  // 1
+
+Math.PI; // 3.141592653589793
+```
+
 ## Data Types
 
 - Up till now we have seen Number, String and Boolean datatype and saw some of the example. Lets see **Object** data type in JavaScript.
@@ -3427,4 +3623,10 @@ addListenerBtn.addEventListener('click', addListener);
 Heap and stack memory are internal to the V8 engine, but the V8 engine taps into system memory (i.e., the physical RAM on your computer) to allocate space for these structures. This interaction with the operating system is how the engine stores and manages data.
 - JavaScript execution involves RAM (system memory) for heap and stack management, not disk space. Browsers may use disk storage for things like caching, local storage, or cookies, but that's separate from the in-memory heap and stack used for code execution.
 - Online reference for [memory management](https://www.turing.com/kb/handling-memory-management-in-javascript#javascript-engine-storages-(stack-and-heap-memory))
+
+
+
+
+
+- Learn more about [JS concepts](JS-I.md)
 

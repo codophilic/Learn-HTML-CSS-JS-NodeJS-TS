@@ -1066,12 +1066,237 @@ dropTarget.addEventListener('drop', (event) => {
 
 <video controls src="2024-12.mp4" title="title"></video>
 
+## Advance Concept in Functions
+
+### Pure vs Impure Functions
+
+- In JavaScript, a **pure function** is a function that which always returns the same output for the same input No matter how many times you call the function with the same arguments, it will always return the same result. It has no side effects meaning it doesn't modify any variables outside its scope, such as global variables or the properties of objects passed as arguments.
+
+```
+function add(x, y) {
+    return x + y;
+}
+
+console.log(add(5,4)) // 9
+console.log(add(1,2)) //3
+```
+
+- Whereas Impure functions, on the other hand, are functions that which may have side effects like they can modify global variables, update object properties, arrays, perform I/O operations (like reading from a file or making a network request), or interact with the DOM.
+- Impure functions may return different outputs for the same input. Their behavior can depend on external state, leading to unpredictable results.
+
+```
+let globalVar=0;
+
+//Impure Functions
+function addWithRandom(x,y){
+    globalVar=Math.random()+x+y;
+    return globalVar;
+}
+console.log(addWithRandom(10,20)) //30.840642363022475 (Randomness)
+console.log(globalVar) //30.840642363022475 (Side effect)
+```
+
+- On every reload of the page we will get different output.
+- **It is always recommended to make your function pure, incase where side effects are require like lets say you wanna make some HTTP request or db connection logging , DOM manipulation etc... requires external resources in such scenario creating impure function is a valid choice**.
+- In general, prefer pure functions whenever possible. They make your code more reliable, maintainable, and testable. Use impure functions only when necessary for performing side effects or interacting with the outside world.
+- Consider below example of impure function
+
+```
+let defaultValue = 10;
+function addNumber(num) {
+    return num + defaultValue;
+}
+```
+
+- `defaultValue` is an external variable and hence the function is not guaranteed to always yield the same result.
+
+### Factory Functions
+
+- Think of a pizza shop. Instead of creating each pizza by hand every time, the shop has a pizza-making machine where you can order a specific kind of pizza with your choice of toppings.
+    - Order Pizza: You tell the pizza-making machine what kind of pizza you want.
+    - Get Your Pizza: The pizza-making machine takes your order and makes the pizza with the ingredients specified.
+    - Serve Pizza: You get your pizza ready to eat, with all toppings and customizations.
+- Considering same analogy, the pizza-making machine is a factory function which creates object and returns you the object (pizzas) based on your given input (toppings and size). Consider below code
+
+```
+
+function createPizza(size, topping) {
+    return {
+      size: size,
+      topping: topping,
+      bake() {
+        console.log(`Baking a ${size} pizza with ${topping}!`);
+      },
+    };
+  }
+  
+const myPizza = createPizza("large", "pepperoni");
+myPizza.bake(); // Output: Baking a large pizza with pepperoni!
+console.log(myPizza.size); // large
+console.log(myPizza.topping); //pepperoni
+```
+
+- A factory function in JavaScript is a function that creates and returns an object. It’s called a "factory" because it makes objects in a way similar to how a factory makes products. **You don't use `new` (like in a constructor), but instead, just call the function to get a new object**.
+- **When you use a factory function to create an object, the values you pass to the function (like `size` and `topping` in the pizza example) are stored as properties in the returned object. You can easily access these properties later**.
+- Each object created with the factory function keeps track of its own unique values that were passed as inputs.
+
+#### Why Use a Factory Function?
+
+- Simplifies Object Creation: A factory function makes it easy to create multiple objects that are similar but might have slight differences.
+- Encapsulation: Factory functions can keep data private and provide only the methods and properties you want accessible, which helps with organizing code and controlling access.
+- No Need for `new`: It doesn't need the new keyword, so it’s simpler and avoids some common pitfalls that can happen with JavaScript’s new operator.
+- A factory function is helpful in situations where:
+    - You need to create multiple instances of a similar kind of object.
+    - You want more control over how the object is created, like adding default values or specific properties.  
+
+### Closure
+
+- In JavaScript, a closure is a feature where an inner function remembers the variables from the outer function in which it was created, even after that outer function has finished running. Closures allow a function to "close over" its surrounding state, giving it access to variables and parameters from its outer scope even after that scope is gone.
+- Consider below JS
+
+```
+function outerFunction(num) {
+    let outerVariable = 'I am from outer function';
+  
+    function innerFunction() {
+      console.log(outerVariable);
+      console.log("Number sent: "+num)
+    }
+  
+    return innerFunction;
+}
+  
+const closure = outerFunction(10);
+closure(); 
+
+Output:
+I am from outer function
+Number sent: 10
+```
+
+- `outerFunction` defines a variable `outerVariable` and also accepts the input `num`. It also defines an `innerFunction` that accesses outer variable `outerVariable` and `num`. `outerFunction` returns `innerFunction`. We assign the result of `outerFunction` (which is `innerFunction`) to the **variable closure**. We call `closure` variable, which executes `innerFunction`.
+- Even though `outerFunction` has finished executing, `innerFunction` still has access to `outerVariable` through the closure. This is because the inner function's lexical environment (scope) forms a closure, preserving the variables it needs from its outer function.
+- Closures are essential for various JavaScript patterns, such as data encapsulation and creating private variables.
+- Even though `outerFunction` has finished executing, `innerFunction` still has access to `outerVariable` through the closure.
+- This is because the inner function's lexical environment (scope) forms a closure, preserving the variables it needs from its outer function.
+- Closures are essential for various JavaScript patterns, such as data encapsulation and creating private variables.
+- **Almost all functions in JavaScript have closures**. A closure is created when a function is defined, not when it's executed.
+It allows the function to access variables from its surrounding lexical environment, even after the outer function has finished executing. In JavaScript, functions are first-class citizens, meaning they can be treated like any other variable. This enables them to be nested within other functions.
+- Lets see an another example of closure
+
+```
+function createMultiplier(multiplier) {
+  return function(number) {
+    return number * multiplier;
+  };
+}
+
+const double = createMultiplier(2);
+const triple = createMultiplier(3);
+
+console.log(double(5)); // Output: 10
+console.log(triple(5)); // Output: 15
+```
+
+- `createMultiplier` accepts a `multiplier` and returns a function. **Each returned function "remembers" its specific multiplier value**. `double` and `triple` are functions that apply their unique `multiplier` to a number.
+- **So in JavaScript, the closure is the combination of the inner function and its lexical environment (the surrounding state, or variables, it "remembers")**. Inner Function has access to the outer function’s variables, creating the closure. Lexical Environment includes the variables from the outer function that the inner function can access.
 
 
+### IIFE
 
+- In JavaScript - especially in older scripts - you sometimes find a pattern described as IIFEs. IIFE stands for **Immediately Invoked Function Expression** and the pattern you might find looks like this.
 
+```
+(function() {
+  console.log("This is an IIFE!");
+})();
+```
 
+- An IIFE (Immediately Invoked Function Expression) is a function in JavaScript that runs as soon as it is defined. You don't need to call it separately; it "self-executes" as soon as the code interpreter reaches it.
+- If the function takes parameter
 
+```
+(function(name) {
+  console.log(`Hello, ${name}!`);
+})("Alice");
+```
 
+- IIFEs are useful for code that needs to run once, such as initializing a configuration or setting up event listeners.
 
+```
+const app = (function() {
+  const config = { theme: "dark", language: "en" };
+  console.log("App initialized with config:", config);
+
+  // The IIFE returns an object with only public methods or properties
+  return {
+    getConfig: function() {
+      return config;
+    },
+  };
+})();
+
+console.log(app.getConfig()); 
+// Output: App initialized with config: { theme: 'dark', language: 'en' }
+// { theme: "dark", language: "en" }
+```
+
+### Recursive Functions
+
+- A recursive function in JavaScript (or any programming language) is a function that calls itself in order to solve a problem. Recursion is often used to solve problems that can be broken down into smaller, similar sub-problems, such as traversing nested structures (like trees) or performing repetitive tasks with a changing state.
+- To avoid an infinite loop, a recursive function needs a base case, which is a condition that tells the function to stop calling itself. Without a base case, the recursion would continue forever and result in a **stack overflow error**.
+
+```
+function factorial(n) {
+  // Base case: if n is 0, return 1
+  if (n === 0) {
+    return 1;
+  }
+  // Recursive case: multiply n by factorial of (n - 1)
+  return n * factorial(n - 1);
+}
+
+console.log(factorial(5)); // Output: 120
+```
+
+- Recursion is very powerful for navigating complex, nested data structures.
+
+```
+const nestedObject = {
+  name: "root",
+  children: [
+    {
+      name: "child1",
+      children: [
+        { name: "child1.1", children: [] },
+        { name: "child1.2", children: [] },
+      ],
+    },
+    {
+      name: "child2",
+      children: [
+        { name: "child2.1", children: [] },
+      ],
+    },
+  ],
+};
+
+function printNames(node) {
+  console.log(node.name);
+  // Recursively print names of all children
+  for (const child of node.children) {
+    printNames(child);
+  }
+}
+
+printNames(nestedObject);
+
+Output:
+root
+child1
+child1.1
+child1.2
+child2
+child2.1
+```
 
