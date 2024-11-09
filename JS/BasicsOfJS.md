@@ -1582,6 +1582,48 @@ const safeHTML = escapeHTML`User comment: ${userInput}`;
 console.log(safeHTML); // "User comment: &lt;script&gt;alert('Hacked!')&lt;/script&gt;"
 ```
 
+## Regex
+
+- Regular expressions are patterns used to match character combinations in text. 
+- There are two ways to defined a regex
+- Using regex literals
+
+```
+const regex = /[a-z]/; // Matches any lowercase letter
+const str = "Hello, world!";
+const matches = str.match(regex); // ["H", "e", "l", "l", "o", "w", "o", "r", "l", "d"]
+console.log(matches)
+console.log(regex.test(str)) //true
+
+const regex1 = /\d{3}-\d{2}-\d{4}/; // Matches a phone number like 123-45-6789
+const str1 = "My phone number is 123-45-6789.";
+console.log(regex1.test(str1)) // true
+
+const regex2 = /\bcat\b/; // Matches the word "cat" but not "catnip" or "tomcat"
+const str2 = "The cat sat on the mat.";
+console.log(regex2.test(str2)) // true
+
+const regex3 = /colou?r/; // Matches both "color" and "colour"
+const str3 = "color";
+const str4 = "colour";
+console.log(regex3.test(str3)); // true
+console.log(regex3.test(str4)); // true
+```
+
+- Another way to define regex is by creating Regex Object
+
+```
+const emailPattern = new RegExp('^[\\w-]+@[\\w-]+\\.[\\w-]{2,}$', 'i');
+
+const email1 = 'johndoe@example.com';
+const email2 = 'jane.doe@example.co.uk';
+const invalidEmail = 'invalid_email';
+
+console.log(emailPattern.test(email1)); // Output: true
+console.log(emailPattern.test(email2)); // Output: true
+console.log(emailPattern.test(invalidEmail)); // Output: false
+```
+
 ## Data Types
 
 - Up till now we have seen Number, String and Boolean datatype and saw some of the example. Lets see **Object** data type in JavaScript.
