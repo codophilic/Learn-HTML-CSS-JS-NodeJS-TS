@@ -61,3 +61,97 @@ function createMultiplier(multiplier) {
   console.log(triple(5)); // Output: 15
   
 
+// CallBack Hell
+
+function getData(dataid,timeTakenToFetch,nextData){
+  console.log(`data ${dataid} fetching...`)
+  setTimeout(()=>{
+      console.log(`data ${dataid} fetched`)
+      if(nextData){
+          nextData()
+      }
+  },timeTakenToFetch)
+}
+
+getData(1,3000,()=>{
+  getData(2,4000,()=>{
+      getData(3,3000)
+  })
+})
+
+// Promises
+// Creating a promise that resolves after 6 second
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Data fetched successfully!'); 
+  }, 6000);
+});
+
+// Using the promise
+promise
+  .then(data => {
+    console.log(data); // Output: Data fetched successfully!
+  })
+  .catch(error => {
+    console.error(error); // Handle any errors
+  });
+
+// Promise Chaining
+function getDataFromPromise(dataid,timeTakenToFetch){
+  return new Promise((resolve,reject)=>{
+    console.log(`data ${dataid} fetching...`)
+    setTimeout(()=>{
+        console.log(`data ${dataid} fetched`)
+        resolve("data was returned")
+    },timeTakenToFetch)
+  })
+}
+
+let r1=getDataFromPromise(1,3000)
+r1.then((data=>{
+    console.log(data);
+    let r2=getDataFromPromise(2,4000)
+    r2.then((data=>{
+        console.log(data)
+        let r3=getDataFromPromise(3,3000)
+        r3.then((data=>{
+            console.log(data)
+        }))
+    }))
+}))
+
+// Async-Await
+
+function getDataAsyncAwait(dataid, timeTakenToFetch) {
+  console.log(`data ${dataid} fetching...`);
+  return new Promise((resolve,reject) => {
+      setTimeout(() => {
+          console.log(`data ${dataid} fetched`);
+          if(dataid==2){
+            reject("Data Not Found");
+          }
+          resolve();
+      }, timeTakenToFetch);
+  });
+}
+
+async function fetchDataInSequence() {
+  let r1;
+  let r2;
+  let r3;
+  try{
+    r1=await getDataAsyncAwait(1, 3000); // Wait for data 1 to fetch
+    r2=await getDataAsyncAwait(2, 4000); // Wait for data 2 to fetch
+    r3=await getDataAsyncAwait(3, 3000); // Wait for data 3 to fetch
+    /*
+    The Above lines are same as using nested .then
+    */
+  }catch(Error){
+    console.log(`Error - ${Error}`);
+  }
+
+}
+
+fetchDataInSequence();
+
+

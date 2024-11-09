@@ -97,7 +97,7 @@
 
 <details> 
 
-<summary> Whats sandboxed? </summary>
+<summary> Whats sandbox? </summary>
 
 - Sandboxing means that web browsers keep the websites you visit in a safe, restricted area on your computer. This is done to protect your system from any harmful actions that the website's code (like JavaScript) might try to do. 
 - Sandboxing means the browser isolates websites to keep them from doing harmful things to your computer. It’s a security feature that limits what websites can access on your system.

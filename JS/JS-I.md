@@ -1433,7 +1433,7 @@ Output:
 25
 ```
 
-- Just like `find()` method, the `forEach()` method requires a **callback function**. Similarly like `find()` it can accept atmost 3 parameters
+- Just like `find()` method, the `forEach()` method requires a **callback function**. Similarly like `find()` it can accept at most 3 parameters
   - value: The value of the array element.
   - index (optional): The index of the array element.
   - array (optional): The array itself. 
@@ -1627,7 +1627,7 @@ console.log(filtered); //[24,33,40]
 
 ##### reduce
 
-- The `reduce()` method in JS is used to accumulate or reduce an array into a single value. It accepts a **callback funtion**, applies it to each element of the array and accepts a **initial value** as one of the parameter. Just like in `find()` method the **callback funtion**
+- The `reduce()` method in JS is used to accumulate or reduce an array into a single value. It accepts a **callback function**, applies it to each element of the array and accepts a **initial value** as one of the parameter. Just like in `find()` method the **callback function**
 - Syntax
 
 ```

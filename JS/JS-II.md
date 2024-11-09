@@ -1300,3 +1300,513 @@ child2
 child2.1
 ```
 
+## Synchronous & Asynchronous
+
+
+### Synchronous 
+
+- In synchronous execution, code runs sequentially, meaning each line is executed one after the other. The program waits for a line to complete before moving on to the next one. This can lead to blocking behavior if a particular task takes a long time (e.g., a heavy calculation or data fetching), as the subsequent lines of code will wait until the current line completes. As Javascript code execution runs on one single thread
+
+```
+console.log("First Task");
+let data = fetchData();  // This could take time if it's synchronous
+console.log("Second Task");
+```
+
+- In this example, `Second Task` won’t print until `fetchData()` is done executing.
+
+![alt text](image-20.png)
+
+### Asynchronous
+
+- Asynchronous execution allows code to run without waiting for other tasks to complete, thus enabling non-blocking behavior. Instead of halting execution, JavaScript can "hand off" certain tasks, allowing the rest of the code to run while waiting for these tasks to complete.
+- Asynchronous behavior is common with I/O operations like fetching data, reading files, or making network requests.
+- Without Asynchronous behavior
+
+![alt text](image-21.png)
+
+- With Asynchronous behavior (the `setTimeout` function is running on another thread)
+
+![alt text](image-22.png)
+
+#### Callback
+
+- Callbacks are often used in asynchronous code, where tasks take time (like loading data), allowing JavaScript to keep running without stopping. A callback function is simply a function that is passed as an argument to another function, with the expectation that it will be "called back" (executed) at a later time.
+- You define a callback function and give it to another function to use. The function you passed the callback to will decide when to call it back, usually after some task is completed.
+
+```
+function greet(name) {
+  console.log("Hello, " + name + "!");
+}
+
+function getUserInput(callback) {
+  let name = "Alice"; // Pretend we got this from user input
+  callback(name); // Call the callback function with the user's name
+}
+
+// Here we pass `greet` as a callback
+getUserInput(greet);
+```
+
+- `greet` is a **callback function**. `getUserInput` takes a function (`callback`) as an argument. Inside `getUserInput`, `callback(name)` calls greet(`name`), which prints `Hello, Alice!`.
+
+#### Event Loop
+
+- JavaScript is single-threaded, meaning it can only do one thing at a time. But, thanks to the event loop, JavaScript can appear to do multiple things at once.
+- **The event loop is a mechanism in JavaScript that manages how tasks are executed, particularly when dealing with asynchronous code. It’s part of JavaScript's environment (usually provided by the browser or Node.js), not the JavaScript engine itself (like V8, which just executes JavaScript code). The event loop’s job is to keep JavaScript running smoothly by deciding which tasks should run and when.**
+
+![alt text](image-23.png)
+
+- In the end, the event loop helps us deal with async code you could say, it helps us deal with callback functions which typically are used in such async code scenarios.
+- The stack and heap are part of the Javascript engine. The browser kind of gives us a bridge where we can talk to certain browser APIs from inside our Javascript code.
+- Lets understand how event loop works with an example using `setTimeout` which is an asynchronous function
+
+```
+console.log('Start script...');
+
+setTimeout(() => {
+    task('Download a file.');
+}, 1000);
+
+console.log('Done!');
+```
+
+- When we run the code, we get below output
+
+```
+Start script...
+Done!
+Download a file.
+```
+
+- When you call the `setTimeout()` function, make a fetch request to the web browser which can do these activities concurrently (execute parallel without blocking) and asynchronously. 
+- In our example, when calling the `setTimeout()` function, the JavaScript engine places the `setTimeout` on the call stack, and the Web API creates a timer that expires in 1 second.
+
+![alt text](image-24.png)
+
+- Then JavaScript engine places the `task()` (`task('Download a file.')`) function into a queue called a **callback queue/task queue/ message queue after 1 seconds**. When JavaScript runs code, each function goes to the call stack to be processed. If it’s an asynchronous task (like a `setTimeout` or a `fetch` request), JavaScript doesn’t block. Instead, it offloads that task and keeps going, putting it in the callback queue when it’s done.
+
+
+![alt text](image-25.png)
+
+- The event loop is a constantly running process that monitors both the callback queue and the call stack. If the call stack is not empty, the event loop waits until it is empty and places the next function from the callback queue to the call stack. If the callback queue is empty, nothing will happen. This cycle keeps repeating, so JavaScript can handle new tasks, finish old ones, and manage asynchronous operations without blocking.
+
+![alt text](image-26.png)
+
+- The event loop is the orchestrator that ties the call stack, callback queue or message queue, and Web APIs together. Its primary role is to constantly check whether the call stack is empty. If it is, the event loop takes the first function from the Callback Queue and pushes it onto the call stack for execution
+  - Check the Call Stack: Is it empty?
+  - If Yes: Move a function from the Callback Queue to the Call Stack.
+  - If No: Keep checking
+- Now consider below code
+
+```
+console.log('Start');
+
+setTimeout(() => {
+  console.log('Inside setTimeout');
+}, 0);
+
+console.log('End');
+```
+
+- We get output as
+
+```
+Start
+End
+Inside setTimeout
+```
+
+- In this example, the `console.log('Start')` and `console.log('End')` statements are executed immediately pushed into call stack, while the `setTimeout` function is pushed to the Web API environment. **After the specified timeout (even if it's 0 milliseconds), the callback function inside `setTimeout` is placed in the callback Queue when it timeout is completed**. When the call stack is empty ,the `setTimeout` is pushed into call stack from callback queue by event loop.
+
+#### Callback hell
+
+- Callback hell refers to a situation in JavaScript where multiple nested callback functions create deeply indented, hard-to-read, and hard-to-maintain code. This often occurs when handling complex asynchronous tasks that depend on each other. As a result, the code structure looks like a pyramid or "ladder" of nested callbacks, making it confusing and challenging to debug.
+- Lets consider a scenario where you need to fetch `data1`, based on `data1` you need to retrieve `data2` and based on `data2` you need to retrieve `data3`. (Real case is like for any social media account you need to first fetch user name (`data1`) if it exists then fetch its password (`data2`)).
+
+```
+function getData(dataid,timeTakenToFetch,nextData){
+    console.log(`data ${dataid} fetching...`)
+    setTimeout(()=>{
+        console.log(`data ${dataid} fetched`)
+        if(nextData){
+            nextData()
+        }
+    },timeTakenToFetch)
+}
+
+getData(1,3000,()=>{ //fetch data3 in 3 seconds
+    getData(2,4000,()=>{ //fetch data2 in 4 seconds
+        getData(3,3000) //fetch data3 in 3 seconds
+    })
+})
+```
+
+- On browser
+
+
+<video controls src="2024-13.mp4" title="title"></video>
+
+##### Issues with Callback Hell
+- **Readability**: The code becomes difficult to read due to excessive nesting, making it hard to understand the flow.
+- **Error Handling**: Managing errors across multiple levels of nested callbacks can be confusing and error-prone. Handling errors within each callback and passing them back up the chain can make the code even messier.
+- **Maintainability**: Code in callback hell is harder to modify or extend. If requirements change, it becomes challenging to adjust nested callbacks without introducing bugs.
+- **Scalability**: As more asynchronous tasks depend on each other, the nested structure only grows, making it unsustainable for larger applications.
+
+#### Promises
+
+- The solution to the callback hell is promises. A promise in JavaScript is an object that allows you to handle asynchronous tasks without deeply nested callbacks, making the code more readable and easier to maintain.
+- Syntax
+
+```
+const promise = new Promise((resolve, reject) => {
+  // Perform asynchronous operation
+  if (/* operation is successful */) {
+    resolve(value); // Pass the result to the 'then' method
+  } else {
+    reject(error); // Pass the error to the 'catch' method
+  }
+});
+
+promise
+  .then((value) => {
+    // Handle the successful result
+  })
+  .catch((error) => {
+    // Handle the error
+  });
+```
+
+- You create a promise by calling `new Promise`, passing it a function with two parameters, `resolve` and `reject`. Inside the promise, you perform your asynchronous task. If it’s successful, you call `resolve` with the result. If it fails, you call `reject` with an error.
+- When an asynchronous task completes successfully, you call `resolve()` to fulfill the promise also you can pass some value into it which will be returned to the caller function. If there’s an error, you call `reject()` to reject the promise.
+- You can attach `.then()` to handle the result of a promise when it’s resolved. Use `.catch()` to handle errors when the promise is rejected.
+- Lets see an simple example
+
+```
+// Creating a promise that resolves after 1 second
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Data fetched successfully!'); 
+  }, 1000);
+});
+
+// Using the promise
+promise
+  .then(data => {
+    console.log(data); // Output: Data fetched successfully!
+  })
+  .catch(error => {
+    console.error(error); // Handle any errors
+  });
+```
+
+- In case of rejection
+
+```
+// Creating a promise that resolves after 1 second
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject('Data cannot be fetch!'); 
+  }, 1000);
+});
+
+// Using the promise
+promise
+  .then(data => {
+    console.log(data); 
+  })
+  .catch(error => {
+    console.log("Error")
+    console.error(error); 
+  });
+
+Output:
+Error
+Data cannot be fetch!
+```
+
+- There are 3 states of promises, a promises is fulfilled (resolve) , pending , rejected. When we print `promise` variable on console. We can see it.
+- Considering same code
+
+```
+// Creating a promise that resolves after 1 second
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Data fetched successfully!'); 
+  }, 6000);
+});
+
+// Using the promise
+promise
+  .then(data => {
+    console.log(data); // Output: Data fetched successfully!
+  })
+  .catch(error => {
+    console.error(error); // Handle any errors
+  });
+```
+
+- On browser
+
+![alt text](image-27.png)
+
+- Similarly when we replace `resolve` by `reject`
+
+![alt text](image-28.png)
+
+- We catch the error. The `PromiseResult` returns the value which is provided in the `reject` or `resolve` function which is useful for any indication require for further code execution.
+
+- You can have multiple `.then()` blocks in a promise chain, and each `.then()` block can handle the result or error from the previous step in the chain. Consider below example
+
+```
+const myPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('Timer completed!');
+    }, 1000);
+})
+    .then((text) => { throw new Error('Failed!') })
+    .catch(err => console.log(err))
+    .then(() => console.log('Does that execute?'));
+
+
+Output:
+Error: Failed!
+    at /tmp/aCrhNIEgNO.js:6:29
+Does that execute?
+```
+
+- Why so? `.then((text) => { throw new Error('Failed!') })` block runs after the promise is resolved, receiving the `Timer completed!` message as the text argument. Instead of doing something with text, it throws an error using `throw new Error('Failed!')`. This error is not handled in this `.then()` block, so it propagates down to the nearest `.catch()` block `.catch(err => console.log(err))`. Since the previous `.then()` threw an error, this `.catch()` block catches it. The `err` argument in this block represents the error created in the previous `.then()`, which is `Failed!`. This `.catch()` block then logs the error message to the console. `.then(() => console.log('Does that execute?'));` block is added after the `.catch()` block. Regardless of whether the promise was resolved or an error was thrown, the `.catch()` block catches the error and continues the chain. So, last final `.then()` block will execute after the `.catch()` finishes.
+- Each `.then()` block represents a step in the chain, and each one operates based on the outcome of the previous block. If an error occurs at any point in the chain, the `.catch()` block will handle it. You can place additional `.then()` blocks after a `.catch()` to continue executing code, even after an error.
+- You can have multiple `.catch()` blocks but it is **useless** because promise chaining, only the first `.catch()` block in a chain will handle any errors that occur in the chain. Once an error is caught by a `.catch()`, it doesn’t propagate to any other `.catch()` blocks that might follow.
+
+##### Promises Methods
+
+###### `Promise.all()` 
+
+- `Promise.all()` takes an array (or any iterable) of promises and returns a single promise. This returned promise resolves when all the promises in the array resolve, or rejects if any one of them rejects. `Promise.all()` when you need to wait for multiple asynchronous operations to complete and want them to all succeed.
+
+```
+const promise1 = new Promise((resolve) => setTimeout(resolve, 1000, "Data 1"));
+const promise2 = new Promise((resolve) => setTimeout(resolve, 2000, "Data 2"));
+const promise3 = new Promise((resolve,reject) => setTimeout(resolve, 1500, "Data 3"));
+
+Promise.all([promise1, promise2, promise3])
+  .then((results) => {
+    console.log(results); // ["Data 1", "Data 2", "Data 3"]
+  })
+  .catch((error) => {
+    console.error("Error: "+error); // Will catch if any promise is rejected
+  });
+```
+
+- The `Promise.all()` method returns a single Promise from a list of promises, when **all promises fulfill**. If any promises are failed then we we can get that from error.
+
+```
+const promise1 = new Promise((resolve) => setTimeout(resolve, 1000, "Data 1"));
+const promise2 = new Promise((resolve) => setTimeout(resolve, 2000, "Data 2"));
+const promise3 = new Promise((resolve,reject) => setTimeout(reject, 1500, "Data 3"));
+
+Promise.all([promise1, promise2, promise3])
+  .then((results) => {
+    console.log(results); 
+  })
+  .catch((error) => {
+    console.error("Error: "+error); // Error: Data 3
+  });
+```
+
+- `Promise.all([promise1, promise2, promise3])` waits for all promises to resolve. It returns an array of results when all promises resolve successfully. If any one of the promises rejects, the entire `Promise.all()` will reject with that error, and the `catch()` block will run.
+- **All the promises in the arrays are executed at the same time**
+- Promises chaining is alternative of it.
+
+###### `Promise.race()`
+
+- `Promise.race()` takes an array (or any iterable) of promises and returns a promise that resolves or rejects as soon as the first promise in the array resolves or rejects. The result is based on the first settled promise (either resolved or rejected). **All the promises in the arrays are executed at the same time**.
+
+```
+const promise1 = new Promise((resolve) => setTimeout(resolve, 2000, "Data 1"));
+const promise2 = new Promise((resolve) => setTimeout(resolve, 1000, "Data 2"));
+const promise3 = new Promise((resolve) => setTimeout(resolve, 1500, "Data 3"));
+
+Promise.race([promise1, promise2, promise3])
+  .then((result) => {
+    console.log(result); // "Data 2" (because it resolves first)
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+- It choses the first available result from multiple promises sources. `Promise.race()` resolves as soon as the first promise resolves, so the result will be `Data 2` because promise2 resolves first. If the first promise rejects, `Promise.race()` rejects with that error.
+
+###### `Promise.allSettled()`
+
+- `Promise.allSettled()` waits for all promises to settle (either resolve or reject), and returns an array of objects describing the outcome of each promise (resolved or rejected).
+- Use this when you want to know the outcome of all promises, even if some of them reject, without having them stop the entire process.
+
+```
+const promise1 = new Promise((resolve) => setTimeout(resolve, 1000, "Data 1"));
+const promise2 = new Promise((resolve, reject) => setTimeout(reject, 2000, "Error in Data 2"));
+const promise3 = new Promise((resolve) => setTimeout(resolve, 1500, "Data 3"));
+
+Promise.allSettled([promise1, promise2, promise3])
+  .then((results) => {
+    console.log(results);
+    /*
+    [
+      { status: 'fulfilled', value: 'Data 1' },
+      { status: 'rejected', reason: 'Error in Data 2' },
+      { status: 'fulfilled', value: 'Data 3' }
+    ]
+    */
+  });
+```
+
+- It doesn't matter if some promises reject; it waits for all promises to settle.
+
+###### `Promise.resolve()`
+
+- `Promise.resolve()` returns a resolved promise with a given value. It's useful when you want to create a promise that is immediately resolved. You can use `Promise.resolve()` to ensure that you always have a promise to work with, whether you're dealing with a value or an actual promise.
+
+```
+Promise.resolve("Resolved value")
+  .then((result) => {
+    console.log(result); // "Resolved value"
+  });
+```
+
+###### `Promise.reject()`
+
+- `Promise.reject()` returns a rejected promise with a given reason or error. It’s useful when you want to create a promise that immediately rejects. You can use `Promise.reject()` to return a promise that fails right away.
+
+```
+Promise.reject("Something went wrong")
+  .catch((error) => {
+    console.log(error); // "Something went wrong"
+  });
+```
+
+##### Promises Chaining
+
+- Considering the same callback hell code, we can apply that in promise chaining.
+
+```
+function getDataFromPromise(dataid,timeTakenToFetch){
+  return new Promise((resolve,reject)=>{
+    console.log(`data ${dataid} fetching...`)
+    setTimeout(()=>{
+        console.log(`data ${dataid} fetched`)
+        resolve("data was returned")
+    },timeTakenToFetch)
+  })
+}
+
+let r1=getDataFromPromise(1,3000)
+r1.then((data=>{
+    console.log(data);
+    let r2=getDataFromPromise(2,4000)
+    r2.then((data=>{
+        console.log(data)
+        let r3=getDataFromPromise(3,3000)
+        r3.then((data=>{
+            console.log(data)
+        }))
+    }))
+}))
+```
+
+- On browser console
+
+![alt text](image-29.png)
+
+- Promise chaining can sometimes make code a bit harder to read, especially if the chain gets long or if there are many operations involved. Although chaining is cleaner than deeply nested callbacks, reading through multiple `.then()` statements can still feel somewhat "step-by-step" and harder to scan.
+- To overcome the promise chaining problem we have **Async-await**
+
+#### Async-Await
+
+- `async` and `await` are alternatives to promise chaining that make asynchronous code look more like synchronous code. This can make it easier to read and understand.
+- `async`: When you declare a function with `async`, it automatically returns a promise, even if you don’t explicitly return one. This means the function can contain asynchronous code that uses `await` **to pause execution until a promise resolves**. In the below snip, when we declared `getDataAsyncAwait` function we can see that it returns a `Promise<void>`.
+
+![alt text](image-31.png)
+
+
+- `await`: **`await` is used inside an `async` function only** to pause the function’s execution until the specified promise resolves. This makes the code appear to run step-by-step, just like synchronous code, but without blocking the main thread. To use `await`, you first need to declare the function as `async`. This tells JavaScript that this function may contain asynchronous code.
+- The promises chaining code will look like below using `async-await`.
+
+```
+function getDataAsyncAwait(dataid, timeTakenToFetch) {
+    console.log(`data ${dataid} fetching...`);
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log(`data ${dataid} fetched`);
+            resolve();
+        }, timeTakenToFetch);
+    });
+}
+
+async function fetchDataInSequence() {
+    await getDataAsyncAwait(1, 3000); // Wait for data 1 to fetch
+    await getDataAsyncAwait(2, 4000); // Wait for data 2 to fetch
+    await getDataAsyncAwait(3, 3000); // Wait for data 3 to fetch
+    
+    /*
+    The Above lines are same as using nested .then
+    */
+}
+
+fetchDataInSequence();
+```
+
+- On browser console
+
+![alt text](image-30.png)
+
+- **For `await` to work, the function you're calling must return a promise. If the function doesn’t return a promise, `await` won’t pause the code—it’ll just treat it as a regular synchronous function and move on immediately. `await` only knows how to "wait" for a `promise` to resolve. If the function you’re calling doesn’t return a `promise`, `await` has nothing to wait for, and it will simply move to the next line. This is why, when using `async`/`await`, any asynchronous function you want to `await` should return a `promise`.**
+- Below code is invalid
+
+```
+let p1=await setTimer(1000)
+```
+
+- Async-await basically transform the promise chaining code making it readable.
+- In the above code, we were able to handle `.then` nested structure what about `.catch` when promises are rejected? for that in the `async` function we can use `try-catch`.
+
+```
+function getDataAsyncAwait(dataid, timeTakenToFetch) {
+  console.log(`data ${dataid} fetching...`);
+  return new Promise((resolve,reject) => {
+      setTimeout(() => {
+          console.log(`data ${dataid} fetched`);
+          if(dataid==2){
+            reject("Data Not Found");
+          }
+          resolve();
+      }, timeTakenToFetch);
+  });
+}
+
+async function fetchDataInSequence() {
+  let r1;
+  let r2;
+  let r3;
+  try{
+    r1=await getDataAsyncAwait(1, 3000); // Wait for data 1 to fetch
+    r2=await getDataAsyncAwait(2, 4000); // Wait for data 2 to fetch
+    r3=await getDataAsyncAwait(3, 3000); // Wait for data 3 to fetch
+    /*
+    The Above lines are same as using nested .then
+    */
+  }catch(Error){
+    console.log(`Error - ${Error}`); // handles all the .catch block of promises
+  }
+
+}
+
+fetchDataInSequence();
+```
+
+- On browser console
+
+![alt text](image-32.png)
+
+- `await` stops all the further execution when encountered any promise got reject. If the promise is rejected (i.e., it fails), `await` will throw an error. This will cause the `async` function to terminate at that point, and the rest of the code will not be executed unless you handle the rejection with a `try/catch `block.
