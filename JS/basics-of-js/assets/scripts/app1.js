@@ -667,3 +667,26 @@ function outerFunction(outerParam) {
 const inner = outerFunction();  // Call outer function and taking its inner method as in return, outer function execution got finished
 inner();  // Calling inner method Output: I'm from outer scope!
 
+// Tagged Template
+function highLight(string, inputfruitName,inputprice){
+  return "This fruit is expensive if its price is greater than $200"
+}
+
+let fruitName="Dragon"
+let price="$300"
+let output=highLight`${fruitName} fruit price is ${price}`
+console.log(output)
+
+
+function highLightNames(string,inputfruitName,inputprice){
+
+  if(inputprice>300){
+    inputfruitName=`<strong>${inputfruitName}</strong>`
+    inputprice=`<strong>${inputprice}</strong>`
+  }
+
+  return `${string[0]}${inputfruitName}${string[1]}${inputprice}${string[2]}`
+}
+fruitName="Dragon"
+price="$300"
+console.log(highLightNames`${fruitName} total price is ${price}. Thankyou for Shopping`)

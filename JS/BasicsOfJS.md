@@ -1464,6 +1464,124 @@ Math.sign(10);  // 1
 Math.PI; // 3.141592653589793
 ```
 
+## Tagged Template (String)
+
+- Below is an example of template literal
+
+```
+let name="ABC"
+console.log(`My name is ${name}`)
+```
+
+- Template literals are a way to work with strings that include placeholders (expressions) and multiline content more conveniently.
+- Tagged templates in JavaScript allow you to process template literals (i.e., template strings) with a custom function, called a "tag function." This lets you manipulate or format the content of the template literal before it's used.
+- Lets take a simple example
+
+```
+// Tagged Template
+function highLight(string, inputfruitName,inputprice){
+  return "This fruit is expensive if its price is greater than $200"
+}
+
+let fruitName="Dragon"
+let price="$300"
+let output=highLight`${fruitName} fruit price is ${price}`
+console.log(output)
+
+Output:
+This fruit is expensive if its price is greater than $200
+```
+
+- Lets print the arguments.
+
+```
+// Tagged Template
+function highLight(string, inputfruitName,inputprice){
+    console.log(string)
+    console.log(inputfruitName)
+    console.log(inputprice)
+    return "This fruit is expensive if its price is greater than $200"
+}
+
+let fruitName="Dragon"
+let price="$300"
+let output=highLight`${fruitName} fruit price is ${price}`
+console.log(output)
+
+Output:
+[ '', ' fruit price is ', '' ]
+Dragon
+$300
+This fruit is expensive if its price is greater than $200
+```
+
+- When you print `string` you get a list of array which is split of template literal. The split is applied on the dynamic placeholders (`${fruitName}`,`${price}`). Resulting an array of static string contents. Whereas the input `inputfruitName` and `inputprice` represent your placeholder in the template literal `${fruitName}` and `${price}` respectively. The input arguments (`inputfruitName` and `inputprice`) are also called as **interpolated values**.
+- Basic syntax of tagged function
+
+```
+function tagFunction(strings, ...values) {
+  // Manipulate the strings and values as needed
+  // Return the final processed string
+}
+const result = tagFunction`template ${expression} string`;
+```
+
+- `strings`: An array of strings that represent the non-expression parts of the template literal.
+- `...values`: The evaluated values of the expressions within the template literal.
+
+### Why Tagged Template are required?
+
+- Now consider a scenario where your template literal represents the string content which will be displayed on HTML page.
+
+```
+function highLightNames(string,inputfruitName,inputprice){
+
+  if(inputprice>300){
+    inputfruitName=`<strong>${inputfruitName}</strong>` //Making the words strong
+    inputprice=`<strong>${inputprice}</strong>`
+  }
+
+  return `${string[0]}${inputfruitName}${string[1]}${inputprice}${string[2]}`
+}
+fruitName="Dragon"
+price="$300"
+console.log(highLightNames`${fruitName} fruit total price is ${price}.`)
+
+Output:
+Dragon fruit total price is $300.
+```
+
+- Now even if the **template literal static contents are changed** like ``${fruitName} fruit total price is ${price}. Thankyou for shopping``. Our code output will automatically get changed as per the static content.
+
+```
+New Output as per static content:
+Dragon total price is $300. Thankyou for Shopping
+```
+
+- Tagged templates are useful for cases where you need to:
+  - Process and format strings dynamically, like for localization or formatting.
+  - Escape or sanitize values to prevent security issues (e.g., in SQL queries or HTML strings).
+  - Add custom logic for interpreting template literals beyond simple string interpolation.
+- Below is an example of HTML escaping
+
+```
+function escapeHTML(strings, ...values) {
+    // Helper function to escape HTML characters
+    const escape = str => str.replace(/&/g, "&amp;")
+                             .replace(/</g, "&lt;")
+                             .replace(/>/g, "&gt;")
+                             .replace(/"/g, "&quot;")
+                             .replace(/'/g, "&#39;");
+
+    return strings.reduce((result, string, i) => 
+        result + string + (values[i] ? escape(String(values[i])) : ''), '');
+}
+
+const userInput = "<script>alert('Hacked!')</script>";
+const safeHTML = escapeHTML`User comment: ${userInput}`;
+console.log(safeHTML); // "User comment: &lt;script&gt;alert('Hacked!')&lt;/script&gt;"
+```
+
 ## Data Types
 
 - Up till now we have seen Number, String and Boolean datatype and saw some of the example. Lets see **Object** data type in JavaScript.
