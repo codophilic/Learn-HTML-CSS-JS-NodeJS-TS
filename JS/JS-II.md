@@ -1810,3 +1810,67 @@ fetchDataInSequence();
 ![alt text](image-32.png)
 
 - `await` stops all the further execution when encountered any promise got reject. If the promise is rejected (i.e., it fails), `await` will throw an error. This will cause the `async` function to terminate at that point, and the rest of the code will not be executed unless you handle the rejection with a `try/catch `block.
+
+## How the Web Works?
+
+- No matter if you check your e-mails on your mobile phone or if you're sending a tweet - you are using the internet (i.e. "the web"). How does all that work? 
+- Let's understand with an example. Suppose you visit a website like [academind.com](academind.com). The moment you enter this address in your browser and you hit `ENTER`, a lot of different things happen:
+  - The URL gets resolved
+  - A Request is sent to the server of the website
+  - The response of the server is parsed
+  - The page is rendered and displayed
+
+
+![alt text](image-33.png)
+
+### Step 1 (Resolving URL)
+
+- The [academind.com](academind.com) website code is obviously not stored on your machine and hence needs to be fetched from another computer where it is stored. This "another computer" is called a "server". Because it serves some purpose, in our case, it serves the website. You enter `academind.com` (that is called "a domain") but actually, the server which hosts the source code of a website, is identified via `IP` (= Internet Protocol) addresses. The browser sends a "request" (see step 2) to the server with the IP address you entered (indirectly - you of course entered `academind.com`).
+- An IP address typically looks like this `172.56.180.5` (IPv4 example). The modern browser uses IPv6 type of addresses. But how is the domain `academind.com` translated to its IP address? there's a special type of server out there in the internet - not just one but many servers of that type. A so called "name server" or "DNS server" (where DNS = "Domain Name System").
+- The job of these DNS servers is to translate domains to IP addresses. You can imagine those servers as huge dictionaries that store translation tables: `Domain => IP address`. When you enter "academind.com", the browser therefore first fetches the IP address from such a DNS server.
+
+>[!NOTE]
+> - In reality, you also often enter `academind.com/learn` or anything like that. `academind.com` is the domain, `/learn` is the so-called path. Together, they make up the "URL" ("Uniform Resource Locator").
+> - In addition, you can visit most websites via `www.academind.com` or just `academind.com`. Technically, `www` is a subdomain but most websites simply redirect traffic to `www` to the main page.
+
+### Step 2 (Request Is Sent)
+
+- With the IP address resolved, the browser goes ahead and makes a request to the server with that IP address. "A request" is not just a term. It really is a technical thing that happens behind the scenes. The browser bundles up a bunch of information (What's the exact URL? Which kind of request should be made? Should metadata be attached) and sends that data package to the IP address. You can see this in the developer tools. 
+
+![alt text](image-34.png)
+
+- The data is sent via the "HyperText Transfer Protocol" (known as "HTTP") - a standardized protocol which defines what a request (and response) has to look like, which data may be included (and in which form) and how the request will be submitted. Because HTTP is used, a full URL actually looks like this `http://academind.com`. The browser auto-completes it for you.
+- And there also is HTTPS - it's like HTTP but encrypted. Most modern pages use that instead of HTTP. A full URL then becomes `https://academind.com`
+- Since the whole process and format is standardized, there is no guessing about how that request has to be read by the server. The server then handles the request appropriately and returns a so called "response". Again, a "response" is a technical thing and kind of similar to a "request". You could say it's basically a "request" in the opposite direction.
+- Like a request, a response can contain data, metadata etc. When requesting a page like `academind.com`, the response will contain the code that is required to render the page onto the screen.
+
+![alt text](image-35.png)
+
+- What happens on the server? that's defined by web developers. In the end, a response has to be sent. That response doesn't have to contain "a website". It can contain any data - including files or images.
+- Some servers are programmed to generate websites dynamically based on the request (e.g. a profile page that contains your personal data), other servers return pre-generated HTML pages (e.g. a news page). Or both is done - for different parts of a webpage. There also is a third alternative: Websites that are pre-generated but that change their appearance and data in the browser.
+
+### Step 3 (Response Is Parsed)
+
+- The browser receives the response sent by the server. This alone, doesn't display anything on the screen though. Instead, the next step is that the browser parses the response. Just as the server did it with the request. Again, the standardization enforced by HTTP helps of course. The browser checks the data and metadata that's enclosed in the response. And based on that, it decides what to do. You might've had cases where a PDF opened in your browser. That happened because the response informed the browser that the data is not a website but a PDF document instead. And the browser tries to pick the best handling mechanism for any data type it detects.
+- Depending upon the request, the response would contain a specific piece of metadata, that tells the browser that the response data is of type `text/html`.
+
+![alt text](image-36.png)
+
+- This allows the browser to then parse the actual data that's attached to the response as HTML code.
+
+### Step 4 (Page Is Displayed)
+
+- The browser goes through the HTML data returned by the server and builds a website based on that. Though it is important to know, that HTML does not include any instructions regarding what the site should look like (i.e. how it should be styled). It really only defines the structure and tells the browser which content is a heading, which content is an image, which content is a paragraph etc. To beautify your page, the HTML has a instructions to fetch more data via new requests - and the browser understands these instructions
+
+```
+<link rel="stylesheet" href="/page-styles.css" />
+```
+
+![alt text](image-37.png)
+
+- This is your CSS. Together with CSS, the browser is able to display webpages. The JavaScript does not reloads the page on each user action. It's not always visible but all dynamic content you find on a website (e.g. tabs, overlays etc.) is actually only possible because of JavaScript. It allows web developers to define code that runs in the browser (not on the server), hence JavaScript can be used to change the website whilst the user is viewing it.
+
+### Server-side vs Browser-side
+
+- Server-Side: The server handles complex tasks, data storage and manipulation, and security. The server side programming languages are `Node.js`, `PHP` and etc.. these languages that don't work in the browser but that can run on a normal computer (a server is in the end just a normal computer).
+- Browser-side: In the browser, there are exactly three languages/ technologies you need to learn (`HTML`,`CSS` and `JS`). It is the tasks executed on the user's device, usually a computer or smartphone. The browser interprets and displays the information sent back from the server.
