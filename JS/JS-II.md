@@ -1884,4 +1884,149 @@ fetchDataInSequence();
 - Now other parts of a Http request are potential headers, that is extra metadata which can be attached to Http requests and some requests, for example a `POST` request, also hold a request body or extra data which is attached to a request. Suppose you wanna `GET` list of data, you can get it from the response body or suppose you wanna `POST` list of data you can sent it in a request body.
 - Now that data then can be sent in different formats and again, it's the server that tells you which formats it expects or supports. The most common format is `JSON` data, secondly used is `FormData` which is supported in Javascript and which is fairly popular and you could also send binary files or other formats.
 - For demonstration purpose, we will implement http request where our host or computer will act as a client side and server side will be [A placeholder website](https://jsonplaceholder.typicode.com/) which processes request and sends our dummy responses. JSONPlaceholder is a free online REST API that you can use whenever you need some fake data.
-https://chatgpt.com/c/6738d354-1fa4-8009-9c24-7ae7edd7bb40
+
+#### `XMLHttpRequest` 
+
+- In JavaScript, there are multiple ways to send HTTP requests. One of the older ways is using the `XMLHttpRequest` object. It allows you to interact with servers, send data, and fetch data without refreshing the page. `XMLHttpRequest` is an object provided by JavaScript to send HTTP requests. It can handle requests like `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` to communicate with a server.
+- Key Methods in XMLHttpRequest:
+  - `open(method, url)`: Prepares the request. You specify the HTTP method (`GET`, `POST`, etc.) and the URL.
+  - `send(data)`: Sends the request. You can include optional data for `POST`/`PUT` requests.
+  - `setRequestHeader(name, value)`: Sets custom headers (e.g., for content type).
+  - `onreadystatechange` or `onload`: Defines a callback to handle the server response.
+
+- Lets take a simple `GET` request example. Consider below code added in **app.js**
+
+```
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://jsonplaceholder.typicode.com/posts");
+xhr.send();
+```
+
+- We won't see anything on console as we are not logging anything, but under the `Network` tab we can see a `GET` request is been sent to the server `https://jsonplaceholder.typicode.com/posts`. 
+
+
+<video controls src="2024-14.mp4" title="title"></video>
+
+- In the response we got dummy values which was expose by the endpoint `posts` provides the above 100 of data. `jsonplaceholder.typicode.com` provides other endpoints on its page.
+
+![alt text](image-39.png)
+
+- Lets users `users`
+
+```
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+xhr.send();
+```
+
+- On network tab we get 10 data.
+
+![alt text](image-40.png)
+
+- If you see, there is an `index.html`, `app.js` and `users`. The `index.html` and `app.js` is our code whereas `users` are the endpoint of the `jsonplaceholder` website.
+- Now can store this data into a variable? and use it? for that you need to use `onload` function. The `onload` function is an event handler that is triggered when the request completes successfully. It allows you to define what to do with the server's response.
+
+```
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+xhr.onload = function () {
+  if (xhr.status === 200) { // Check if the request was successful
+    console.log(xhr.responseText); // Handle the server response
+  }
+};
+xhr.send();
+```
+
+- On console
+
+![alt text](image-41.png)
+
+- The `xhr.status` property provides the HTTP status code of the response. Common status codes:
+  - `200`: OK (Success)
+  - `201`: Created (Resource created successfully)
+  - `400`: Bad Request
+  - `404`: Not Found
+  - `500`: Internal Server Error
+- The `xhr.responseTex`t property provides the raw text or string of the server's response. It’s typically used when the response type is plain text or JSON in string format. Now to convert this into JSON format or to parse this into JSON format we need to use `JSON.parse()`.
+
+```
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+xhr.onload = function () {
+  if (xhr.status === 200) { // Check if the request was successful
+    const jsonResponse=JSON.parse(xhr.responseText); // Handle the server response and converting into JSON
+    console.log(jsonResponse)
+  }
+};
+xhr.send();
+```
+
+- On browser console
+
+![alt text](image-42.png)
+
+- If you are sure that your incoming response will be a JSON, you can set `xhr.responseType = 'json'`. You don't need to parse it. But instead of `responseText` you need to use `response`
+
+```
+const xhr = new XMLHttpRequest();
+xhr.responseType='json' // Default is String plain text
+xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+xhr.onload = function () {
+  if (xhr.status === 200) { // Check if the request was successful
+    const jsonResponse=xhr.response;
+    console.log(jsonResponse)
+  }
+};
+xhr.send();
+```
+
+- The `xhr.response` property gives the response based on the `responseType` you set where you don't need to parse. If `responseType` is `json`, it returns a parsed JavaScript object. If `responseType` is not set, it defaults to a string (like `responseText`). Other responseType values include `arraybuffer`, `blob`, and `document`
+- Lets create a resource or use `POST` method to create our own data on `jsonplaceholder`. To do so first we need to check what kind of data does the `jsonplaceholder` requires?
+
+![alt text](image-43.png)
+
+- So to create a resource they require JSON object which consist of `title`,`body` and `userId`.
+
+```
+const xhr = new XMLHttpRequest();
+const myData={
+  title: "This is a dummy title",
+  body: "This is a dummy body",
+  userId: 101
+}
+xhr.open('POST','https://jsonplaceholder.typicode.com/posts');
+xhr.send(JSON.stringify(myData));
+```
+
+- On network tab we can see we got `201` (resource created successfully) as status. 
+
+
+<video controls src="2024-15.mp4" title="title"></video>
+
+
+>[!NOTE]
+> - Here we need to send data in string format so we use `JSON.stringify` method.
+
+- Lets say you wanna delete an item, you need to use `DELETE` method.
+
+![alt text](image-44.png)
+
+- Below is code to delete via HTTP request `DELETE` method. So to delete anything we require a identifier of data or any `id` , when you enter the url `https://jsonplaceholder.typicode.com/posts/1`, on browser you can see data for the id `1`. `/posts/1` tells request that we need to delete item for id `1`, to delete any other id we will have `/posts/{id}`. 
+
+<video controls src="2024-16.mp4" title="title"></video>
+
+- Below is the code
+
+```
+const xhr = new XMLHttpRequest();
+xhr.open('DELETE','https://jsonplaceholder.typicode.com/posts/1')
+xhr.send();
+```
+
+- On browser network tab you can see
+
+![alt text](image-45.png)
+
+
+
+
