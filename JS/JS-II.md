@@ -2485,16 +2485,16 @@ then(response=> {
 
 ## Third Party Libraries
 
-- Lets say you have two arrays, where you need to find out which is the uncommon data in the two arrays.
+- Lets say you have two arrays, where you need to find out which is the common data in the two arrays.
 
 ```
 const arr=[1,2]
 const arr1=[2,3]
 
-uncommon elements are -> [1,3]
+common element is -> [2]
 ```
 
-- So you can write your own logic to find out the uncommon elements but what is there is already code written by other developer which is free to use? third-party libraries are pre-built collections of code, functions, and tools created by developers outside of your own team or organization. These libraries are used to simplify and accelerate the development process by providing reusable solutions for common tasks or more specialized functionalities.
+- So you can write your own logic to find out the common elements but what is there is already code written by other developer which is free to use? third-party libraries are pre-built collections of code, functions, and tools created by developers outside of your own team or organization. These libraries are used to simplify and accelerate the development process by providing reusable solutions for common tasks or more specialized functionalities.
 
 ### Lodash
 
@@ -2512,4 +2512,186 @@ uncommon elements are -> [1,3]
 
 ![alt text](image-61.png)
 
-- Now to use third-party library.
+- Now to use third-party library we can directly add it as a script in our HTML file.
+
+```
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+```
+
+- Lodash provides a method called [`intersection`](https://lodash.com/docs/4.17.15#intersection) which gives common element between arrays. To use the method it exposes a global object `_`.
+
+```
+const arr=[3,2]
+const arr1=[2,3]
+console.log(_.intersection(arr,arr1))
+```
+
+- On browser console
+
+![alt text](image-62.png)
+
+- Similarly there are bunch of methods which is provided by Lodash library.
+
+### jQuery
+
+- jQuery is a lightweight, fast, and feature-rich JavaScript library. It simplifies HTML document traversal, manipulation, event handling, and animations. Before modern JavaScript (ES6+), jQuery was widely used to make tasks simpler and more cross-browser compatible.
+- It is useful for 
+  - Simplify DOM manipulation.
+  - Handle events more easily.
+  - Simplify AJAX requests.
+
+- Example without JS (Vanilla JS)
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vanilla JS Example</title>
+</head>
+<body>
+  <button id="myButton">Click me</button>
+  <div id="myDiv">Hello</div>
+  
+  <script>
+    const button = document.getElementById('myButton');
+    const div = document.getElementById('myDiv');
+    
+    button.addEventListener('click', () => {
+      div.textContent = 'You clicked the button!';
+    });
+  </script>
+</body>
+</html>
+```
+
+- With jQuery
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>jQuery Example</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <button id="myButton">Click me</button>
+  <div id="myDiv">Hello</div>
+  
+  <script>
+    $('#myButton').click(() => {
+      $('#myDiv').text('You clicked the button!');
+    });
+  </script>
+</body>
+</html>
+```
+
+- Here we import the library in the `script` tag.`$` is jQuery's shorthand to access elements like `document.querySelector`. `$('#myButton')` this selects the element with the `id="myButton"`. `.click(() => { ... })` this adds a click event listener to the selected element `(#myButton)`. When the button is clicked, the function inside click is executed. `$('#myDiv')` this selects the element with `id="myDiv"`. `.text('You clicked the button!')` this changes the text content of the `#myDiv` element to `'You clicked the button!'`.
+
+![alt text](image-63.png)
+
+- Some other examples of it
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Change Style</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <button id="styleButton">Change Style</button>
+  <div id="styledDiv">Watch me change!</div>
+  
+  <script>
+    $('#styleButton').click(() => {
+      $('#styledDiv').css('color', 'red'); // Change text color to red
+    });
+  </script>
+</body>
+</html>
+```
+
+![alt text](image-64.png)
+
+
+- Another example
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Change Style</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <button id="styleButton">Change Style</button>
+  <div id="styledDiv">Watch me change!</div>
+  
+  <script>
+    $('#styleButton').click(() => {
+      $('#styledDiv').css('color', 'red'); // Change text color to red
+    });
+  </script>
+</body>
+</html>
+```
+
+![alt text](image-65.png)
+
+### Axios
+
+- Axios is a modern JavaScript library used to make HTTP requests. It simplifies sending data to and receiving data from servers. It's similar to fetch in modern JavaScript but comes with additional features like:
+  - Automatic JSON data transformation.
+  - Simpler error handling.
+  - Support for request timeouts and interceptors.
+- Make AJAX requests (`GET`, `POST`, `PUT`, `DELETE`, etc.).
+- Without Axios
+
+```
+fetch('https://jsonplaceholder.typicode.com/posts')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => console.log(data))
+  .catch(error => console.error('There was a problem with the fetch operation:', error));
+```
+
+- With Axios, first import the library in `script` tag
+
+```
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js" integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+```
+
+- In **app.js**
+
+```
+axios.get('https://jsonplaceholder.typicode.com/users')
+  .then(response => console.log(response.data))
+  .catch(error => console.error('There was a problem with the Axios request:', error));
+```
+
+- Axios has a more straightforward syntax and automatically parses the JSON response. Axios simplifies error handling.
+
+>[!IMPORTANT]
+> - All third-party libraries added under the `script` must be loaded before your javascript file. Example is below
+>
+> ```
+> <!DOCTYPE html>
+> <html lang="en">
+> <head>
+>     <meta charset="UTF-8">
+>     <title>Click Event Example</title>
+> </head>
+> <body>
+>
+> <h1> Load All the Libraries before executing App.js file , as it as a dependency on these libraries </h1>
+> <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+> <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js" integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+> <script src="app.js" defer></script>
+>   </body>
+> </html>
+> ```

@@ -283,3 +283,7 @@
 const arr=[3,2]
 const arr1=[2,3]
 console.log(_.intersection(arr,arr1))
+
+axios.get('https://jsonplaceholder.typicode.com/users')
+  .then(response => console.log(response.data))
+  .catch(error => console.error('There was a problem with the Axios request:', error));
