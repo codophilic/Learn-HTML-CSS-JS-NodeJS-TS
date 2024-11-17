@@ -271,7 +271,7 @@
 
 ![alt text](Images/basicofjs/image-29.png)
 
-## Import JavaScript Files
+## Adding JavaScript Files into HTML
 
 Lets say you wanna add multiple JS feature, its a good practice to define all the JS related functionalities into a script file with an extension **.js** because when you develop a multiple page you may write several JS features so placing them into a single folder makes the code more readable. Since JS are static files we create a new folder with name as **scripts** under **assets**. Lets create a file name **app.js**.
 

@@ -2483,3 +2483,33 @@ then(response=> {
 - To catch the response status in the else block we need to return `response.json()` with a promise of chaining using `then(data)`. This will check that if the response status is `400` or not and `throw new Error`. That error is catch by `catch((error))`, which in return throws the same error which is caught by `performOperationOnGetData` catch block.
 
 
+## Third Party Libraries
+
+- Lets say you have two arrays, where you need to find out which is the uncommon data in the two arrays.
+
+```
+const arr=[1,2]
+const arr1=[2,3]
+
+uncommon elements are -> [1,3]
+```
+
+- So you can write your own logic to find out the uncommon elements but what is there is already code written by other developer which is free to use? third-party libraries are pre-built collections of code, functions, and tools created by developers outside of your own team or organization. These libraries are used to simplify and accelerate the development process by providing reusable solutions for common tasks or more specialized functionalities.
+
+### Lodash
+
+- [Lodash](https://lodash.com/docs/4.17.15#difference) is a JavaScript utility library that provides a wide range of functions for working with:
+  - Arrays
+  - Objects
+  - Strings
+  - Numbers
+  - Collections
+- It simplifies common programming tasks, such as:
+  - Manipulating arrays and objects: Sorting, filtering, finding unique elements, etc.
+  - Deep cloning: Copying objects without reference issues.
+  - Working with functions: Throttling, debouncing, and memoizing.
+  - String manipulation: Changing cases, padding, etc.
+
+![alt text](image-61.png)
+
+- Now to use third-party library.

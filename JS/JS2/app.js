@@ -206,40 +206,40 @@
 
 // Fetch API
 
-function GetData(){
-  return fetch("https://jsonplaceholder.typicode.com/u").
-  then(response=> {
-    if(response.status==200){
-      return response.json()
-    }
-    else{
-      return response.json().then(data=>{
-        console.log(data)
-        console.log(response)
-        throw new Error("Invalid URL")
-      })
-    }
-  }
-  ).
-  catch((error)=>{
-    throw new Error(error);
-  });
-}
+// function GetData(){
+//   return fetch("https://jsonplaceholder.typicode.com/u").
+//   then(response=> {
+//     if(response.status==200){
+//       return response.json()
+//     }
+//     else{
+//       return response.json().then(data=>{
+//         console.log(data)
+//         console.log(response)
+//         throw new Error("Invalid URL")
+//       })
+//     }
+//   }
+//   ).
+//   catch((error)=>{
+//     throw new Error(error);
+//   });
+// }
 
-async function performOperationOnGetData(){
-  let getResult;
-  try{
-    getResult=await GetData();
-    console.log(getResult)
-    for(const i of getResult){
-      console.log(`Item - id ${i.id} , name ${i.name}`);
-    }
-  }catch(e){ // Handling ERROR
-    console.error("ERROR FOUND: "+e)
-  }
-}
+// async function performOperationOnGetData(){
+//   let getResult;
+//   try{
+//     getResult=await GetData();
+//     console.log(getResult)
+//     for(const i of getResult){
+//       console.log(`Item - id ${i.id} , name ${i.name}`);
+//     }
+//   }catch(e){ // Handling ERROR
+//     console.error("ERROR FOUND: "+e)
+//   }
+// }
 
-performOperationOnGetData()
+// performOperationOnGetData()
 
 // function OtherOperationData(methodName,url,body=null){
 //   return fetch(url,{
@@ -279,3 +279,7 @@ performOperationOnGetData()
 // performOperationOtherOperationsData()
 
 
+
+const arr=[3,2]
+const arr1=[2,3]
+console.log(_.intersection(arr,arr1))
