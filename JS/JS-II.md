@@ -2027,6 +2027,189 @@ xhr.send();
 
 ![alt text](image-45.png)
 
+- Lets say you are using `GET` method and wanted to perform some operations when you get the data. Normally you can think of like this.
 
+```
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+xhr.responseType='json' // Default is String plain text
+xhr.onload = function () {
+  if (xhr.status === 200) { // Check if the request was successful
+    const jsonResponse=xhr.response; // Handle the server response and converting into JSON
+    console.log(jsonResponse)
+  }
+};
+xhr.send();
+console.log('Process Data')
+```
 
+- But on browser console we get below as an output
+
+![alt text](image-46.png)
+
+- It seems that both the operation run asynchronously. So now to work such situation we have `async-await`.
+
+```
+const xhr = new XMLHttpRequest();
+
+function GetData(){
+  return new Promise((resolve,reject)=>{
+    xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+    xhr.responseType='json' // Default is String plain text
+    xhr.onload = function () {
+      if (xhr.status === 200) { // Check if the request was successful
+        resolve(xhr.response);
+      }
+      else{
+        console.log("Request was unsuccessful");
+      }
+    };
+    xhr.send();
+  })
+}
+
+async function performOperationOnGetData(){
+  let getResult;
+  try{
+    getResult=await GetData();
+    for(const i of getResult){
+      console.log(`Item - id ${i.id} , name ${i.name}`);
+    }
+  }catch(e){
+    console.error(e)
+  }
+}
+
+performOperationOnGetData()
+```
+
+- On browser console
+
+![alt text](image-47.png)
+
+- Lets say you entered a invalid url like `https://jsonplaceholder.typicode.com/u`, in such case you will get a status of `404` something. So just changing the url in the above code.
+- On browser console
+
+![alt text](image-48.png)
+
+- In such case, you wanted to throw some custom error message, you need to use `reject` method of promise.
+
+```
+const xhr = new XMLHttpRequest();
+
+function GetData(){
+  return new Promise((resolve,reject)=>{
+    xhr.open("GET", "https://jsonplaceholder.typicode.com/u");
+    xhr.responseType='json' // Default is String plain text
+    xhr.onload = function () {
+      if (xhr.status === 200) { // Check if the request was successful
+        resolve(xhr.response);
+      }
+      else{
+        reject( new Error("Request was unsuccessful URL is invalid"));
+      }
+    };
+    xhr.send();
+  })
+}
+
+async function performOperationOnGetData(){
+  let getResult;
+  try{
+    getResult=await GetData();
+    for(const i of getResult){
+      console.log(`Item - id ${i.id} , name ${i.name}`);
+    }
+  }catch(e){ // Handling ERROR
+    console.error("ERROR FOUND: "+e)
+  }
+}
+
+performOperationOnGetData()
+```
+
+- On browser console
+
+![alt text](image-49.png)
+
+- Lets say server side , server is not functioning or as a client your host or your computer is not connected to internet. To handle such network level error we have a `onerror` handler. The `onerror` function in `XMLHttpRequest` is used to handle network errors or other issues that prevent the request from completing successfully. It gets triggered if the request cannot reach the server or if there's an issue like a timeout.
+
+```
+
+const xhr = new XMLHttpRequest();
+
+function GetData(){
+  return new Promise((resolve,reject)=>{
+    xhr.open("GET", "https://jsonplaceholder.typicode.com/u");
+    xhr.responseType='json' // Default is String plain text
+    xhr.onload = function () {
+      if (xhr.status === 200) { // Check if the request was successful
+        resolve(xhr.response);
+      }
+      else{
+        reject( new Error("Request was unsuccessful URL is invalid"));
+      }
+    };
+    xhr.onerror=function(){
+      reject(new Error("You are not connected to Internet"))
+    }
+    xhr.send();
+  })
+}
+
+async function performOperationOnGetData(){
+  let getResult;
+  try{
+    getResult=await GetData();
+    for(const i of getResult){
+      console.log(`Item - id ${i.id} , name ${i.name}`);
+    }
+  }catch(e){ // Handling ERROR
+    console.error("ERROR FOUND: "+e)
+  }
+}
+
+performOperationOnGetData()
+```
+
+- On browser console
+
+![alt text](image-50.png)
+
+- `xhr.status` in `onload` is to distinguish between successful (e.g., `200`) and unsuccessful (e.g., `404`) responses. Use `onerror` for handling network errors, such as, the server is down, No internet connection etc..
+
+#### Fetch API
+
+- The Fetch API (`fetch()`) is a modern, more powerful, and easier-to-use alternative to `XMLHttpRequest` for making HTTP requests in JavaScript. It’s widely used today because of its cleaner syntax and built-in support for promises. `XMLHttpRequest` was originally designed to work with XML data but can handle JSON and other formats. It became less favored due to its clunky syntax.
+- **Fetch API returns a promise by itself**. Lets see an example
+
+```
+function GetData(){
+  return fetch("https://jsonplaceholder.typicode.com/users").then((response=> response.json()
+  ));
+}
+
+async function performOperationOnGetData(){
+  let getResult;
+  try{
+    getResult=await GetData();
+    for(const i of getResult){
+      console.log(`Item - id ${i.id} , name ${i.name}`);
+    }
+  }catch(e){ // Handling ERROR
+    console.error("ERROR FOUND: "+e)
+  }
+}
+```
+
+- On browser console
+
+![alt text](image-51.png)
+
+- The `fetch()` function returns a Promise that resolves to a Response object. **This Response object represents the data returned by the server, but the data is not immediately available as plain text or JSON**.
+- When `fetch()` makes a request to a server, the response data doesn't come all at once. Instead, it comes in **small pieces called streams**. Think of it like downloading a large file, you receive the file in small chunks, bit by bit, instead of all at once.
+- A stream is like a pipeline of data that flows from the server to your browser. Instead of waiting for the entire response to be downloaded, the browser processes the data piece by piece. This is especially useful for large files like videos, images, or large JSON objects because you can start using part of the data while the rest is still downloading.
+- Initially, the data from the server is in its raw binary form (0's and 1's). This is why it needs to be processed or "decoded" into a format that JavaScript can work with, such as like Text (`response.text()`), JSON (`response.json()`), Binary data like blobs (`response.blob()`)or Stream (`response.body`)
+- When you call methods like `response.text()` or `response.json()`, these methods read the stream and convert the binary data into a usable format (like a string or JavaScript object).
+- Streams allow you to handle large amounts of data without waiting for the entire response. For example, video streaming websites can play the beginning of the video before the entire file is downloaded. You can process the data as it arrives instead of waiting for everything to be loaded.
 

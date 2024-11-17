@@ -156,16 +156,40 @@
 
 // HTTP Request
 
-const xhr = new XMLHttpRequest();
-// xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
-// xhr.responseType='json' // Default is String plain text
-// xhr.onload = function () {
-//   if (xhr.status === 200) { // Check if the request was successful
-//     const jsonResponse=xhr.response; // Handle the server response and converting into JSON
-//     console.log(jsonResponse)
+// const xhr = new XMLHttpRequest();
+
+// function GetData(){
+//   return new Promise((resolve,reject)=>{
+//     xhr.open("GET", "https://jsonplaceholder.typicode.com/u");
+//     xhr.responseType='json' // Default is String plain text
+//     xhr.onload = function () {
+//       if (xhr.status === 200) { // Check if the request was successful
+//         resolve(xhr.response);
+//       }
+//       else{
+//         reject( new Error("Request was unsuccessful URL is invalid"));
+//       }
+//     };
+//     xhr.onerror=function(){
+//       reject(new Error("You are not connected to Internet"))
+//     }
+//     xhr.send();
+//   })
+// }
+
+// async function performOperationOnGetData(){
+//   let getResult;
+//   try{
+//     getResult=await GetData();
+//     for(const i of getResult){
+//       console.log(`Item - id ${i.id} , name ${i.name}`);
+//     }
+//   }catch(e){ // Handling ERROR
+//     console.error("ERROR FOUND: "+e)
 //   }
-// };
-// xhr.send();
+// }
+
+// performOperationOnGetData()
 
 
 // const myData={
@@ -176,7 +200,28 @@ const xhr = new XMLHttpRequest();
 // xhr.open('POST','https://jsonplaceholder.typicode.com/posts');
 // xhr.send(JSON.stringify(myData));
 
-xhr.open('DELETE','https://jsonplaceholder.typicode.com/posts/1')
-xhr.send();
+// xhr.open('DELETE','https://jsonplaceholder.typicode.com/posts/1')
+// xhr.send();
+
+// Fetch API
+
+function GetData(){
+  return fetch("https://jsonplaceholder.typicode.com/users").then((response=> response.json()
+  ));
+}
+
+async function performOperationOnGetData(){
+  let getResult;
+  try{
+    getResult=await GetData();
+    for(const i of getResult){
+      console.log(`Item - id ${i.id} , name ${i.name}`);
+    }
+  }catch(e){ // Handling ERROR
+    console.error("ERROR FOUND: "+e)
+  }
+}
+
+performOperationOnGetData()
 
 
