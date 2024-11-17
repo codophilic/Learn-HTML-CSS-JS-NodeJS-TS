@@ -160,8 +160,9 @@
 
 // function GetData(){
 //   return new Promise((resolve,reject)=>{
-//     xhr.open("GET", "https://jsonplaceholder.typicode.com/u");
+//     xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
 //     xhr.responseType='json' // Default is String plain text
+//     xhr.setRequestHeaders("Content-Type","JSON Content");
 //     xhr.onload = function () {
 //       if (xhr.status === 200) { // Check if the request was successful
 //         resolve(xhr.response);
@@ -206,14 +207,30 @@
 // Fetch API
 
 function GetData(){
-  return fetch("https://jsonplaceholder.typicode.com/users").then((response=> response.json()
-  ));
+  return fetch("https://jsonplaceholder.typicode.com/u").
+  then(response=> {
+    if(response.status==200){
+      return response.json()
+    }
+    else{
+      return response.json().then(data=>{
+        console.log(data)
+        console.log(response)
+        throw new Error("Invalid URL")
+      })
+    }
+  }
+  ).
+  catch((error)=>{
+    throw new Error(error);
+  });
 }
 
 async function performOperationOnGetData(){
   let getResult;
   try{
     getResult=await GetData();
+    console.log(getResult)
     for(const i of getResult){
       console.log(`Item - id ${i.id} , name ${i.name}`);
     }
@@ -223,5 +240,42 @@ async function performOperationOnGetData(){
 }
 
 performOperationOnGetData()
+
+// function OtherOperationData(methodName,url,body=null){
+//   return fetch(url,{
+//     method: methodName,
+//     headers:{
+//       "Content-Type": "JSON Content",
+//       "JSON-Length": 20
+//     },
+//     body:JSON.stringify(body)
+//   }).then(response => {
+//     if (!response.ok) {
+//       throw new Error("Failed to POST: " + response.status);
+//     }
+//     return response.json();
+//   })
+//   .then(data => {
+//     console.log("POST Response:", data);
+//   })
+//   .catch(error => {
+//     console.error("Fetch POST Error:", error);
+//   });
+// }
+
+// async function performOperationOtherOperationsData(){
+//   try{
+//     const myData={
+//       title: "This is a dummy title",
+//       body: "This is a dummy body",
+//       userId: 101
+//     }
+//     let result=OtherOperationData('DELETE','https://jsonplaceholder.typicode.com/posts/2');
+//   }catch(e){ // Handling ERROR
+//     console.error("ERROR FOUND: "+e)
+//   }
+// }
+
+// performOperationOtherOperationsData()
 
 

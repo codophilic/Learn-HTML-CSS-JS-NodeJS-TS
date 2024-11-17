@@ -2176,7 +2176,51 @@ performOperationOnGetData()
 
 ![alt text](image-50.png)
 
-- `xhr.status` in `onload` is to distinguish between successful (e.g., `200`) and unsuccessful (e.g., `404`) responses. Use `onerror` for handling network errors, such as, the server is down, No internet connection etc..
+- `xhr.status` in `onload` is to distinguish between successful (e.g., `200`) and unsuccessful (e.g., `404`) responses. Use `onerror` for handling network errors, such as, the server is down, No internet connection etc...
+- Suppose you wanted to add some headers in your request. Request headers are like providing extra information to server about your request like what sort of content type your are sending or expecting etc.. So to do so you have `setRequestHeader`.
+
+```
+
+const xhr = new XMLHttpRequest();
+
+function GetData(){
+  return new Promise((resolve,reject)=>{
+    xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+    xhr.responseType='json' // Default is String plain text
+    xhr.setRequestHeader("Content-Type","JSON Content");
+    xhr.onload = function () {
+      if (xhr.status === 200) { // Check if the request was successful
+        resolve(xhr.response);
+      }
+      else{
+        reject( new Error("Request was unsuccessful URL is invalid"));
+      }
+    };
+    xhr.onerror=function(){
+      reject(new Error("You are not connected to Internet"))
+    }
+    xhr.send();
+  })
+}
+
+async function performOperationOnGetData(){
+  let getResult;
+  try{
+    getResult=await GetData();
+    for(const i of getResult){
+      console.log(`Item - id ${i.id} , name ${i.name}`);
+    }
+  }catch(e){ // Handling ERROR
+    console.error("ERROR FOUND: "+e)
+  }
+}
+
+performOperationOnGetData()
+```
+
+- On network tab
+
+![alt text](image-56.png)
 
 #### Fetch API
 
@@ -2212,4 +2256,230 @@ async function performOperationOnGetData(){
 - Initially, the data from the server is in its raw binary form (0's and 1's). This is why it needs to be processed or "decoded" into a format that JavaScript can work with, such as like Text (`response.text()`), JSON (`response.json()`), Binary data like blobs (`response.blob()`)or Stream (`response.body`)
 - When you call methods like `response.text()` or `response.json()`, these methods read the stream and convert the binary data into a usable format (like a string or JavaScript object).
 - Streams allow you to handle large amounts of data without waiting for the entire response. For example, video streaming websites can play the beginning of the video before the entire file is downloaded. You can process the data as it arrives instead of waiting for everything to be loaded.
+- The `catch` block is similarly to `xhr.onerror` which deals with network level errors.
+- Lets implement `POST` and `DELETE`
+
+```
+// Post Example
+function OtherOperationData(methodName,url,body=null){
+  return fetch(url,{
+    method: methodName,
+    body:JSON.stringify(body)
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error("Failed to POST: " + response.status);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("POST Response:", data);
+  })
+  .catch(error => {
+    console.error("Fetch POST Error:", error);
+  });
+}
+
+async function performOperationOtherOperationsData(){
+  try{
+    const myData={
+      title: "This is a dummy title",
+      body: "This is a dummy body",
+      userId: 101
+    }
+    let result=OtherOperationData('POST','https://jsonplaceholder.typicode.com/posts',myData);
+  }catch(e){ // Handling ERROR
+    console.error("ERROR FOUND: "+e)
+  }
+}
+
+performOperationOtherOperationsData()
+```
+
+- On browser console
+
+![alt text](image-52.png)
+![alt text](image-53.png)
+
+- `DELETE` example
+
+```
+function OtherOperationData(methodName,url,body=null){
+  return fetch(url,{
+    method: methodName,
+    body:JSON.stringify(body)
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error("Failed to POST: " + response.status);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("POST Response:", data);
+  })
+  .catch(error => {
+    console.error("Fetch POST Error:", error);
+  });
+}
+
+async function performOperationOtherOperationsData(){
+  try{
+    const myData={
+      title: "This is a dummy title",
+      body: "This is a dummy body",
+      userId: 101
+    }
+    let result=OtherOperationData('DELETE','https://jsonplaceholder.typicode.com/posts/2');
+  }catch(e){ // Handling ERROR
+    console.error("ERROR FOUND: "+e)
+  }
+}
+
+performOperationOtherOperationsData()
+```
+
+- On browser console
+
+![alt text](image-54.png)
+![alt text](image-55.png)
+
+- You can also add request headers in fetch api
+
+```
+
+function OtherOperationData(methodName,url,body=null){
+  return fetch(url,{
+    method: methodName,
+    headers:{
+      "Content-Type": "JSON Content",
+      "JSON-Length": 20
+    },
+    body:JSON.stringify(body)
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error("Failed to POST: " + response.status);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("POST Response:", data);
+  })
+  .catch(error => {
+    console.error("Fetch POST Error:", error);
+  });
+}
+
+async function performOperationOtherOperationsData(){
+  try{
+    const myData={
+      title: "This is a dummy title",
+      body: "This is a dummy body",
+      userId: 101
+    }
+    let result=OtherOperationData('DELETE','https://jsonplaceholder.typicode.com/posts/2');
+  }catch(e){ // Handling ERROR
+    console.error("ERROR FOUND: "+e)
+  }
+}
+
+performOperationOtherOperationsData()
+```
+
+- On network tab
+
+![alt text](image-57.png)
+
+- Now how can we handle response error? the `catch` block handles network level error but how to handle response error like `400`?. Consider below code.
+
+```
+
+function GetData(){
+  return fetch("https://jsonplaceholder.typicode.com/u").
+  then(response=> {
+    if(response.status==200){
+      return response.json()
+    }
+    else{
+      return response.json().then(err=>{
+        console.log(err)
+        throw new Error("Invalid URL")
+      })
+    }
+  }
+  ).
+  catch((error)=>{
+    throw new Error(error);
+  });
+}
+
+async function performOperationOnGetData(){
+  let getResult;
+  try{
+    getResult=await GetData();
+    console.log(getResult)
+    for(const i of getResult){
+      console.log(`Item - id ${i.id} , name ${i.name}`);
+    }
+  }catch(e){ // Handling ERROR
+    console.error("ERROR FOUND: "+e)
+  }
+}
+
+performOperationOnGetData()
+```
+
+- Here the URL is invalid and on the browser console we get
+
+![alt text](image-58.png)
+
+- In below snip of above code
+
+```
+then(response=> {
+    if(response.status==200){
+      return response.json()
+    }
+    else{
+      return response.json().then(data=>{
+        console.log(data)
+        throw new Error("Invalid URL")
+      })
+    }
+  }
+  ).
+  catch((error)=>{
+    throw new Error(error);
+  });
+```
+
+- The `response` is a object which consist of all the response header and body contents. When we do `console.log(response)`.
+
+```
+then(response=> {
+    if(response.status==200){
+      return response.json()
+    }
+    else{
+      return response.json().then(data=>{
+        console.log(data)
+        console.log(response)
+        throw new Error("Invalid URL")
+      })
+    }
+  }
+  ).
+  catch((error)=>{
+    throw new Error(error);
+  });
+```
+
+- On browser console
+
+![alt text](image-59.png)
+
+- Now based on the status if it is a `200` that is handle in the `if` block which returns `response.json()` (which is a promise object).
+
+![alt text](image-60.png)
+
+- To catch the response status in the else block we need to return `response.json()` with a promise of chaining using `then(data)`. This will check that if the response status is `400` or not and `throw new Error`. That error is catch by `catch((error))`, which in return throws the same error which is caught by `performOperationOnGetData` catch block.
+
 
