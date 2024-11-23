@@ -2695,3 +2695,10 @@ axios.get('https://jsonplaceholder.typicode.com/users')
 >   </body>
 > </html>
 > ```
+
+
+## Modules
+
+- JavaScript modules allow you to break up your code into separate files. This makes it easier to maintain a code-base. Consider example
+
+

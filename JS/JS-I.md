@@ -3069,6 +3069,30 @@ console.log(Dog.life); //Output: True
 console.log(Dog.lives()) //Output: Animal is alive"
 ```
 
+
+>[!IMPORTANT]
+> - **JavaScript classes are not hoisted like function declarations. This means you cannot use a class before it's declared in your code**.
+> - Consider below example
+>
+> ```
+> class B extends A{
+>     display(){
+>         console.log("Display B")
+>     }
+> }
+> class A{
+>     display(){
+>         console.log("Display A")
+>     }
+> }
+> const b = new B();
+> b.display()
+> 
+> Output: ReferenceError: Cannot access 'A' before initialization
+> ```
+>
+> - The child class needs to know about the parent class in order to inherit from it. If the parent class is defined below the child class, the child class won't be able to find it during its definition.
+
 ### Super 
 
 - The `super()` keyword (or method) is used in class inheritance to call methods or constructors of the parent class. When a class extends another class (inheritance), `super()`allows you to access and use the properties and methods of the parent class within the child class.
