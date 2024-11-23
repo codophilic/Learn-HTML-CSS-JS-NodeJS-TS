@@ -2699,6 +2699,240 @@ axios.get('https://jsonplaceholder.typicode.com/users')
 
 ## Modules
 
-- JavaScript modules allow you to break up your code into separate files. This makes it easier to maintain a code-base. Consider example
+- JavaScript modules allow you to break up your code into separate files. This makes it easier to maintain a code-base. Consider below example example
+
+```
+// app1.js 
+
+class A{
+    display(){
+        console.log("Display A")
+    }
+}
 
 
+class B extends A{
+    display(){
+        console.log("Display B")
+    }
+}
+
+
+const b = new B();
+
+b.display()
+
+Output:
+Display B
+```
+
+- Now all the classes are present in a single file named **app1.js**. If there are multiple classes created a single JS file, the code will look clumsy. So to maintain readability we can separate out each piece of code into different modules or into different JS files.
+
+```
+// A.js
+
+class A{
+    display(){
+        console.log("Display A")
+    }
+}
+
+
+// app1.js
+
+class B extends A{
+    display(){
+        console.log("Display B")
+    }
+}
+
+
+const b = new B();
+
+b.display()
+```
+
+- Now both JS files needs to be added in the `script` tag under HTML.
+
+```
+HTML Snip
+
+<script src="app.js" defer></script>
+<script src="A.js" defer></script>
+<script src="app1.js" defer></script>
+```
+
+- **`A.js` file is loaded before the `app1.js` because `app1.js` has a dependency on `A.js`**. If we load `A.js` before `app1.js` , class `B` won't get reference for class `A`.
+
+```
+app1.js:1 Uncaught ReferenceError: A is not defined
+    at app1.js:1:17
+```
+
+- So it is important to first load all your dependencies javascript files before loading your main file. In such scenario when there are multiple JavaScript files, the HTML code will look clumsy right? thats why we have an option to **import and export**.
+- **Import and export** are used to share and use code between files, making it easier to organize your programs into smaller, reusable pieces
+- **`export`** sends out specific parts of a file (e.g., variables, functions, classes), makes it available globally so that they can be used in other files.
+
+```
+export class A{
+    display(){
+        console.log("Display A")
+    }
+}
+```
+
+- **`import`** brings in parts of another file that were exported, so you can use them in the current file. To tell javascript you wanted to use certain part of another file, you need to provide path of it.
+
+```
+
+import { A } from './A.js';
+
+class B extends A{
+    display(){
+        console.log("Display B")
+    }
+}
+
+
+const b = new B();
+
+b.display()
+```
+
+- **Relative paths** (use `./` or `../`):
+  - `./`: Means "in the same directory as this file."
+  - `../`: Means "go up one directory level."
+  - Example:
+
+```
+import { add } from './math.js'; // 'math.js' is in the same folder
+import { subtract } from '../utils.js'; // 'utils.js' is one folder above
+```
+
+- **Absolute paths** (e.g., starting with `/`):
+  - In modern web development, this usually refers to the root directory of the server.
+  - Example:
+
+```
+import { multiply } from '/scripts/math.js'; // 'math.js' is in 'scripts' at the server root
+```
+
+- When using `import` and `export` in the browser, you must specify `type="module" `in the `<script>` tag. This tells the browser that the script uses JavaScript modules.
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Click Event Example</title>
+</head>
+<body>
+
+<script src="app1.js" defer type="module"></script>
+  </body>
+</html>
+```
+
+- Without `type="module"`, the browser won't understand the import and export syntax, and you'll get an error. Now when we open our index html file we get an error.
+
+![alt text](image-66.png)
+
+- Why so? what does this CORS means? Browsers enforce CORS policy to **prevent unauthorized requests between different origins**. For example, If a webpage from one domain tries to access resources (like scripts or data) from another domain, it needs proper permissions. When working locally with `file://`, there’s no valid origin or a proper domain, if the these file based origin tries to access another script, the browser blocks the request by default. This default behavior in browser prevents access of any third party malicious website to our website , thus making it secure. 
+- This error occurs because modern browsers enforce CORS (Cross-Origin Resource Sharing) policies even when you're working with local files. When you open an index.html file directly via a file path (e.g., `file:///`), the browser treats it as being from the "null" origin, which isn't allowed to make cross-origin requests.
+- If you're using `type="module"` in your `<script>` tag, the browser applies stricter security policies. Loading JavaScript modules requires a proper HTTP or HTTPS server. Now so we need server? nope, in **Node.js** we have an option of `serve`. First you need to install `node.js`, then execute the following command to install `serve`.
+
+```
+npm install -g serve
+```
+
+- What does `serve` do? a `Node.js` server is a program that uses `Node.js` to make files or data available to users through a web browser. In simple terms, it allows your computer to act like a mini-website host. When you set up a `Node.js` server and visit its address (like `http://localhost:8080`), it serves your HTML, CSS, JavaScript, or other files to the browser just like a live website does.
+- When you access `http://localhost:8080`, the server sends the files to the browser. The browser runs them.
+- To run your HTML file in using `node.js` , run `serve` command.
+
+![alt text](image-67.png)
+
+- It creates a mini website, click on the URL `http://localhost:3000`. You will see your page.
+
+![alt text](image-68.png)
+
+
+![alt text](image-69.png)
+
+- This is how **import** and **export** works.
+
+### Types of Export
+
+#### Named Export
+
+- You explicitly name the items you want to export. Multiple exports per file are allowed.
+- Example
+
+```
+// math.js
+export const add = (a, b) => a + b;
+export const subtract = (a, b) => a - b;
+export const pi = 3.14159;
+
+// Importing Named Exports
+// main.js
+import { add, subtract } from './math.js';
+console.log(add(2, 3)); // Outputs: 5
+console.log(subtract(5, 2)); // Outputs: 3
+```
+
+- You must use the exact name of the exported item. You can rename them during import.
+
+```
+import { add as addition, subtract as subtraction } from './math.js';
+```
+
+####  Default Exports
+
+- You can export one default item from a module. The importing file can name it anything it wants.
+- Example
+
+```
+// math.js
+export default function multiply(a, b) {
+  return a * b;
+}
+
+// main.js
+import multiply from './math.js';
+console.log(multiply(2, 3)); // Outputs: 6
+```
+
+- You can combine default and named exports in the same file.
+
+```
+export default multiply;
+export const pi = 3.14159;
+```
+
+### Types of Import
+
+- Named Imports: You used exact name of object you wanted to import.
+
+```
+import { add, subtract } from './math.js';
+```
+
+- Default Import: Any name you would give for the default exported code.
+
+```
+import multiply from './math.js';
+```
+
+- Import All: Use `*` to import everything from a module as an object.
+
+```
+import * as math from './math.js';
+console.log(math.add(2, 3)); // Outputs: 5
+console.log(math.pi);        // Outputs: 3.14159
+```
+
+- Mixing Named and Default Imports
+
+```
+import multiply, { pi, add } from './math.js';
+```
