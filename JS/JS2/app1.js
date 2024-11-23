@@ -11,3 +11,14 @@ class B extends A{
 const b = new B();
 
 b.display()
+
+const getBtn=document.getElementById("myButton");
+
+getBtn.addEventListener("click",()=>{
+
+    const promise=import("./onClick.js")
+    promise.then(i=>{
+        i.showAlert();
+    })
+
+})

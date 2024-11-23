@@ -2936,3 +2936,136 @@ console.log(math.pi);        // Outputs: 3.14159
 ```
 import multiply, { pi, add } from './math.js';
 ```
+
+- All above types are example of **static imports**.
+- Dynamic Import: Dynamic import (`import()`) in JavaScript allows you to load modules dynamically at runtime, rather than at the start of the script. This means you can import a module only when it's needed (e.g., based on user interaction or certain conditions). Dynamic import uses a special function-like syntax, `import('module-path')`. Unlike static imports, which must appear at the top of your file, dynamic imports can appear anywhere in your code.
+- Suppose there is a JS file which has click event code
+
+```
+// onClick.js
+export function showAlert(){
+        alert("Button Clicked");
+}
+```
+
+- Now inside the **app1.js**, if we don't use dynamic import, and import the `onClick.js` as static import, under the network tab we can it it gets loaded since we have mentioned it as static import
+
+```
+
+import { A } from './A.js';
+import { showAlert } from './onClick.js';
+
+class B extends A{
+    display(){
+        console.log("Display B")
+    }
+}
+
+
+const b = new B();
+
+b.display()
+
+const getBtn=document.getElementById("myButton");
+
+getBtn.addEventListener("click",showAlert)
+```
+
+- Under network tab.
+
+![alt text](image-70.png)
+
+- Suppose, if we wanted to load the `onClick.js` script only when the button is clicked, we could use dynamic import
+
+```
+// app1.js
+
+const getBtn=document.getElementById("myButton");
+
+getBtn.addEventListener("click",()=>{
+
+    const promise=import("./onClick.js")
+    promise.then(i=>{
+        i.showAlert();
+    })
+
+})
+```
+
+- On network tab, we can see when the user clicks on button then only the `onClick.js` gets loaded
+
+<video controls src="2024-17.mp4" title="Title"></video>
+
+- **Why Use Dynamic Import?**
+  - **Improves Performance**:
+    - Only loads the code when it's needed, reducing the initial load time of your application.
+    - Useful for large apps or when certain features are rarely used.
+  - **Code Splitting**:
+    - Helps break your JavaScript into smaller chunks (modules) that can be loaded independently.
+  - **Conditional Loading**:
+    - Load modules based on conditions like user actions or environment settings.
+  - **Lazy Loading**:
+    - Modules that are not immediately needed (e.g., for a popup, a specific route in a Single Page Application) can be loaded later.
+
+
+>[!NOTE]
+> - If there is a code inside a module, and if that module is imported, the code inside that module will execute once.
+> 
+> ```
+> // onClick.js
+> console.log("Line Executed once")
+> export function showAlert(){
+>         alert("Button Clicked");
+> }
+> ```
+> 
+> - Now when the `onClick.js` script is loaded, the `console.log` ( code inside the module ) will get executed once.
+> 
+> <video controls src="2024-18.mp4" title="title"></video>
+
+### `this` in Modules
+
+- In regular JavaScript scripts (non-modules), `this` at the top level points to the global object (`window` in browsers).
+
+```
+console.log(this); // In a script, this outputs: window
+```
+
+- If you wanna add your own variable into the window object you can do it this way.
+
+```
+window.MY_VARIABLE="10"
+console.log(window.MY_VARIABLE)
+```
+
+- In modules, the top-level `this` is `undefined`. This is intentional **to avoid accidental global variable creation and ensure better modularity and stricter code behavior**. 
+
+```
+console.log(this) //undefined
+console.log("Line Executed once")
+export function showAlert(){
+        alert("Button Clicked");
+}
+```
+
+- To define global variables in modules, you must explicitly set them on the global object using `window` or `globalThis`
+
+#### `globalThis`
+
+- `globalThis` is a standardized way to access the global object, regardless of the JavaScript environment (browser, Node.js, etc.). It provides a universal reference to the global object.
+
+```
+console.log(globalThis); // Outputs: global object (e.g., window in browsers)
+```
+
+- Adding variable into `globalThis`
+
+```
+globalThis.myGlobalVar = 42;
+console.log(globalThis.myGlobalVar); // Outputs: 42
+```
+
+- Incase of other environment like `node.js` the `this` and `window` property does not reference to global object. Whereas `globalThis` is a standardize global object reference accepted by all runtime environments of javascript.
+
+
+
