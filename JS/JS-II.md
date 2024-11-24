@@ -3114,99 +3114,25 @@ console.log(globalThis.myGlobalVar); // Outputs: 42
 
 ![alt text](image-77.png)
 
-- So we set up this project to have a `package.json` file to be managed by `npm` therefore. Now we can install our first package by running `npm install`, a command we used
+- So we set up this project to have a `package.json` file to be managed by `npm` therefore. Just like we installed `server` using `npm install -g serve`, similarly we need to install `eslint` library but we will execute the command `npm install --save-dev eslint`, why so? the flag `-g` tell `Node.js` to install that library globally, it will be available for all the project which uses `Node.js` where `--save-dev` will install library for a particular project. Since **linting** is not required in production, we need it for development purpose, for code quality purpose.
+- `--save-dev` basically signals to `npm` we want install the following package as a development dependency of this project, development dependency because it's not a third-party package which I want to use as part of my project, it will not be part of the code that it will be upload to some server, it's just a package I need to do something with the code during development to optimize it, to check it, anything like that.
+- Post installing we can see `node_module` folder is being created along with a file `package-lock.json`.
 
-earlier already but now not -g because I don't want install it globally but instead
+![alt text](image-78.png)
 
---save or to be precise, --save-dev which basically signals to npm we want install
+- `node_modules` is a folder where all the dependencies (external code libraries or packages) your project needs are stored. These packages are downloaded when you run npm install. It allows your project to use tools or libraries other people have already written (e.g., React, Express, Lodash,ESLint).
+-  `package.json` file that acts like a project manual. It includes information about your project (like its name and version) and lists the libraries your project depends on. It keeps track of the exact packages your project needs to run (dependencies) and scripts for automating tasks (e.g., `npm start`). It also consist of inter-related dependencies meaning, if any third party library depends on another third-party library those are also being downloaded in your project.
 
-the following package as a development dependency of this project, development dependency because it's
+![alt text](image-79.png)
 
-not a third-party package which I want to use as part of my project,
+- You can see it also list out all the required dependencies.
+- `package-lock.json` file automatically generated when you run `npm install.` It locks the exact versions of every package (and their sub-packages) being used. If someone else installs your project, they’ll get the same exact versions of libraries as you. 
 
-it will not be part of the code
+![alt text](image-80.png)
 
-I want to upload to some server, it's just a package I need to do something with the code during development
-
-to optimize it, to check it,
-
-anything like that
-
-and then the name of the package here is ESLint,
-
-one word,
-
-that's the package we want install. You can by the way always search for
-
-in this case npm ESLint and find out the npm js page about ESLint to read more about this package,
-
-about its usage and so on,
-
-for this specific package, there is a lot you can configure and I won't dive into all these details here
-
-but of course therefore you have these official docs so that you can learn more about that.
-
-So let's simply hit enter now and this will now install ESLint in this project here. It can take a while
-
-here, shouldn't take too long though
-
-and once this command finished, you should see some output like this and in package.json,
-
-you now have a dev dependencies entry where you see ESLint and the version number under which it
-
-was installed.
-
-This symbol here simply means that we're not necessarily focusing only on this specific version which
-
-is the latest version at the point of time I'm recording this but then we would be fine with this version
-
-or any version higher than that.
-
-We also have a package-lock.json file which holds more detailed information about this dependency
-
-and all the dependencies of this dependency
-
-and you can simply ignore that file, that package-lock.json file.
-
-Now important, you also now have a node modules folder.
-
-This folder holds the dependencies you installed and that's why this folder is quite big,
-
-all the dependencies of this dependency and the dependencies of the dependencies of the dependency and
-
-so on.
-
-So we have a lot of packages in there and in the end here, we also see ESLint, here you can see the code
-
-that the ESLint tool uses.
-
-It's all Javascript code but important to you, you should never change code in node modules,
-
-this is third-party package code,
-
-none of your business,
-
-we take it as granted and this node modules folder is managed by npm.
-
-Indeed you can delete it and if you want to share your code, you always should delete it and recreate
-
-it with npm install in your project folder. When you run npm install, npm will go into your package.json
-
-file, look at your dependencies and development dependencies and install all the dependencies it
-
-finds there,
-
-in this case ESLint and all the dependencies the ESLint package needs
-
-and that's also where this version number then is important, npm install will install at least this version
-
-of this package because of this version number we specified here.
-
-So if I hit npm install, it again we'll go ahead and download all required packages which in my case
-
-is the ESLint package.
-
-So with that, we have ESLint installed,
-
-how can we now use it?
-
+- Then whats difference from `package.json`? `package.json` specifies general dependencies (e.g., `^4.17.1` means "any version 4.x") whereas `package-lock.json` specifies exact versions (e.g., `"4.17.1"`).
+- **You should usually ignore `node_modules` in version control systems like Git.** Here's why:
+  - Size: The `node_modules` folder can become extremely large (thousands of files).
+  - Reproducibility: Since dependencies are listed in `package.json` and locked by `package-lock.json`, anyone can recreate `node_modules` by running `npm install`.
+  - Unnecessary Uploads: Uploading `node_modules` is redundant and makes your repository unnecessarily bulky.
+- To ignore `node_modules` you can create a `.gitignore` file.
