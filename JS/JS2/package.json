@@ -1,0 +1,11 @@
+{
+  "name": "tooling",
+  "version": "1.0.0",
+  "description": "Tooling in JavaScript",
+  "main": "A.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Harsh Pandya",
+  "license": "ISC"
+}

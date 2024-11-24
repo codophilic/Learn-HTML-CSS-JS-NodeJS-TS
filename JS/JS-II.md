@@ -2839,7 +2839,7 @@ import { multiply } from '/scripts/math.js'; // 'math.js' is in 'scripts' at the
 
 - Why so? what does this CORS means? Browsers enforce CORS policy to **prevent unauthorized requests between different origins**. For example, If a webpage from one domain tries to access resources (like scripts or data) from another domain, it needs proper permissions. When working locally with `file://`, there’s no valid origin or a proper domain, if the these file based origin tries to access another script, the browser blocks the request by default. This default behavior in browser prevents access of any third party malicious website to our website , thus making it secure. 
 - This error occurs because modern browsers enforce CORS (Cross-Origin Resource Sharing) policies even when you're working with local files. When you open an index.html file directly via a file path (e.g., `file:///`), the browser treats it as being from the "null" origin, which isn't allowed to make cross-origin requests.
-- If you're using `type="module"` in your `<script>` tag, the browser applies stricter security policies. Loading JavaScript modules requires a proper HTTP or HTTPS server. Now so we need server? nope, in **Node.js** we have an option of `serve`. First you need to install `node.js`, then execute the following command to install `serve`.
+- If you're using `type="module"` in your `<script>` tag, the browser applies stricter security policies. Loading JavaScript modules requires a proper HTTP or HTTPS server. Now so we need server? nope, in **Node.js** we have an option of `serve`. First you need to install `Node.js`, then execute the following command to install `serve`.
 
 ```
 npm install -g serve
@@ -2847,7 +2847,7 @@ npm install -g serve
 
 - What does `serve` do? a `Node.js` server is a program that uses `Node.js` to make files or data available to users through a web browser. In simple terms, it allows your computer to act like a mini-website host. When you set up a `Node.js` server and visit its address (like `http://localhost:8080`), it serves your HTML, CSS, JavaScript, or other files to the browser just like a live website does.
 - When you access `http://localhost:8080`, the server sends the files to the browser. The browser runs them.
-- To run your HTML file in using `node.js` , run `serve` command.
+- To run your HTML file in using `Node.js` , run `serve` command.
 
 ![alt text](image-67.png)
 
@@ -3065,7 +3065,148 @@ globalThis.myGlobalVar = 42;
 console.log(globalThis.myGlobalVar); // Outputs: 42
 ```
 
-- Incase of other environment like `node.js` the `this` and `window` property does not reference to global object. Whereas `globalThis` is a standardize global object reference accepted by all runtime environments of javascript.
+- Incase of other environment like `Node.js` the `this` and `window` property does not reference to global object. Whereas `globalThis` is a standardize global object reference accepted by all runtime environments of javascript.
 
 
+## Tooling & Workflows
+
+- We learned about Javascript modules which basically means splitting our code across multiple Javascript files, where the files then import each other. Now there we could already see a huge advantage of this approach, it makes our code more manageable but we can see a disadvantage there, we had a lot of **HttpRequests** because all these separate files had to be downloaded one-by-one and the bigger your project grows, the more this might become a problem.
+
+![alt text](image-71.png)
+
+
+- To resolve such problem, javascript has a tooling option which essentially is all about managing our project with certain tools that automatically optimize our code, combine our code so that we can write our code in the best possible way and still get an optimized and better output than we're currently doing it.
+- Actually, we are already using one tool, the development server (`serve`) which we had to use in order to get our modules import and export. Now that's pretty cool, this already shows us one example of an extra tool we need to build proper applications with Javascript.
+- We needed this development server to have a more realistic testing environment, where we actually serve our web page as if it were served by a web server somewhere on the Internet. Previously we just double clicked on our `index.html` file and that therefore did use the file protocol (`file:///`). It was good enough for many things but with certain limitations as we saw when we started to use Javascript modules where all of a sudden for security reasons, the file protocol was not supported and we needed a real web server environment.
+- To understand which tools we might need, lets first understand the potential limitations we might face with basic Javascript projects as we use them.
+
+![alt text](image-72.png)
+
+- Lets say, we might need to micromanage all our imports if we're not using Javascript modules or if we are using them, we might have a lot of unnecessary **HttpRequests**.**The bigger our project grows, the more we have to manage imports or live with all these requests or both at the same time**.
+- Another problem we might face is that our code is not really optimized, it's not as small as it could be. Now thus far we haven't built huge applications when we learned but we've certainly written some code. **Now when we write code, we of course use function names which are pretty clear, we use the variable names which give a clear hint about what's stored in there, we use a lot of extra whitespace to structure our code or put in other words, we're using a lot of features that make the code more readable to us humans but which are not important to the computer. If we would strip out all these features and ship as small of a code bundle as possible, we could load our page faster because the computer, the browser has to download less bytes. If we would use shorter function names, then there are less bytes to be downloaded and therefore the site loads faster but of course to us humans, if we use very short function names like A, B, C, D, well that would be hard to understand our code so that's something where a tool might be able to help us**
+- Well another the problem is that, not all these latest and greatest features are supported by all browsers. So in an ideal world, we can write code that uses all these latest features and we can ship code, which means we can upload code to our web server that actually is a bit older, that code works on more browsers, **using that our modern code there can be a tool which can be automatically translates our modern code to older code which is supported by older browser**.
+- We also, when we write code, when we work on our application, constantly need to reload the web page to see our changes in effect, wouldn't it be great if we did not only have a development server but actually a development server **that automatically reloads the page whenever the code changes**? it can really speed up your development time, your development flow if that happens, if you don't have to manually press that reload button all the time, so that would be another improvement.
+- Last but not least, something we haven't really done thus far is checking our code quality. Now code quality is a broad term, there are certain conventions which you should follow but there also are a lot of loose rules or a lot of ideas and how you could write your code, there isn't a single right or wrong way of writing code. Still, you might want to be consistent, so it might be interesting if you could configure your code for yourself and **then there is a tool which automatically check it if your code follows the rules you set up for yourself to ensure it is properly written and has a good quality**.
+- So now we know about the limitations, the problems we might want to solve, now it's time to solve them and for that, we can use various tools. For most of these tasks, we have more than one tool out there. 
+
+
+![alt text](image-73.png)
+
+- Lets explore the most commonly used tool. Now let's start with the development server for that. So the one which we used `serve` or `webpack-dev-server` consist of auto reloading of page. 
+- To resolve the second problem, we need a bundling tool. The idea behind a bundling tool is that it analyzes all our imports and exports which we have when we use Javascript modules and that it then combines these different files into a single bundled file or into a couple of file bundles, so that you don't have these dozens of `HttpRequests` which need to be sent. It somewhere is actually merged back into a single file so that you have the better development experience but ship code which requires less `HttpRequests` and here, the by far, most popular tool is `webpack`. So now we can bundle our code, we can serve our code, we also typically want to optimize our code when we ship it or when we build it for production.
+- So when we're ready to deploy it onto our real server. During development you typically don't really care about such optimizations, they might even be bad because your code might be harder to debug in the development tools. To optimize your code, you want to shorten function names, remove access whitespace, remove everything which doesn't break your code if you remove it and for that, again `webpack` fortunately already has a couple of plugins built in which we can utilize to automatically optimize our code once we're ready to deploy it. 
+- We also might want to write modern code and ship code that also works on older browsers and for that, we need a code compilation tool, also transpilation called `Babel`. That simply is a tool which takes our code and transpile it to code that also works on older browsers.
+- You might want to check your code quality, so make sure that you follow certain patterns and conventions, that you consistently write your code in the same way and for that the most popular tool for Javascript is **ESLint** which you can also use.
+- Incase of your development stage, you may use **Linting** to check code quality, make sure you follow patterns and conventions you defined to make your code consistent, next would be **bundling** up your code and **reload dev server** when any changes are made. In development phase you don't wanna go for optimization as will be difficult to debug your code. Secondly you won't need the compiler like `Babel` in your development phase. Incase of production along with **Linting** & **bundling** , there you would require **optimization** and **Compiler like `Babel`** which will make your code changes ready from dev to production.
+
+![alt text](image-74.png)
+
+- These all tools are available under `Node.js`, so here we need to work with `npm` command.
+
+*We will learned about `Node.js` later*
+
+- So work with `npm` command we need to have a `package.json` file. To run `npm` commands effectively, you always need a `package.json` file in your project directory as it stores information about your project's dependencies and allows `npm` to manage them properly; essentially, without a `package.json`, npm doesn't know which packages to install or manage for your project. This file lists all the external modules your project depends on, including their versions.  It also contains information about your project like name, version, author, license, etc. 
+- You can create a `package.json` file using the `npm init` command which will prompt you to fill in the necessary details. 
+
+![alt text](image-75.png)
+
+![alt text](image-76.png)
+
+![alt text](image-77.png)
+
+- So we set up this project to have a `package.json` file to be managed by `npm` therefore. Now we can install our first package by running `npm install`, a command we used
+
+earlier already but now not -g because I don't want install it globally but instead
+
+--save or to be precise, --save-dev which basically signals to npm we want install
+
+the following package as a development dependency of this project, development dependency because it's
+
+not a third-party package which I want to use as part of my project,
+
+it will not be part of the code
+
+I want to upload to some server, it's just a package I need to do something with the code during development
+
+to optimize it, to check it,
+
+anything like that
+
+and then the name of the package here is ESLint,
+
+one word,
+
+that's the package we want install. You can by the way always search for
+
+in this case npm ESLint and find out the npm js page about ESLint to read more about this package,
+
+about its usage and so on,
+
+for this specific package, there is a lot you can configure and I won't dive into all these details here
+
+but of course therefore you have these official docs so that you can learn more about that.
+
+So let's simply hit enter now and this will now install ESLint in this project here. It can take a while
+
+here, shouldn't take too long though
+
+and once this command finished, you should see some output like this and in package.json,
+
+you now have a dev dependencies entry where you see ESLint and the version number under which it
+
+was installed.
+
+This symbol here simply means that we're not necessarily focusing only on this specific version which
+
+is the latest version at the point of time I'm recording this but then we would be fine with this version
+
+or any version higher than that.
+
+We also have a package-lock.json file which holds more detailed information about this dependency
+
+and all the dependencies of this dependency
+
+and you can simply ignore that file, that package-lock.json file.
+
+Now important, you also now have a node modules folder.
+
+This folder holds the dependencies you installed and that's why this folder is quite big,
+
+all the dependencies of this dependency and the dependencies of the dependencies of the dependency and
+
+so on.
+
+So we have a lot of packages in there and in the end here, we also see ESLint, here you can see the code
+
+that the ESLint tool uses.
+
+It's all Javascript code but important to you, you should never change code in node modules,
+
+this is third-party package code,
+
+none of your business,
+
+we take it as granted and this node modules folder is managed by npm.
+
+Indeed you can delete it and if you want to share your code, you always should delete it and recreate
+
+it with npm install in your project folder. When you run npm install, npm will go into your package.json
+
+file, look at your dependencies and development dependencies and install all the dependencies it
+
+finds there,
+
+in this case ESLint and all the dependencies the ESLint package needs
+
+and that's also where this version number then is important, npm install will install at least this version
+
+of this package because of this version number we specified here.
+
+So if I hit npm install, it again we'll go ahead and download all required packages which in my case
+
+is the ESLint package.
+
+So with that, we have ESLint installed,
+
+how can we now use it?
 
