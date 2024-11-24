@@ -3136,3 +3136,147 @@ console.log(globalThis.myGlobalVar); // Outputs: 42
   - Reproducibility: Since dependencies are listed in `package.json` and locked by `package-lock.json`, anyone can recreate `node_modules` by running `npm install`.
   - Unnecessary Uploads: Uploading `node_modules` is redundant and makes your repository unnecessarily bulky.
 - To ignore `node_modules` you can create a `.gitignore` file.
+- Along with `npm install --save-dev eslint` you would also need to install `npm install -g eslint-cli`. Now to enable `eslint` in your project, navigate to your project directory and run `eslint --init` (`Ctrl+Shift+P` -> Search for Enable ESLINT Configuration and Click on it). You will get a prompt where you need to fill in details.
+
+![alt text](image-81.png)
+
+- We can see a file `eslint.config.mjs` gets created. **The full form of the `.mjs` extension is Module JavaScript**. It signifies that the file contains JavaScript code written using the ECMAScript module (ESM) syntax, as opposed to the older CommonJS (`.cjs`) module format. 
+- `eslint.config.mjs` **stands for "ESLint configuration file using the modern JavaScript module format** - essentially, it's a file named `eslint.config.js` that specifically indicates it should be interpreted as an ECMAScript Module (ESM) using the `.mjs` extension, allowing for more advanced JavaScript features in your ESLint configuration. Using `.mjs` allows you to utilize newer JavaScript features like import/export statements in your ESLint configuration.
+- When we open up `eslint.config.mjs` we get something below.
+
+![alt text](image-82.png)
+
+- `languageOptions.globals: globals.browser`:
+  - This tells ESLint to recognize global variables that are common in browser environments (like `window`, `document`, etc.).
+  - Without this, ESLint might throw errors saying `window is not defined` or similar when you use browser-specific features.
+
+
+![alt text](image-83.png)
+
+- `pluginJs.configs.recommended`:
+  - This loads the recommended configuration provided by the `@eslint/js` plugin. **It includes a basic set of rules considered best practices for JavaScript**, such as avoiding undefined variables and discouraging the use of eval.
+  - Here you can define, your own custom rules for code consistency.
+- Before we add our own rules, we need to understand what all rules are provided by `eslint`. Rules are defined in the rules property of the configuration object. Rules consist of a rule name and its configuration, which typically has these formats:
+  - `off` or **0**: Turn the rule off.
+  - `warn` or **1**: Trigger a warning.
+  - `error` or **2**: Trigger an error.
+- Consider below rules
+
+```
+import globals from "globals";
+import pluginJs from "@eslint/js";
+
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  {
+    languageOptions: {
+      globals: globals.browser, // Use browser-specific global variables
+    },
+  },
+  pluginJs.configs.recommended, // Use recommended settings for JavaScript
+  {
+    rules: {
+      'no-console': 'warn', // Warn when console statements are used
+      'quotes': ['error', 'single'], // Enforce single quotes
+      'indent': ['error', 4], // Enforce 4-space indentation
+      'semi': ['error', 'always'], // Require semicolons
+      'no-unused-vars': 'warn', // Disallow unused variables
+      'max-len': ['error', { code: 80 }], // Enforce 80-character line length
+    },
+  },
+];
+```
+
+- `no-console`: Prevents the use of `console.log`, `console.error`, etc., in production code.
+
+```
+// Example
+console.log('Debugging'); // Warning based on the rule
+```
+
+- `quotes`: Enforces consistency in string quotes ('single' or "double").
+
+```
+// Example
+const name = "John"; // Error if 'single' is configured
+const name = 'John'; // Correct
+```
+
+- `indent`: Ensures consistent indentation in your code (e.g., 2 spaces, 4 spaces, or tabs).
+
+```
+// Example
+function greet() {
+  console.log('Hello'); // Correct for 2 spaces
+}
+```
+
+- `no-unused-vars`: Detects variables that are declared but not used.
+
+```
+// Example
+const unused = 42; // Warning
+```
+
+- `max-len`: Limits the maximum number of characters per line to improve readability.
+
+```
+// Example
+const longLine = 'This is a very long line that exceeds the maximum length'; // Error
+```
+
+- `semi`: Enforces or disallows the use of semicolons at the end of statements.
+
+```
+//Example
+const a = 5; // Correct if 'always' is configured
+const b = 10 // Error if 'always' is configured
+```
+
+- As soon as we defined these rules, we can see how it gets affected in the current directory including `eslint.config.mjs`
+
+![alt text](image-84.png)
+
+![alt text](image-85.png)
+
+- To ignore certain files, we can do this way.
+
+```
+import globals from "globals";
+import pluginJs from "@eslint/js";
+
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  {
+    languageOptions: {
+      globals: globals.browser, // Use browser-specific global variables
+    },
+  },
+  {
+    ignores: [
+      'node_modules', // Ignore the node_modules directory
+      'app1.js',         // Ignore app1.js
+      '*.config.mjs',     // Ignore eslint config mjs file
+    ],
+  },
+  pluginJs.configs.recommended, // Use recommended settings for JavaScript
+  {
+    rules: {
+      'no-console': 'warn', // Warn when console statements are used
+      'quotes': ['error', 'single'], // Enforce single quotes
+      'indent': ['error', 4], // Enforce 4-space indentation
+      'semi': ['error', 'always'], // Require semicolons
+      'no-unused-vars': 'warn', // Disallow unused variables
+      'max-len': ['error', { code: 80 }], // Enforce 80-character line length
+    },
+  },
+];
+```
+
+- There is an alternative option to ignore certain paths or directories, create a file named `.eslintignore` in the root of your project. Add the paths you want to ignore.
+- Lets say you wanna disable rule for a certain line, you get that suggestion 
+
+
+<video controls src="2024-19.mp4" title="Title"></video>
+
+- Similarly there are several options provided by `eslint` which can be configured by referring its [doc](https://eslint.org/docs/latest/use/configure/)
