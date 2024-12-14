@@ -3280,3 +3280,138 @@ export default [
 <video controls src="2024-19.mp4" title="Title"></video>
 
 - Similarly there are several options provided by `eslint` which can be configured by referring its [doc](https://eslint.org/docs/latest/use/configure/)
+- Now lets do bundling, for bundling we will be using `webpack`. So run the command  `npm install --save-dev webpack webpack-cli`. When we say **bundling our code**, it means that `webpack` gonna combine all the individual code files or script into one large script file. So multiple code files will get merged together so that we don't send all these unnecessary `HttpRequests` for all the imports we do.
+- To use webpack, we typically create a configuration file where we tell webpack from where the bundling needs to be started, and where the large script file needs to be place or merged file needs to be place. For that the configuration file will be `webpack.config.js`, a javascript configuration file.
+- First lets move all the `js` file under an `src` folder.
+
+![alt text](image-86.png)
+
+- Now we have to provide a configuration for `webpack` named as `webpack.config.js`. Now this file under the hood uses or is executed by `Node.js`. Now to export the module we will be using default utility provided by `Node.js` which is `module.exports` and write different property to bundle up our code.
+
+```
+//webpack.config.js
+
+const path = require('path');
+
+module.exports={
+    entry: ['./src/app1.js','./src/app.js','./src/onClick.js'],
+    output:{
+        filename: 'finalBundle.js',
+        path:path.resolve(__dirname,'assets','scripts'),
+        publicPath: 'assets/scripts'
+    }
+};
+```
+
+- Here the export is being assigned with an object which consist of properties like `entry` and `output`. Now webpack needs to know where the starting point of your app is, so it needs to know where in your source files the `entry` point of your project is and it will then take that entry point, in our case that would be `app.js`, `app1.js` and `onClick.js`. The `webpack` will analyze these file, most importantly analyze the imports of that file and then resolve all the dependencies of that file and the files related to that file.
+- Now besides the entry file, we also need to specify where the output should be written to and for that, we can add an `output` key here and that can now be a Javascript object where we for one specify the output file name (`finalBundle.js`) that should be generated. This will be one code file in the end which contains all the other merged code files.
+- Now where should we place this file? for that we need to defined a path or location, so we wanted to place this under `assets\scripts`. Now to generate that path here, we can use a utility module, a utility package built into `Node.js` which is
+
+
+```
+const path = require('path');
+```
+
+
+- Now we need to import that package here and if you import, in `Node.js` you don't do it with import, just as we also didn't use export to export something, instead you import like `require('path')`. We want to use the path package so we store it in a constant, path and we import it with the require function here where we simply pass the package name to path and path is a package built into `Node.js`.
+- We can use `path.resolve` to basically get absolute path with the help of that `path`, where we want to start in our current path and for that, `Node.js` has a global constant, `__dirname`, this simply gives us access to this current path where the config file lives in. Using `path.resolve(__dirname,'assets','scripts')` we tell `webpack` to create `assets\scripts` folder under the current path where the config `webpack.config.js` reside. Now this value is assign to `path:` variable inside the `module.exports`, what this does is it constructs a new absolute path and output needs an absolute path, not a relative one, starting at our current file, so the absolute path to our current file, adding `/assets` to this `path`, adding `/scripts` to this `path`, so that in the end we generate our output here in the `scripts` folder. 
+- Now to execute bundling of our js files, let's go to `package.json` and there in the `script` section you can set up some scripts which you can run through the command line, so here you can simply add a new script.
+
+```
+//package.json
+{
+  "name": "tooling",
+  "version": "1.0.0",
+  "description": "Tooling in JavaScript",
+  "main": "A.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js"
+  },
+  "author": "Harsh Pandya",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "eslint": "^9.15.0",
+    "globals": "^15.12.0",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
+  }
+}
+```
+
+- So here we have created a `build` where we want to perform bundling of our code, so instead of writing cli command `webpack --config webpack.config.js` we can simple execute `npm run build` which in turn will use the webpack tool to do bundling and webpack will automatically search for such a` webpack.config.js` file.
+- Now update the `index.html` `script` tag to new path which is `<script src="assets/scripts/finalBundle.js" defer></script>`.
+- We can tell `webpack` for which mode we need the build whether it will be development mode or production or any other
+
+```
+const path = require('path');
+
+module.exports={
+    mode: 'development',
+    entry: ['./src/app1.js','./src/app.js','./src/onClick.js'],
+    output:{
+        filename: 'finalBundle.js',
+        path:path.resolve(__dirname,'assets','scripts'),
+        publicPath: 'assets/scripts'
+    }
+};
+```
+
+>[!NOTE]
+> - For production environment we can another webpack configuration file like `webpack.config.prod.js` or any other file name, and that file name needs to be added under `script` tag of `package.json` something like below
+> 
+> ```
+>  "scripts": {
+>    "test": "echo \"Error: no test specified\" && exit 1",
+>    "build:prod": "webpack --config webpack.config.prod.js",
+>    "build": "webpack --config webpack.config.js",
+>    "build:dev": "webpack-dev-server"
+>  }
+> ```
+
+- Now lets add automatically reloading server to our development mode. So for that we need to install `npm install --save-dev webpack-dev-server` for local, then add a script inside `package.json` to run dev server via `npm`. 
+
+```
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "build:dev": "webpack-dev-server"
+  }
+```
+
+- Dev server requires HTML files to be present under `public` folder. So move your `index.html` file under public folder.
+
+
+![alt text](image-87.png)
+
+- Now when we run `npm run build:dev` our dev server gets started.
+
+![alt text](image-89.png)
+
+
+![alt text](image-88.png)
+
+- Now as a final optimization, a "Clean Plugin" is used in webpack, usually it referred to as the `CleanWebpackPlugin`, is a plugin that automatically deletes all files within your designated build output directory before starting a new build, ensuring a fresh build with only the newly generated assets, effectively cleaning up old build artifacts from previous compilations. So first lets install the plugin `npm install --save-dev clean-webpack-plugin`
+- Now inside the `webpack.config.js` we need to add this plugin
+
+```
+const path = require('path');
+const CleanPlugin = require('clean-webpack-plugin')
+
+module.exports={
+    mode: 'development',
+    entry: ['./src/app1.js','./src/app.js','./src/onClick.js'],
+    output:{
+        filename: 'finalBundle.js',
+        path:path.resolve(__dirname,'assets','scripts'),
+        publicPath: 'assets/scripts'
+    },
+    plugins:[
+        new CleanPlugin.CleanWebpackPlugin()
+    ]
+};
+```
+
+
+

@@ -11,8 +11,10 @@ export default [
   {
     ignores: [
       'node_modules', // Ignore the node_modules directory
-      '*.js',         // Ignore app1.js
+      'src/*.js',         // Ignore *.js under src folder (temporary)
       '*.config.mjs',     // Ignore eslint config mjs file
+      'webpack.config.js',
+      "assets/scripts/*.js"
     ],
   },
   pluginJs.configs.recommended, // Use recommended settings for JavaScript
