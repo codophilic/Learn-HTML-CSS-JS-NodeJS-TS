@@ -3413,5 +3413,97 @@ module.exports={
 };
 ```
 
+## Browser Storage (Client-Side Storage)
 
+- Browser storage, also known as web storage or DOM storage, is a JavaScript API that allows websites to store data on a user's device. It's a client-side feature, meaning that the processing happens on the user's computer.
+- JavaScript browser storage is a way for web applications to store data directly in your browser. This means the data stays on your device and can be used later, even if you refresh the page or close and reopen the browser (depending on the storage type).
+- Lets take an example, suppose you are visiting an online shopping site. So the application hosted must have all the products in their database or server side database. This products are displayed on the browser page and user adds it and keep it in their respective shopping cart. Now you have a dark-light mode feature on your website, this will being varying from user to user, now to store such data you will be using client-side storage or browser storage.
+- Your server can read it, whether user prefers dark-light mode and can use it again when the use revisits the site.
+
+![alt text](image-90.png)
+
+## Types of Browser Storage
+
+### 1. Cookie
+
+- A cookie is a small piece of data stored by the browser on behalf of a website or application server. It’s sent with every HTTP request to the same domain, allowing the server to recognize users and manage sessions. Cookies can have attributes like `Expires` (sets expiration time), `HttpOnly` (restricts JavaScript access), and `Secure` (ensures cookies are only sent over HTTPS). They are typically used for session management, user tracking, and storing small amounts of information. 
+- Cookies have a storage limit of around **4KB**. Cookies were the first widely used method to store data in the browser.
+- A cookie is an amount of information that persists between a server-side and a client-side. A web browser stores this information at the time of browsing.
+- A cookie contains the information as a string generally in the form of a key-value pair separated by semi-colons. It maintains the state of a user and remembers the user's information among all the web pages.
+
+#### How Cookies Works?
+
+- When a user sends a request to the server, then each of that request is treated as a new request sent by the different user.
+- So, to recognize the old user, server adds a cookie in browser at the client-side, in the initial response .
+- Now, **whenever a user sends a request to the server, the cookie is added with that request automatically. Due to the cookie, the server recognizes the users.**
+
+![alt text](image-91.png)
+
+#### Implementation
+
+>[!NOTE]
+> - Cookies are only available when you serve your application on real server, during development phase it is now shown in the browser.
+
+- You can all the cookies under `Application` tab of developer console.
+
+![alt text](image-92.png)
+
+- To create cookie you can use the `document` object.
+
+```
+// Set a cookie using js
+document.cookie = "username=JohnDoe; max-age=900;";
+```
+
+- The advantages of cookies are that you can set them to expire and that you can also send them to a server within your requests. If you don't set any expiration date on a cookie, it should expire when your session expires, so when you close the entire browser, though finally it's up to the browser when it wants to delete the cookie. Also keep in mind that the user can always delete all cookies. You can clear cookies no matter if they have an expiration date via your code.
+- To add expiration date, you can use the flag `max-age` and set the value computed in seconds. The expiration of cookie will be visible under the `Expires/` tab.
+
+![alt text](image-93.png)
+
+- Alternatively you can also use `expires` key for expiration where you need to set the fixed date as its value.
+- To update the cookie, you can again use the same key like below
+
+```
+document.cookie = "username=newUserName; max-age=900;";
+```
+
+- So the `username` key is replaced with the new value.
+
+
+### 2. LocalStorage
+
+- `localStorage` is a web storage feature that allows websites to store data in the browser for long-term, client-side use. Unlike cookies, localStorage data is not sent with HTTP requests, making it ideal for storing larger amounts of data (typically up to 5–10MB) that doesn’t need to be shared with the server. Data persists even after the browser is closed, until it is explicitly cleared by the user or the application. LocalStorage is often used for caching, user preferences, and settings.
+
+```
+// Set data in localStorage
+localStorage.setItem('username', 'JohnDoe');
+localStorage.setItem('age', '30');
+
+// Storing an object using JS. (browser only, Cant be manipulated from server)
+const user = { name: 'John Doe', age: 30 };
+localStorage.setItem('user', JSON.stringify(user));
+
+// Retrieving the object
+const retrievedUser = JSON.parse(localStorage.getItem('user'));
+console.log(retrievedUser.name); // Output: John Doe
+```
+
+### 3. SessionStorage
+
+- `sessionStorage` is a web storage feature that stores data for the duration of a single browser session. The data is accessible only within the same tab or window and is cleared when the tab is closed. Unlike cookies, sessionStorage data is not sent with HTTP requests, and it has a larger storage capacity (typically 5–10MB). It’s useful for storing temporary data, such as form inputs or session-specific state, that doesn’t need to persist across tabs or browser restarts. But session storage data is lost once the browser tab or window is closed.
+
+```
+// Set data in sessionStorage
+sessionStorage.setItem('username', 'JohnDoe');
+sessionStorage.setItem('age', '30');
+
+// Get data from sessionStorage
+const username = sessionStorage.getItem('username');
+const age = sessionStorage.getItem('age');
+```
+
+- `sessionStorage` is similar to `localStorage`, but the data is only stored for the duration of your browser session. Once you close your browser, the data is deleted. `sessionStorage` is often used for storing temporary data that doesn’t need to persist between sessions.
+
+>[!NOTE]
+> - Both `localStorage` and `sessionStorage` are mechanisms within a web browser that allow you to store data locally on a user's device without requiring a server-side component, meaning you can use them even when a real server isn't available or accessible.
 

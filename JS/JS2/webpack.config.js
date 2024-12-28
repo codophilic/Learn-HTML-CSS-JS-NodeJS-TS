@@ -9,7 +9,7 @@ module.exports={
         path:path.resolve(__dirname,'assets','scripts'),
         publicPath: 'assets/scripts'
     },
-    plugins:[
-        new CleanPlugin.CleanWebpackPlugin()
-    ]
+    // plugins:[
+    //     new CleanPlugin.CleanWebpackPlugin()
+    // ]
 };
