@@ -3507,3 +3507,99 @@ const age = sessionStorage.getItem('age');
 >[!NOTE]
 > - Both `localStorage` and `sessionStorage` are mechanisms within a web browser that allow you to store data locally on a user's device without requiring a server-side component, meaning you can use them even when a real server isn't available or accessible.
 
+## Browser Support
+
+- "Browser support" refers to the compatibility of a website or application with different web browsers, meaning whether a particular browser can correctly display and function with all the features of a website without issues.
+- Well consider an application where you're writing some Javascript code and you want to use the `fetch` API, you want to send an `HttpRequest` with that `fetch` API.
+
+![alt text](image-94.png)
+
+
+- Now the problem you as a developer have when writing Javascript for the browser is you can't control which browser your users will use, you don't know if people use Internet Explorer, if they use Firefox, if they use Chrome and which version of that browser they use, that's something you can't control.
+- You can test your code in a certain browser. So for example here, `fetch` would be supported in Chrome since 2015 already, in Firefox also since 2015 but not in Internet Explorer. Now of course Internet Explorer is an old browser, Microsoft is now working on Edge which now also actually is based on the chromium project, so it has a similar core as the Chrome browser but there still are users out there, especially in some companies that still use Internet Explorer even though it's outdated, so that might be a problem because for those users, your code that uses `fetch` would simply not work, it would throw an error and your application would crash.
+- So fetch has decent browser support but it has one browser, Internet Explorer, no matter which version you are using there, where it won't work. So that can be a problem and that's a problem you as a developer have to work around because as a developer, it's your responsibility to make sure that you write code that works for all the browsers you're targeting with your web page.
+- It's also important to **differentiate between browser features and Javascript syntax**, sometimes it does not matter but sometimes it does.
+
+
+![alt text](image-95.png)
+
+- When we talk about browser features, we talk about the APIs a browser exposes, whereas Javascript syntax really is about all the keywords, all the functionalities and features that are built into the Javascript language, they're of course kind of related but not exactly the same. 
+- For browser features, these browser APIs, the browser decides which features it offers and examples there would be the fetch API, geolocation, the DOM API, so all these objects and functions and methods that are exposed by the browser in Javascript. Of course you worked with these features in Javascript but **they're not part of the core Javascript language**, instead the browser as you learned provides a bridge to these functionalities and exposes APIs in Javascript so that you can conveniently use these features. 
+- On the other hand when we talk about Javascript syntax, mean parts and features that are built into the Javascript engine and there, it's the browsers Javascript engine that defines which syntax and which version of the Javascript language is supported. Examples for Javascript syntax would be things like `let`, `const`, `async` and `await`, `promises`, so all these core functionalities that are baked into Javascript.
+- **Now why does this matter?** Because browser features typically are implemented individually, so one feature at a time. There might be some new feature which is coming up and let's say the team behind the Chrome browser decides that they want to implement it. They might just go ahead and offer this feature as part of Chrome, other browsers might not yet offer this feature and they might not even plan to offer it in the near future at all. So then you can only use this feature in Chrome browser and hence if you're using it in your application, only users using the Chrome browser could use that feature.
+- Now the example in Javascript, there is a specific version, ES6, which brought a lot of changes. It introduced `let`, `const`, `arrow` functions and much more and of course all these features also were implemented step-by-step by browsers but they all worked towards that goal of supporting these features at some point, so it was like a big chunk of features where all browsers kind of agreed that they want to implement this and that's a difference you can be aware of.
+- So it's typically **safer to rely on certain Javascript syntax features to be available at some point than it is for certain browser APIs**, especially if it's very new experimental APIs, then it might take way longer until all browsers support it.
+- Now how can you find out which features are supported where?
+
+![alt text](image-96.png)
+
+- So every time when we implement a feature, we need to check compatibility with all browser? **NO**. The naive thought might be that you simply check all these resources and then you need to find a way to make the feature you want to use work in all possible browsers across all browser versions and here, the clear answer is **don't do this**. For one, this will never be entirely possible, there are super older versions of Internet Explorer that don't support anything, you will never be able to make your application with all its features work there.
+- You would just cut so many features that just to support a small fraction of the user base, you pass on some awesome features and awesome improvements you could offer to the vast majority of the user base.
+
+![alt text](image-97.png)
+
+
+- So you definitely have a tradeoff there and you want to be careful regarding your decision. Don't build an application for the smallest possible denominator, instead analyze your market, get an idea of who your users will be and then build your application for those users and use the features or make the features you plan on using work for these users and their browsers, not for the global user base.
+
+### Feature Detection and FallBack
+
+![alt text](image-98.png)
+
+- Let's say we want to use the clipboard API, that's a relatively modern browser API that allows us to interact with the user's clipboard, so the thing you use with copy and pasting. If we search for clipboard API and we check the MDN article and we scroll down, we see browser support is not looking that great.
+
+![alt text](image-99.png)
+
+- It works on Edge and Chrome, we don't know whether it works in Safari, it internal features does not work in FireFox. We can handle such FallBack by using `try-catch` or feature detection (`if-else`). Lets see an example
+
+
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+      <button id="button">Copy</button>
+      <p>This is the text you copied</p>
+      <script src="script.js"></script>
+      <script>
+        
+        const getbtn=document.querySelector('button');
+        const textPara=document.querySelector('p');
+        button.addEventListener('click',()=>{
+          
+          // Feature Detection using if-else, if feature is not detected navigation.clipboard will give undefined and thus else block will be executed
+          if(navigator.clipboard){
+            navigator.clipboard
+            .writeText(textPara.textContent)
+            .then(result =>{
+              console.log(result);
+            })
+            .catch(error=>{
+              console.log(error);
+            })
+          }else{
+            alert('Copy Feature is not support in this browser');
+          }
+        })
+        
+      </script>
+      
+  </body>
+  
+  
+</html>
+```
+
+![alt text](image-100.png)
+
+### Polyfill
+
+- Another strategy for making code work in more browsers is to use polyfills. A polyfill is a third-party package that adds a functionality which otherwise might be missing in a browser, let's say you want to use `promises`. `Promises` might not be available in all browsers, for example Internet Explorer does not support `promises` and therefore to still make it work there, you can add such a polyfill which again is just a third-party package that actually teaches the browser how to use that feature.
+
+![alt text](image-101.png)
+
+- Now obviously, this is not possible for all features, some features rely on some core mechanics which can't be worked around with Javascript, some features however can be replicated with other Javascript features and therefore an older browser which might not support let's say `promises` but supports other features with which you can rebuild the idea behind promises might be able to utilize such a promise polyfill. So it's a third-party Javascript feature that simply adds something to a browser which otherwise is missing there.
+- So in JavaScript, a polyfill is a piece of code that provides functionality that a browser might not support natively. It "fills in" the gap, allowing you to use modern features even in older browsers. The polyfill first checks if the browser supports the feature you want to use. If the feature is not supported, the polyfill provides its own implementation of the feature using JavaScript code that works in the older browser.
+- Now to include polyfill for the corresponding feature you can refer `caniuse.com` or search `feature name polyfill` on internet. Include the dependencies in your workspace and use it.
