@@ -10,8 +10,13 @@
   },
   "author": "Harsh Pandya",
   "license": "ISC",
+  "browserslist": ">0.2%",
   "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "@eslint/js": "^9.15.0",
+    "babel-loader": "^9.2.1",
     "clean-webpack-plugin": "^4.0.0",
     "eslint": "^9.15.0",
     "globals": "^15.12.0",

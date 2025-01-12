@@ -3603,3 +3603,68 @@ const age = sessionStorage.getItem('age');
 - Now obviously, this is not possible for all features, some features rely on some core mechanics which can't be worked around with Javascript, some features however can be replicated with other Javascript features and therefore an older browser which might not support let's say `promises` but supports other features with which you can rebuild the idea behind promises might be able to utilize such a promise polyfill. So it's a third-party Javascript feature that simply adds something to a browser which otherwise is missing there.
 - So in JavaScript, a polyfill is a piece of code that provides functionality that a browser might not support natively. It "fills in" the gap, allowing you to use modern features even in older browsers. The polyfill first checks if the browser supports the feature you want to use. If the feature is not supported, the polyfill provides its own implementation of the feature using JavaScript code that works in the older browser.
 - Now to include polyfill for the corresponding feature you can refer `caniuse.com` or search `feature name polyfill` on internet. Include the dependencies in your workspace and use it.
+
+### Transpiling Code (Babel) 
+
+- **Compilers translate code from one language to another e.g Java to bytecode. Transpilers translate code to the same language**. Transpilers transform the code of a language into another form of the same language.
+- Transpiling in JavaScript typically refers to converting code written in a newer version of JavaScript (like ES6+, which includes features like arrow functions, classes, and modules) into an older version (like ES5) that is more widely supported by browsers.
+- So a JavaScript transpiler converts a form of JS code to another form of JS. There are several transpilers that translate ES6 code to ES5:
+    - Babel
+    - TypeScript
+    - Traceur
+
+- While using a transpiler, it's important to write your code using the newer syntax during development. However, when deploying your project, you should utilize the transpiler.
+- Babel is the most popular JavaScript transpiler.
+
+```
+npm install --save-dev @babel/core @babel/cli @babel/preset-env babel-loader
+```
+
+- The `babel-loader`, which is the integration with `webpack` which basically does the connection of `webpack` and the Babel tool, we got `babel/core` which is that Babel tool, so the tool that actually knows how to translate modern code to older code and `babel/present-env` is a preset that controls which features are compiled in which way, so actually this is the package with the concrete translation rules is present. 
+- Now babel and webpack is integrated, so below details needs to be added in `webpack.config.js`.
+
+```
+    module: {
+        rules: [
+          {
+            test: /\.(?:js|mjs|cjs)$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                targets: "defaults",
+                presets: [
+                  ['@babel/preset-env']
+                ]
+              }
+            }
+          }
+        ]
+      }
+```
+
+- This adds a module entry which basically gives instructions to webpack how to transform your different modules, so it basically tells webpage what to do with the files, you can add a rules entry here and that takes multiple rules because you can control different kinds of files with different so-called loaders. A rule is a Javascript object where you have a test property, there you define how the file you want to translate should be identified. `/\.(?:js|mjs|cjs)$/` is a regular expression, here we're basically saying any file ending with `.js` or `.mjs`, so with an extension of `js` or `mjs`, should be treated or should be handled by this rule, other files ending with a different extension of which we have none but if we had them would be ignored. Now we also want to `exclude` any files that are in those modules and will be ignored so that we don't start transpiling code which is part of third-party packages (`node_modules`).
+- Here we are using the loader named `babel-loader`, Babel loader should take care about Javascript files and that as an option, it should use that `preset-env` ruleset.
+- Now we're not entirely done though, we need to configure which browsers we want to support because `@babel/preset-env` it's a set of rules that controls which features are translated to which older code, for example that `let` and `const` are translated to `var`. Now of course the exact translation you want depends on which **browsers you're targeting**, this is where we come back to our market analysis using MDN or `canisue.com` that where different features modern Javascript offers have different browser support.
+- Now under `package.json` we need to specify list of browser for which transpiling is required.
+
+```
+//package.json
+.....
+  "author": "Harsh Pandya",
+  "license": "ISC",
+  "browserslist": "",
+....
+```
+- `browserslist` is a tool that is used under the hood by `@babel/preset-env`. When `"browserslist": ">2%"`, which means you want to output code that works in browsers that have a market share of greater than 2% and of course every time you build, this is checked and this under the hood taps into a source which is always kept up-to-date so that you build code that works in browsers with greater than 2% market share. 
+- Below is the output when `2%` is used
+
+![alt text](image-102.png)
+
+- Now if I change this to let's say we want to support browsers with a market share greater than `0.2` (`"browserslist": ">0.2%"`) which of course includes way older and smaller browsers and now rebuild this, let's check the output again.
+
+![alt text](image-103.png)
+
+- Arrow functions are not supported by older browsers, thats why in above image we can see babel is transpiling it into a normal function. 
+- In the `browserslist` we can also target specific browser name.
+
