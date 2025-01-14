@@ -3668,3 +3668,6 @@ npm install --save-dev @babel/core @babel/cli @babel/preset-env babel-loader
 - Arrow functions are not supported by older browsers, thats why in above image we can see babel is transpiling it into a normal function. 
 - In the `browserslist` we can also target specific browser name.
 
+# Advance JavaScript Concepts
+
+## Symbol
