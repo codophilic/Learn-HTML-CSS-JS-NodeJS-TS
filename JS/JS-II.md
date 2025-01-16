@@ -3671,3 +3671,206 @@ npm install --save-dev @babel/core @babel/cli @babel/preset-env babel-loader
 # Advance JavaScript Concepts
 
 ## Symbol
+
+- Consider below code
+
+```
+const obj={
+  id:1,
+  desc:"ID Must not change"
+}
+
+console.log(obj);
+```
+
+- Output
+
+```
+Output:
+
+{ id: 1, desc: 'ID Must not change' }
+```
+
+- Now lets say you forgot that you have already added an `id` key (which must not be changed) and you accidentally create it again with new value
+
+```
+const obj={
+  id:1,
+  desc:"ID Must not change"
+}
+
+obj.id=2
+console.log(obj);
+
+Output:
+{ id: 2, desc: 'ID Must not change' }
+```
+
+- So how can we avoid this of accidentally creating a key without overriding existing ones? by using `Symbol`.
+
+```
+let id=Symbol()
+
+const obj={
+  [id]:1,
+  desc:"ID Must not change"
+}
+
+
+obj.id='accidentally added new id'
+console.log(obj); //Overriding does not happens
+
+Output:
+{
+  desc: 'ID Must not change',
+  id: 'accidentally added new id',
+  [Symbol()]: 1
+}
+```
+
+-  A `Symbol` is a unique and immutable value that can be used as an identifier for object properties. Each Symbol is guaranteed to be unique, even if two symbols are created with the same description.
+- The purpose of using `Symbol` is to create unique keys that won’t accidentally collide with keys in other parts of the code, ensuring no unintended overwriting or conflicts.
+- We can also provide description to a `Symbol`
+
+```
+let id=Symbol('id') //'id' is description
+
+const obj={
+  [id]:1,
+  desc:"ID Must not change"
+}
+
+
+obj.id='accidentally added new id'
+console.log(obj); //Overriding does not happens
+
+console.log(obj[Symbol('id')])
+
+Output:
+{
+  desc: 'ID Must not change',
+  id: 'accidentally added new id',
+  [Symbol(id)]: 1
+}
+undefined
+```
+
+- While accessing the `Symbol('id')` having same description why does it provides `undefined`? because **every `Symbol` is unique, even if the description (`id`) is the same.**. Then how we can access it? by using the same variable for which the unique key was created like below
+
+```
+// Create two Symbols
+const sym1 = Symbol("uniqueKey");
+const sym2 = Symbol("uniqueKey");
+
+console.log(sym1 === sym2); // false (Symbols are always unique even though their description "uniqueKey" are same)
+
+// Using Symbol as a key in an object
+const myObject = {};
+myObject[sym1] = "Value for sym1";
+myObject[sym2] = "Value for sym2";
+
+console.log(myObject[sym1]); // "Value for sym1"
+console.log(myObject[sym2]); // "Value for sym2"
+```
+
+- Properties created with Symbol keys are not included in `for...in` or `Object.keys()` iterations, making them hidden by default.
+
+```
+const user = {
+  name: "Alice",
+  age: 30,
+};
+
+// Add a unique property using a Symbol
+const id = Symbol("id");
+user[id] = 12345;
+
+console.log(user); // { name: 'Alice', age: 30, [Symbol(id)]: 12345 }
+console.log(user[id]); // 12345
+
+
+//Symbol Hidden during Object.Keys and during for..in
+
+// The Symbol property doesn't interfere with normal keys
+console.log(Object.keys(user)); // ["name", "age"]
+
+// for..in 
+for( i in user){
+  console.log(i)
+}
+// name
+//age
+```
+
+- They are used for defining **hidden** object properties or unique constants that won't clash with other property names.
+
+### Built-In Symbol
+
+#### Symbol.toStringTag
+
+- Consider below code
+
+```
+const person = {
+  name: "John",
+  age: 30
+};
+
+console.log(person.toString()); // Output: [object Object]
+```
+
+- In JavaScript, when you try to convert an object directly to a string using the `toString()` method, you get the default output `[object Object]`. This behavior is because of how the default implementation of `toString()` is defined in JavaScript for objects. Here, `<ClassName>` is typically `Object` (the type of the object) `[object <ClassName>]`.
+- Now lets use built-in `Symbol.toStringTag`
+
+```
+const person = {
+  [Symbol.toStringTag]: "John",
+  age: 30
+};
+
+console.log(person.toString()); // Output: [object John]
+```
+
+- `Symbol.toStringTag` allows you to customize the string representation of an object when using the `Object.prototype.toString()` method, essentially defining how an object's type is described when converted to a string; it's used to provide a more descriptive label for a custom object type instead of the default class name. 
+- When you call `Object.prototype.toString()` on an object, it internally looks for the `Symbol.toStringTag` property on that object to determine what string to return.
+
+#### Symbol.iterator
+
+- When you use a `for...of `loop on an object, JavaScript automatically calls the `Symbol.iterator` method on that object to get an iterator which then provides the values to be iterated over.
+
+```
+const myArray = [1, 2, 3];
+for (let num of myArray) {
+
+    console.log(num); // Prints 1, then 2, then 3
+
+}
+// This works because the `myArray` object has a built-in `[Symbol.iterator]` method that returns an iterator for the array [1, 2, 3].
+```
+
+- Using `Symbol.iterator` for doubling values of element
+
+```
+const myCollection = {
+  items: [10, 20, 30],
+  [Symbol.iterator]() {
+    let index = 0;
+    return {
+      next: () => {
+        if (index < this.items.length) {
+          return { value: this.items[index++]*2, done: false };
+        }
+        return { done: true }; // Stop iteration
+      },
+    };
+  },
+};
+
+for (const item of myCollection) {
+  console.log(item); // 20, 40, 60
+}
+```
+
+- Learn about [more built-in methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) of Symbol.
+
+

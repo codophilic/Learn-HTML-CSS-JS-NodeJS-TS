@@ -1356,6 +1356,35 @@ console.log(0.2 + 0.4 === 0.6); // Output: false
 ```
 
 - When you call `.toFixed(20)`, JavaScript attempts to display `20.2` to `20` decimal places. However, it’s using the approximate value stored in memory, not the exact `20.2` as we would write it in decimal. This results in the actual value being output, which is `20.19999999999999928946`.
+- Now consider below code
+
+```
+const person = {
+  name: "John",
+  age: 30
+};
+
+console.log(person.toString()); // Output: [object Object]
+```
+
+- In JavaScript, when you try to convert an object directly to a string using the `toString()` method, you get the default output `[object Object]`. This behavior is because of how the default implementation of `toString()` is defined in JavaScript for objects. Here, `<ClassName>` is typically `Object` (the type of the object) `[object <ClassName>]`. 
+- The `Object.prototype` defines a generic `toString` method that works for most objects unless overridden. For plain objects, the `<ClassName>` part is always Object, resulting in` [object Object]`. The default `toString()` for objects returns `[object Object]` because the `Object.prototype.toString` implementation does not consider the object's content but its class.
+
+*We will learn more about `Object.prototype` later*
+
+- Here we can customize the `toString` method
+
+```
+const person = {
+  name: "Alice",
+  age: 30,
+  toString() {
+    return `Person: ${this.name}, Age: ${this.age}`;
+  },
+};
+
+console.log(person.toString()); // "Person: Alice, Age: 30"
+```
 
 ### BigInt
 
