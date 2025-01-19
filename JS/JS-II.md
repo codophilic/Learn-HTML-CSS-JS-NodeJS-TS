@@ -3836,6 +3836,32 @@ console.log(person.toString()); // Output: [object John]
 
 #### Symbol.iterator
 
+
+- In JavaScript, an `iterator` is an object that allows you to traverse through a collection of data (like an array, string, or map) one element at a time. When you call the `next()` method on an iterator, it returns an object with two properties
+  - `value`: The current value in the iteration sequence.
+  - `done`: A boolean value indicating whether the iterator has reached the end of the sequence. If `done` is true, there are no more elements to iterate over. 
+- Example 
+```
+const myArray = [1, 2, 3];
+
+// Get the iterator for the array
+const iterator = myArray[Symbol.iterator]();
+
+// Iterate through the array
+console.log(iterator.next()); // { value: 1, done: false }
+console.log(iterator.next()); // { value: 2, done: false }
+console.log(iterator.next()); // { value: 3, done: false }
+console.log(iterator.next()); // { value: undefined, done: true }
+
+Output:
+
+{ value: 1, done: false }
+{ value: 2, done: false }
+{ value: 3, done: false }
+{ value: undefined, done: true }
+```
+- `myArraySymbol.iterator` retrieves the iterator object associated with the array. `iterator.next()` method moves the iterator to the next element in the sequence and returns an object with the value and done properties.
+- `done: false` indicates that there are more elements in the sequence. `done: true` indicates that the iterator has reached the end of the sequence.
 - When you use a `for...of `loop on an object, JavaScript automatically calls the `Symbol.iterator` method on that object to get an iterator which then provides the values to be iterated over.
 
 ```
@@ -3866,11 +3892,52 @@ const myCollection = {
   },
 };
 
-for (const item of myCollection) {
-  console.log(item); // 20, 40, 60
+while(myCollection.done){
+  console.log(myCollection.next());
 }
+
+Output:
+20
+40
+60
 ```
 
 - Learn about [more built-in methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) of Symbol.
 
+## Generator
 
+- In JavaScript, a `generator` function is a special type of function that can pause its execution and resume it later. This is achieved using the `yield` keyword.
+- Generator functions are defined using the `function*` syntax. The `yield` keyword is used to pause the function's execution and return a value.
+- Example 
+
+```
+function* countUpTo(max) {
+    let count = 1;
+    while (count <= max) {
+        yield count++;
+    }
+}
+const counter = countUpTo(3);
+console.log(counter.next()); 
+console.log(counter.next()); 
+console.log(counter.next());
+console.log(counter.next());
+
+
+Output:
+{ value: 1, done: false }
+{ value: 2, done: false }
+{ value: 3, done: false }
+{ value: undefined, done: true }
+```
+
+- In JavaScript, a generator function always returns an `Symbol.iterator` object. When you call the `next()` method on this iterator, it returns an object with two properties 
+  - `value`: The yielded value from the generator function.
+  - `done`: A boolean indicating whether the generator has finished yielding values (true) or not (false).
+
+### How Do Generators Work?
+
+- Creating a Generator: Call the generator function to create a generator object.
+- Using the `next()` Method: The `next()` method moves the generator to the next yield statement, returning an object with value and done properties.
+- `value`: The value yielded by the generator.
+- `done`: A boolean indicating whether the generator has completed execution.
