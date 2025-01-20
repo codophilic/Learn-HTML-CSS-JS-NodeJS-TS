@@ -10,7 +10,7 @@
 
 - We use click event with `addEventListener()`, but there are other approaches. When we create a button tag we can see multiple attributes based on `on` events.
 
-![alt text](image.png)
+![alt text](/JS/Images/js2/image.png)
 
 - Below is example of using these event.
 
@@ -39,7 +39,7 @@
 
 - On browser
 
-<video controls src="2024-1.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-1.mp4" title="Title"></video>
 
 - Another approach is using `onclick` or any `on` based events inside the JS script code.
 
@@ -84,7 +84,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-![alt text](image-1.png)
+![alt text](/JS/Images/js2/image-1.png)
 
 ### mouseover Event
 
@@ -112,7 +112,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-![alt text](image-2.png)
+![alt text](/JS/Images/js2/image-2.png)
 
 - When the mouse hovers over the button, the paragraph text changes to display a message.
 
@@ -143,7 +143,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-<video controls src="2024-2.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-2.mp4" title="Title"></video>
 
 - As the user types, the paragraph text is updated in real time with the entered name.
 
@@ -178,7 +178,7 @@ btn.onclick = btnhandlerApproach2
 
 - On page
 
-![alt text](image-3.png)
+![alt text](/JS/Images/js2/image-3.png)
 
 ### change Event
 
@@ -213,7 +213,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-<video controls src="2024-3.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-3.mp4" title="Title"></video>
 
 - When the user selects a color, the paragraph text updates to show the selected color.
 
@@ -243,7 +243,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-![alt text](image-4.png)
+![alt text](/JS/Images/js2/image-4.png)
 
 ### focus and blur Events
 
@@ -278,7 +278,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-<video controls src="2024-4.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-4.mp4" title="Title"></video>
 
 ### input Event
 
@@ -306,7 +306,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-<video controls src="2024-5.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-5.mp4" title="Title"></video>
 
 ### resize Event
 
@@ -333,7 +333,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-<video controls src="2024-6.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-6.mp4" title="Title"></video>
 
 
 ### scroll Event
@@ -372,7 +372,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser 
 
-<video controls src="2024-7.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-7.mp4" title="Title"></video>
 
 ### load Event
 
@@ -399,7 +399,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-![alt text](image-5.png)
+![alt text](/JS/Images/js2/image-5.png)
 
 ### error Event
 
@@ -427,7 +427,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-![alt text](image-6.png)
+![alt text](/JS/Images/js2/image-6.png)
 
 ### copy Event
 
@@ -455,7 +455,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-<video controls src="2024-8.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-8.mp4" title="Title"></video>
 
 
 - So using keyboard when we try to copy by selecting text (`Control+C`) , the event `copy` is triggered.
@@ -493,7 +493,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser
 
-<video controls src="2024-9.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-9.mp4" title="Title"></video>
 
 - After 2 seconds the `removeEventListener` removes the `btnClick` handler.
 
@@ -537,7 +537,7 @@ btn.onclick = btnhandlerApproach2
 
 
 
-<video controls src="2024-10.mp4" title="title"></video>
+<video controls src="/JS/Images/js2/2024-10.mp4" title="title"></video>
 
 
 - Now to prevent this we need to use `event.preventDefault()`.
@@ -573,7 +573,7 @@ btn.onclick = btnhandlerApproach2
 - On page
 
 
-<video controls src="2024-1.mp4" title="title"></video>
+<video controls src="/JS/Images/js2/2024-1.mp4" title="title"></video>
 
 - Inside the listener, `event.preventDefault()` stops the form’s default submit action (so the page doesn't reload). `preventDefault()` can be useful to perform some validation before submitting the data to server incase of button. Similarly for button event, for all other event which has default behaviors, those can be prevent.
 - For Event `click` the default behavior the navigates to the URL specified in the `href` attribute of the link. Using `preventDefault()` will prevent navigation and maybe open a modal window or handle the click in a custom way.
@@ -590,19 +590,19 @@ btn.onclick = btnhandlerApproach2
     - For example, if you click on a button inside a `div`, the click event will first trigger on the button, then on the parent `div`, and then any other parent elements up to the `<body>` and `<html>`.
 - Capturing occurs during the event’s capture phase, where the event travels from the root of the DOM tree towards the target element. On the other hand, bubbling happens during the bubbling phase, where the event moves from the target element back up to the root
 
-![alt text](image-7.png)
+![alt text](/JS/Images/js2/image-7.png)
 
 - For example, we have a simple HTML document with a DOM tree, for the anchor element. Let’s see what happens with an event when someone clicks on that link.
 
-![alt text](image-8.png)
+![alt text](/JS/Images/js2/image-8.png)
 
 - When a click happens on the link, the DOM generates a click event. However, this event is not generated at the target element (the anchor element in this case), instead, the event is generated at the root of the document, which is the top of the DOM tree. Subsequently, **the capturing phase commences**, where the event travels down from the document root to the target element. As the event travels down the tree, it passes through each parent element of the target element.
 
-![alt text](image-9.png)
+![alt text](/JS/Images/js2/image-9.png)
 
 - After reaching the target, the event travels upwards toward the document root, called the bubbling phase. This bubbling behavior entails events moving from the target back up to the document root. Similar to the capturing phase, the event traverses through all parent elements during the bubbling phase as well.
 
-![alt text](image-10.png)
+![alt text](/JS/Images/js2/image-10.png)
 
 - By default, events can only be handled in the target, and the bubbling phase. However, we can configure event listeners to capture events in the capturing phase instead. Additionally, certain event types do not involve capturing and bubbling phases; they are directly created on the target element, limiting event handling to that specific location.
 - Consider below HTML JS code
@@ -636,7 +636,7 @@ btn.onclick = btnhandlerApproach2
 
 - On browser console, we can observer default phase as bubbling phase
 
-![alt text](image-11.png)
+![alt text](/JS/Images/js2/image-11.png)
 
 - **The event occur for child element will be same event for the parent element**
 - To enable, capturing phase we need to set flag as `true` in event listener
@@ -650,7 +650,7 @@ JS Snip
 
 - On browser console
 
-![alt text](image-12.png)
+![alt text](/JS/Images/js2/image-12.png)
 
 - In JavaScript, the `stopPropagation()` method is used to prevent an event from bubbling up the DOM tree. This means that if an event occurs on an element, and that element has a parent element with an event handler for the same event, the parent element's event handler will not be triggered.
 - Consider below HTML & JS Code
@@ -689,7 +689,7 @@ JS Snip
 
 - On browser console
 
-![alt text](image-13.png)
+![alt text](/JS/Images/js2/image-13.png)
 
 
 - Now consider below HTML and JS Code
@@ -732,7 +732,7 @@ JS Snip
 
 - When we execute this, now the same button event has multiple handlers, so we get below output
 
-![alt text](image-14.png)
+![alt text](/JS/Images/js2/image-14.png)
 
 - Lets use `event.stopImmediatePropagation()` instead of `event.stopPropagation()`
 
@@ -756,7 +756,7 @@ JS Snip
 
 - On browser console
 
-![alt text](image-15.png)
+![alt text](/JS/Images/js2/image-15.png)
 
 
 - `stopImmediatePropagation` prevents any further event listeners on the same element from executing. `stopPropagation` will prevent any parent handlers from being executed whereas `stopImmediatePropagation` will prevent any parent handlers and also any other handlers from executing for the same element.
@@ -778,7 +778,7 @@ JS Snip
 > 
 > - On browser
 > 
-> ![alt text](image-16.png)
+> ![alt text](/JS/Images/js2/image-16.png)
 > 
 > - The `Button Clicked-1` consist of `stopImmediatePropagation` but before that for the same event there is another handler defined (`Button Clicked`) which got executed.
 
@@ -817,7 +817,7 @@ JS Snip
 
 - So we can apply `click` event listener on each of the list items. 
 
-![alt text](image-17.png)
+![alt text](/JS/Images/js2/image-17.png)
 
 - In above example the list items are few incase of many list items, this code logic will give us memory and performance issue. So **Event delegation is a technique in JavaScript where you add a single event listener to a parent element instead of adding multiple event listeners to each child element**. This parent event listener can handle events triggered by all child elements, thanks to event bubbling (where events move up from the target element to its parent elements).
 - Now consider below code
@@ -855,7 +855,7 @@ JS Snip
 
 - On browser console
 
-![alt text](image-18.png)
+![alt text](/JS/Images/js2/image-18.png)
 
 
 ### Trigger DOM events using JS
@@ -921,7 +921,7 @@ JS Snip
 
 - On browser console
 
-![alt text](image-19.png)
+![alt text](/JS/Images/js2/image-19.png)
 
 ### Drag and Drop
 
@@ -1064,7 +1064,7 @@ dropTarget.addEventListener('drop', (event) => {
 
 - On page
 
-<video controls src="2024-12.mp4" title="title"></video>
+<video controls src="/JS/Images/js2/2024-12.mp4" title="title"></video>
 
 ## Advance Concept in Functions
 
@@ -1315,7 +1315,7 @@ console.log("Second Task");
 
 - In this example, `Second Task` won’t print until `fetchData()` is done executing.
 
-![alt text](image-20.png)
+![alt text](/JS/Images/js2/image-20.png)
 
 ### Asynchronous
 
@@ -1323,11 +1323,11 @@ console.log("Second Task");
 - Asynchronous behavior is common with I/O operations like fetching data, reading files, or making network requests.
 - Without Asynchronous behavior
 
-![alt text](image-21.png)
+![alt text](/JS/Images/js2/image-21.png)
 
 - With Asynchronous behavior (the `setTimeout` function is running on another thread)
 
-![alt text](image-22.png)
+![alt text](/JS/Images/js2/image-22.png)
 
 #### Callback
 
@@ -1355,7 +1355,7 @@ getUserInput(greet);
 - JavaScript is single-threaded, meaning it can only do one thing at a time. But, thanks to the event loop, JavaScript can appear to do multiple things at once.
 - **The event loop is a mechanism in JavaScript that manages how tasks are executed, particularly when dealing with asynchronous code. It’s part of JavaScript's environment (usually provided by the browser or Node.js), not the JavaScript engine itself (like V8, which just executes JavaScript code). The event loop’s job is to keep JavaScript running smoothly by deciding which tasks should run and when.**
 
-![alt text](image-23.png)
+![alt text](/JS/Images/js2/image-23.png)
 
 - In the end, the event loop helps us deal with async code you could say, it helps us deal with callback functions which typically are used in such async code scenarios.
 - The stack and heap are part of the Javascript engine. The browser kind of gives us a bridge where we can talk to certain browser APIs from inside our Javascript code.
@@ -1382,16 +1382,16 @@ Download a file.
 - When you call the `setTimeout()` function, make a fetch request to the web browser which can do these activities concurrently (execute parallel without blocking) and asynchronously. 
 - In our example, when calling the `setTimeout()` function, the JavaScript engine places the `setTimeout` on the call stack, and the Web API creates a timer that expires in 1 second.
 
-![alt text](image-24.png)
+![alt text](/JS/Images/js2/image-24.png)
 
 - Then JavaScript engine places the `task()` (`task('Download a file.')`) function into a queue called a **callback queue/task queue/ message queue after 1 seconds**. When JavaScript runs code, each function goes to the call stack to be processed. If it’s an asynchronous task (like a `setTimeout` or a `fetch` request), JavaScript doesn’t block. Instead, it offloads that task and keeps going, putting it in the callback queue when it’s done.
 
 
-![alt text](image-25.png)
+![alt text](/JS/Images/js2/image-25.png)
 
 - The event loop is a constantly running process that monitors both the callback queue and the call stack. If the call stack is not empty, the event loop waits until it is empty and places the next function from the callback queue to the call stack. If the callback queue is empty, nothing will happen. This cycle keeps repeating, so JavaScript can handle new tasks, finish old ones, and manage asynchronous operations without blocking.
 
-![alt text](image-26.png)
+![alt text](/JS/Images/js2/image-26.png)
 
 - The event loop is the orchestrator that ties the call stack, callback queue or message queue, and Web APIs together. Its primary role is to constantly check whether the call stack is empty. If it is, the event loop takes the first function from the Callback Queue and pushes it onto the call stack for execution
   - Check the Call Stack: Is it empty?
@@ -1445,7 +1445,7 @@ getData(1,3000,()=>{ //fetch data3 in 3 seconds
 - On browser
 
 
-<video controls src="2024-13.mp4" title="title"></video>
+<video controls src="/JS/Images/js2/2024-13.mp4" title="title"></video>
 
 ##### Issues with Callback Hell
 - **Readability**: The code becomes difficult to read due to excessive nesting, making it hard to understand the flow.
@@ -1548,11 +1548,11 @@ promise
 
 - On browser
 
-![alt text](image-27.png)
+![alt text](/JS/Images/js2/image-27.png)
 
 - Similarly when we replace `resolve` by `reject`
 
-![alt text](image-28.png)
+![alt text](/JS/Images/js2/image-28.png)
 
 - We catch the error. The `PromiseResult` returns the value which is provided in the `reject` or `resolve` function which is useful for any indication require for further code execution.
 
@@ -1717,7 +1717,7 @@ r1.then((data=>{
 
 - On browser console
 
-![alt text](image-29.png)
+![alt text](/JS/Images/js2/image-29.png)
 
 - Promise chaining can sometimes make code a bit harder to read, especially if the chain gets long or if there are many operations involved. Although chaining is cleaner than deeply nested callbacks, reading through multiple `.then()` statements can still feel somewhat "step-by-step" and harder to scan.
 - To overcome the promise chaining problem we have **Async-await**
@@ -1727,7 +1727,7 @@ r1.then((data=>{
 - `async` and `await` are alternatives to promise chaining that make asynchronous code look more like synchronous code. This can make it easier to read and understand.
 - `async`: When you declare a function with `async`, it automatically returns a promise, even if you don’t explicitly return one. This means the function can contain asynchronous code that uses `await` **to pause execution until a promise resolves**. In the below snip, when we declared `getDataAsyncAwait` function we can see that it returns a `Promise<void>`.
 
-![alt text](image-31.png)
+![alt text](/JS/Images/js2/image-31.png)
 
 
 - `await`: **`await` is used inside an `async` function only** to pause the function’s execution until the specified promise resolves. This makes the code appear to run step-by-step, just like synchronous code, but without blocking the main thread. To use `await`, you first need to declare the function as `async`. This tells JavaScript that this function may contain asynchronous code.
@@ -1759,7 +1759,7 @@ fetchDataInSequence();
 
 - On browser console
 
-![alt text](image-30.png)
+![alt text](/JS/Images/js2/image-30.png)
 
 - **For `await` to work, the function you're calling must return a promise. If the function doesn’t return a promise, `await` won’t pause the code—it’ll just treat it as a regular synchronous function and move on immediately. `await` only knows how to "wait" for a `promise` to resolve. If the function you’re calling doesn’t return a `promise`, `await` has nothing to wait for, and it will simply move to the next line. This is why, when using `async`/`await`, any asynchronous function you want to `await` should return a `promise`.**
 - Below code is invalid
@@ -1807,7 +1807,7 @@ fetchDataInSequence();
 
 - On browser console
 
-![alt text](image-32.png)
+![alt text](/JS/Images/js2/image-32.png)
 
 - `await` stops all the further execution when encountered any promise got reject. If the promise is rejected (i.e., it fails), `await` will throw an error. This will cause the `async` function to terminate at that point, and the rest of the code will not be executed unless you handle the rejection with a `try/catch `block.
 
@@ -1821,7 +1821,7 @@ fetchDataInSequence();
   - The page is rendered and displayed
 
 
-![alt text](image-33.png)
+![alt text](/JS/Images/js2/image-33.png)
 
 ### Step 1 (Resolving URL)
 
@@ -1837,14 +1837,14 @@ fetchDataInSequence();
 
 - With the IP address resolved, the browser goes ahead and makes a request to the server with that IP address. "A request" is not just a term. It really is a technical thing that happens behind the scenes. The browser bundles up a bunch of information (What's the exact URL? Which kind of request should be made? Should metadata be attached) and sends that data package to the IP address. You can see this in the developer tools. 
 
-![alt text](image-34.png)
+![alt text](/JS/Images/js2/image-34.png)
 
 - The data is sent via the "HyperText Transfer Protocol" (known as "HTTP") - a standardized protocol which defines what a request (and response) has to look like, which data may be included (and in which form) and how the request will be submitted. Because HTTP is used, a full URL actually looks like this `http://academind.com`. The browser auto-completes it for you.
 - And there also is HTTPS - it's like HTTP but encrypted. Most modern pages use that instead of HTTP. A full URL then becomes `https://academind.com`
 - Since the whole process and format is standardized, there is no guessing about how that request has to be read by the server. The server then handles the request appropriately and returns a so called "response". Again, a "response" is a technical thing and kind of similar to a "request". You could say it's basically a "request" in the opposite direction.
 - Like a request, a response can contain data, metadata etc. When requesting a page like `academind.com`, the response will contain the code that is required to render the page onto the screen.
 
-![alt text](image-35.png)
+![alt text](/JS/Images/js2/image-35.png)
 
 - What happens on the server? that's defined by web developers. In the end, a response has to be sent. That response doesn't have to contain "a website". It can contain any data - including files or images.
 - Some servers are programmed to generate websites dynamically based on the request (e.g. a profile page that contains your personal data), other servers return pre-generated HTML pages (e.g. a news page). Or both is done - for different parts of a webpage. There also is a third alternative: Websites that are pre-generated but that change their appearance and data in the browser.
@@ -1854,7 +1854,7 @@ fetchDataInSequence();
 - The browser receives the response sent by the server. This alone, doesn't display anything on the screen though. Instead, the next step is that the browser parses the response. Just as the server did it with the request. Again, the standardization enforced by HTTP helps of course. The browser checks the data and metadata that's enclosed in the response. And based on that, it decides what to do. You might've had cases where a PDF opened in your browser. That happened because the response informed the browser that the data is not a website but a PDF document instead. And the browser tries to pick the best handling mechanism for any data type it detects.
 - Depending upon the request, the response would contain a specific piece of metadata, that tells the browser that the response data is of type `text/html`.
 
-![alt text](image-36.png)
+![alt text](/JS/Images/js2/image-36.png)
 
 - This allows the browser to then parse the actual data that's attached to the response as HTML code.
 
@@ -1866,7 +1866,7 @@ fetchDataInSequence();
 <link rel="stylesheet" href="/page-styles.css" />
 ```
 
-![alt text](image-37.png)
+![alt text](/JS/Images/js2/image-37.png)
 
 - This is your CSS. Together with CSS, the browser is able to display webpages. The JavaScript does not reloads the page on each user action. It's not always visible but all dynamic content you find on a website (e.g. tabs, overlays etc.) is actually only possible because of JavaScript. It allows web developers to define code that runs in the browser (not on the server), hence JavaScript can be used to change the website whilst the user is viewing it.
 
@@ -1876,7 +1876,7 @@ fetchDataInSequence();
 - Browser-side: In the browser, there are exactly three languages/ technologies you need to learn (`HTML`,`CSS` and `JS`). It is the tasks executed on the user's device, usually a computer or smartphone. The browser interprets and displays the information sent back from the server.
 
 
-![alt text](image-38.png)
+![alt text](/JS/Images/js2/image-38.png)
 
 - Now the communication between the client side and the server side happens with the help of **Http Requests and Responses** and these requests and responses have to be configured and set up in a certain way, following a certain structure (like `JSON`,`XML`, `YAML` formats etc..). When you're sending a request to the server, it needs to know the address, so it needs to know the URL made up of the domain and the path. Each Http request has a HTTP method that is assigned to it.
 - A couple of available HTTP methods, you have for example `GET`, `POST`, `PATCH`, `PUT` and `DELETE`. Based on the method the server perform operation on server side. The server just exposes different endpoints and for example might support a `POST` request to `/posts` whereas it maybe might not support a `PATCH` request to `/posts`, it's up to the developer writing the server side code to decide which HTTP method URL combinations are supported.
@@ -1905,11 +1905,11 @@ xhr.send();
 - We won't see anything on console as we are not logging anything, but under the `Network` tab we can see a `GET` request is been sent to the server `https://jsonplaceholder.typicode.com/posts`. 
 
 
-<video controls src="2024-14.mp4" title="title"></video>
+<video controls src="/JS/Images/js2/2024-14.mp4" title="title"></video>
 
 - In the response we got dummy values which was expose by the endpoint `posts` provides the above 100 of data. `jsonplaceholder.typicode.com` provides other endpoints on its page.
 
-![alt text](image-39.png)
+![alt text](/JS/Images/js2/image-39.png)
 
 - Lets users `users`
 
@@ -1921,7 +1921,7 @@ xhr.send();
 
 - On network tab we get 10 data.
 
-![alt text](image-40.png)
+![alt text](/JS/Images/js2/image-40.png)
 
 - If you see, there is an `index.html`, `app.js` and `users`. The `index.html` and `app.js` is our code whereas `users` are the endpoint of the `jsonplaceholder` website.
 - Now can store this data into a variable? and use it? for that you need to use `onload` function. The `onload` function is an event handler that is triggered when the request completes successfully. It allows you to define what to do with the server's response.
@@ -1939,7 +1939,7 @@ xhr.send();
 
 - On console
 
-![alt text](image-41.png)
+![alt text](/JS/Images/js2/image-41.png)
 
 - The `xhr.status` property provides the HTTP status code of the response. Common status codes:
   - `200`: OK (Success)
@@ -1963,7 +1963,7 @@ xhr.send();
 
 - On browser console
 
-![alt text](image-42.png)
+![alt text](/JS/Images/js2/image-42.png)
 
 - If you are sure that your incoming response will be a JSON, you can set `xhr.responseType = 'json'`. You don't need to parse it. But instead of `responseText` you need to use `response`
 
@@ -1983,7 +1983,7 @@ xhr.send();
 - The `xhr.response` property gives the response based on the `responseType` you set where you don't need to parse. If `responseType` is `json`, it returns a parsed JavaScript object. If `responseType` is not set, it defaults to a string (like `responseText`). Other responseType values include `arraybuffer`, `blob`, and `document`
 - Lets create a resource or use `POST` method to create our own data on `jsonplaceholder`. To do so first we need to check what kind of data does the `jsonplaceholder` requires?
 
-![alt text](image-43.png)
+![alt text](/JS/Images/js2/image-43.png)
 
 - So to create a resource they require JSON object which consist of `title`,`body` and `userId`.
 
@@ -2001,7 +2001,7 @@ xhr.send(JSON.stringify(myData));
 - On network tab we can see we got `201` (resource created successfully) as status. 
 
 
-<video controls src="2024-15.mp4" title="title"></video>
+<video controls src="/JS/Images/js2/2024-15.mp4" title="title"></video>
 
 
 >[!NOTE]
@@ -2009,11 +2009,11 @@ xhr.send(JSON.stringify(myData));
 
 - Lets say you wanna delete an item, you need to use `DELETE` method.
 
-![alt text](image-44.png)
+![alt text](/JS/Images/js2/image-44.png)
 
 - Below is code to delete via HTTP request `DELETE` method. So to delete anything we require a identifier of data or any `id` , when you enter the url `https://jsonplaceholder.typicode.com/posts/1`, on browser you can see data for the id `1`. `/posts/1` tells request that we need to delete item for id `1`, to delete any other id we will have `/posts/{id}`. 
 
-<video controls src="2024-16.mp4" title="title"></video>
+<video controls src="/JS/Images/js2/2024-16.mp4" title="title"></video>
 
 - Below is the code
 
@@ -2025,7 +2025,7 @@ xhr.send();
 
 - On browser network tab you can see
 
-![alt text](image-45.png)
+![alt text](/JS/Images/js2/image-45.png)
 
 - Lets say you are using `GET` method and wanted to perform some operations when you get the data. Normally you can think of like this.
 
@@ -2045,7 +2045,7 @@ console.log('Process Data')
 
 - But on browser console we get below as an output
 
-![alt text](image-46.png)
+![alt text](/JS/Images/js2/image-46.png)
 
 - It seems that both the operation run asynchronously. So now to work such situation we have `async-await`.
 
@@ -2085,12 +2085,12 @@ performOperationOnGetData()
 
 - On browser console
 
-![alt text](image-47.png)
+![alt text](/JS/Images/js2/image-47.png)
 
 - Lets say you entered a invalid url like `https://jsonplaceholder.typicode.com/u`, in such case you will get a status of `404` something. So just changing the url in the above code.
 - On browser console
 
-![alt text](image-48.png)
+![alt text](/JS/Images/js2/image-48.png)
 
 - In such case, you wanted to throw some custom error message, you need to use `reject` method of promise.
 
@@ -2130,7 +2130,7 @@ performOperationOnGetData()
 
 - On browser console
 
-![alt text](image-49.png)
+![alt text](/JS/Images/js2/image-49.png)
 
 - Lets say server side , server is not functioning or as a client your host or your computer is not connected to internet. To handle such network level error we have a `onerror` handler. The `onerror` function in `XMLHttpRequest` is used to handle network errors or other issues that prevent the request from completing successfully. It gets triggered if the request cannot reach the server or if there's an issue like a timeout.
 
@@ -2174,7 +2174,7 @@ performOperationOnGetData()
 
 - On browser console
 
-![alt text](image-50.png)
+![alt text](/JS/Images/js2/image-50.png)
 
 - `xhr.status` in `onload` is to distinguish between successful (e.g., `200`) and unsuccessful (e.g., `404`) responses. Use `onerror` for handling network errors, such as, the server is down, No internet connection etc...
 - Suppose you wanted to add some headers in your request. Request headers are like providing extra information to server about your request like what sort of content type your are sending or expecting etc.. So to do so you have `setRequestHeader`.
@@ -2220,7 +2220,7 @@ performOperationOnGetData()
 
 - On network tab
 
-![alt text](image-56.png)
+![alt text](/JS/Images/js2/image-56.png)
 
 #### Fetch API
 
@@ -2248,7 +2248,7 @@ async function performOperationOnGetData(){
 
 - On browser console
 
-![alt text](image-51.png)
+![alt text](/JS/Images/js2/image-51.png)
 
 - The `fetch()` function returns a Promise that resolves to a Response object. **This Response object represents the data returned by the server, but the data is not immediately available as plain text or JSON**.
 - When `fetch()` makes a request to a server, the response data doesn't come all at once. Instead, it comes in **small pieces called streams**. Think of it like downloading a large file, you receive the file in small chunks, bit by bit, instead of all at once.
@@ -2297,8 +2297,8 @@ performOperationOtherOperationsData()
 
 - On browser console
 
-![alt text](image-52.png)
-![alt text](image-53.png)
+![alt text](/JS/Images/js2/image-52.png)
+![alt text](/JS/Images/js2/image-53.png)
 
 - `DELETE` example
 
@@ -2339,8 +2339,8 @@ performOperationOtherOperationsData()
 
 - On browser console
 
-![alt text](image-54.png)
-![alt text](image-55.png)
+![alt text](/JS/Images/js2/image-54.png)
+![alt text](/JS/Images/js2/image-55.png)
 
 - You can also add request headers in fetch api
 
@@ -2386,7 +2386,7 @@ performOperationOtherOperationsData()
 
 - On network tab
 
-![alt text](image-57.png)
+![alt text](/JS/Images/js2/image-57.png)
 
 - Now how can we handle response error? the `catch` block handles network level error but how to handle response error like `400`?. Consider below code.
 
@@ -2429,7 +2429,7 @@ performOperationOnGetData()
 
 - Here the URL is invalid and on the browser console we get
 
-![alt text](image-58.png)
+![alt text](/JS/Images/js2/image-58.png)
 
 - In below snip of above code
 
@@ -2474,11 +2474,11 @@ then(response=> {
 
 - On browser console
 
-![alt text](image-59.png)
+![alt text](/JS/Images/js2/image-59.png)
 
 - Now based on the status if it is a `200` that is handle in the `if` block which returns `response.json()` (which is a promise object).
 
-![alt text](image-60.png)
+![alt text](/JS/Images/js2/image-60.png)
 
 - To catch the response status in the else block we need to return `response.json()` with a promise of chaining using `then(data)`. This will check that if the response status is `400` or not and `throw new Error`. That error is catch by `catch((error))`, which in return throws the same error which is caught by `performOperationOnGetData` catch block.
 
@@ -2510,7 +2510,7 @@ common element is -> [2]
   - Working with functions: Throttling, debouncing, and memoizing.
   - String manipulation: Changing cases, padding, etc.
 
-![alt text](image-61.png)
+![alt text](/JS/Images/js2/image-61.png)
 
 - Now to use third-party library we can directly add it as a script in our HTML file.
 
@@ -2528,7 +2528,7 @@ console.log(_.intersection(arr,arr1))
 
 - On browser console
 
-![alt text](image-62.png)
+![alt text](/JS/Images/js2/image-62.png)
 
 - Similarly there are bunch of methods which is provided by Lodash library.
 
@@ -2588,7 +2588,7 @@ console.log(_.intersection(arr,arr1))
 
 - Here we import the library in the `script` tag.`$` is jQuery's shorthand to access elements like `document.querySelector`. `$('#myButton')` this selects the element with the `id="myButton"`. `.click(() => { ... })` this adds a click event listener to the selected element `(#myButton)`. When the button is clicked, the function inside click is executed. `$('#myDiv')` this selects the element with `id="myDiv"`. `.text('You clicked the button!')` this changes the text content of the `#myDiv` element to `'You clicked the button!'`.
 
-![alt text](image-63.png)
+![alt text](/JS/Images/js2/image-63.png)
 
 - Some other examples of it
 
@@ -2612,7 +2612,7 @@ console.log(_.intersection(arr,arr1))
 </html>
 ```
 
-![alt text](image-64.png)
+![alt text](/JS/Images/js2/image-64.png)
 
 
 - Another example
@@ -2637,7 +2637,7 @@ console.log(_.intersection(arr,arr1))
 </html>
 ```
 
-![alt text](image-65.png)
+![alt text](/JS/Images/js2/image-65.png)
 
 ### Axios
 
@@ -2835,7 +2835,7 @@ import { multiply } from '/scripts/math.js'; // 'math.js' is in 'scripts' at the
 
 - Without `type="module"`, the browser won't understand the import and export syntax, and you'll get an error. Now when we open our index html file we get an error.
 
-![alt text](image-66.png)
+![alt text](/JS/Images/js2/image-66.png)
 
 - Why so? what does this CORS means? Browsers enforce CORS policy to **prevent unauthorized requests between different origins**. For example, If a webpage from one domain tries to access resources (like scripts or data) from another domain, it needs proper permissions. When working locally with `file://`, there’s no valid origin or a proper domain, if the these file based origin tries to access another script, the browser blocks the request by default. This default behavior in browser prevents access of any third party malicious website to our website , thus making it secure. 
 - This error occurs because modern browsers enforce CORS (Cross-Origin Resource Sharing) policies even when you're working with local files. When you open an index.html file directly via a file path (e.g., `file:///`), the browser treats it as being from the "null" origin, which isn't allowed to make cross-origin requests.
@@ -2849,14 +2849,14 @@ npm install -g serve
 - When you access `http://localhost:8080`, the server sends the files to the browser. The browser runs them.
 - To run your HTML file in using `Node.js` , run `serve` command.
 
-![alt text](image-67.png)
+![alt text](/JS/Images/js2/image-67.png)
 
 - It creates a mini website, click on the URL `http://localhost:3000`. You will see your page.
 
-![alt text](image-68.png)
+![alt text](/JS/Images/js2/image-68.png)
 
 
-![alt text](image-69.png)
+![alt text](/JS/Images/js2/image-69.png)
 
 - This is how **import** and **export** works.
 
@@ -2973,7 +2973,7 @@ getBtn.addEventListener("click",showAlert)
 
 - Under network tab.
 
-![alt text](image-70.png)
+![alt text](/JS/Images/js2/image-70.png)
 
 - Suppose, if we wanted to load the `onClick.js` script only when the button is clicked, we could use dynamic import
 
@@ -2994,7 +2994,7 @@ getBtn.addEventListener("click",()=>{
 
 - On network tab, we can see when the user clicks on button then only the `onClick.js` gets loaded
 
-<video controls src="2024-17.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-17.mp4" title="Title"></video>
 
 - **Why Use Dynamic Import?**
   - **Improves Performance**:
@@ -3021,7 +3021,7 @@ getBtn.addEventListener("click",()=>{
 > 
 > - Now when the `onClick.js` script is loaded, the `console.log` ( code inside the module ) will get executed once.
 > 
-> <video controls src="2024-18.mp4" title="title"></video>
+> <video controls src="/JS/Images/js2/2024-18.mp4" title="title"></video>
 
 ### `this` in Modules
 
@@ -3072,7 +3072,7 @@ console.log(globalThis.myGlobalVar); // Outputs: 42
 
 - We learned about Javascript modules which basically means splitting our code across multiple Javascript files, where the files then import each other. Now there we could already see a huge advantage of this approach, it makes our code more manageable but we can see a disadvantage there, we had a lot of **HttpRequests** because all these separate files had to be downloaded one-by-one and the bigger your project grows, the more this might become a problem.
 
-![alt text](image-71.png)
+![alt text](/JS/Images/js2/image-71.png)
 
 
 - To resolve such problem, javascript has a tooling option which essentially is all about managing our project with certain tools that automatically optimize our code, combine our code so that we can write our code in the best possible way and still get an optimized and better output than we're currently doing it.
@@ -3080,7 +3080,7 @@ console.log(globalThis.myGlobalVar); // Outputs: 42
 - We needed this development server to have a more realistic testing environment, where we actually serve our web page as if it were served by a web server somewhere on the Internet. Previously we just double clicked on our `index.html` file and that therefore did use the file protocol (`file:///`). It was good enough for many things but with certain limitations as we saw when we started to use Javascript modules where all of a sudden for security reasons, the file protocol was not supported and we needed a real web server environment.
 - To understand which tools we might need, lets first understand the potential limitations we might face with basic Javascript projects as we use them.
 
-![alt text](image-72.png)
+![alt text](/JS/Images/js2/image-72.png)
 
 - Lets say, we might need to micromanage all our imports if we're not using Javascript modules or if we are using them, we might have a lot of unnecessary **HttpRequests**.**The bigger our project grows, the more we have to manage imports or live with all these requests or both at the same time**.
 - Another problem we might face is that our code is not really optimized, it's not as small as it could be. Now thus far we haven't built huge applications when we learned but we've certainly written some code. **Now when we write code, we of course use function names which are pretty clear, we use the variable names which give a clear hint about what's stored in there, we use a lot of extra whitespace to structure our code or put in other words, we're using a lot of features that make the code more readable to us humans but which are not important to the computer. If we would strip out all these features and ship as small of a code bundle as possible, we could load our page faster because the computer, the browser has to download less bytes. If we would use shorter function names, then there are less bytes to be downloaded and therefore the site loads faster but of course to us humans, if we use very short function names like A, B, C, D, well that would be hard to understand our code so that's something where a tool might be able to help us**
@@ -3090,7 +3090,7 @@ console.log(globalThis.myGlobalVar); // Outputs: 42
 - So now we know about the limitations, the problems we might want to solve, now it's time to solve them and for that, we can use various tools. For most of these tasks, we have more than one tool out there. 
 
 
-![alt text](image-73.png)
+![alt text](/JS/Images/js2/image-73.png)
 
 - Lets explore the most commonly used tool. Now let's start with the development server for that. So the one which we used `serve` or `webpack-dev-server` consist of auto reloading of page. 
 - To resolve the second problem, we need a bundling tool. The idea behind a bundling tool is that it analyzes all our imports and exports which we have when we use Javascript modules and that it then combines these different files into a single bundled file or into a couple of file bundles, so that you don't have these dozens of `HttpRequests` which need to be sent. It somewhere is actually merged back into a single file so that you have the better development experience but ship code which requires less `HttpRequests` and here, the by far, most popular tool is `webpack`. So now we can bundle our code, we can serve our code, we also typically want to optimize our code when we ship it or when we build it for production.
@@ -3099,7 +3099,7 @@ console.log(globalThis.myGlobalVar); // Outputs: 42
 - You might want to check your code quality, so make sure that you follow certain patterns and conventions, that you consistently write your code in the same way and for that the most popular tool for Javascript is **ESLint (EmaScriptLint)** which you can also use.
 - Incase of your development stage, you may use **Linting** to check code quality, make sure you follow patterns and conventions you defined to make your code consistent, next would be **bundling** up your code and **reload dev server** when any changes are made. In development phase you don't wanna go for optimization as will be difficult to debug your code. Secondly you won't need the compiler like `Babel` in your development phase. Incase of production along with **Linting** & **bundling** , there you would require **optimization** and **Compiler like `Babel`** which will make your code changes ready from dev to production.
 
-![alt text](image-74.png)
+![alt text](/JS/Images/js2/image-74.png)
 
 - These all tools are available under `Node.js`, so here we need to work with `npm` command.
 
@@ -3108,27 +3108,27 @@ console.log(globalThis.myGlobalVar); // Outputs: 42
 - So work with `npm` command we need to have a `package.json` file. To run `npm` commands effectively, you always need a `package.json` file in your project directory as it stores information about your project's dependencies and allows `npm` to manage them properly; essentially, without a `package.json`, npm doesn't know which packages to install or manage for your project. This file lists all the external modules your project depends on, including their versions.  It also contains information about your project like name, version, author, license, etc. 
 - You can create a `package.json` file using the `npm init` command which will prompt you to fill in the necessary details. 
 
-![alt text](image-75.png)
+![alt text](/JS/Images/js2/image-75.png)
 
-![alt text](image-76.png)
+![alt text](/JS/Images/js2/image-76.png)
 
-![alt text](image-77.png)
+![alt text](/JS/Images/js2/image-77.png)
 
 - So we set up this project to have a `package.json` file to be managed by `npm` therefore. Just like we installed `server` using `npm install -g serve`, similarly we need to install `eslint` library but we will execute the command `npm install --save-dev eslint`, why so? the flag `-g` tell `Node.js` to install that library globally, it will be available for all the project which uses `Node.js` where `--save-dev` will install library for a particular project. Since **linting** is not required in production, we need it for development purpose, for code quality purpose.
 - `--save-dev` basically signals to `npm` we want install the following package as a development dependency of this project, development dependency because it's not a third-party package which I want to use as part of my project, it will not be part of the code that it will be upload to some server, it's just a package I need to do something with the code during development to optimize it, to check it, anything like that.
 - Post installing we can see `node_module` folder is being created along with a file `package-lock.json`.
 
-![alt text](image-78.png)
+![alt text](/JS/Images/js2/image-78.png)
 
 - `node_modules` is a folder where all the dependencies (external code libraries or packages) your project needs are stored. These packages are downloaded when you run npm install. It allows your project to use tools or libraries other people have already written (e.g., React, Express, Lodash,ESLint).
 -  `package.json` file that acts like a project manual. It includes information about your project (like its name and version) and lists the libraries your project depends on. It keeps track of the exact packages your project needs to run (dependencies) and scripts for automating tasks (e.g., `npm start`). It also consist of inter-related dependencies meaning, if any third party library depends on another third-party library those are also being downloaded in your project.
 
-![alt text](image-79.png)
+![alt text](/JS/Images/js2/image-79.png)
 
 - You can see it also list out all the required dependencies.
 - `package-lock.json` file automatically generated when you run `npm install.` It locks the exact versions of every package (and their sub-packages) being used. If someone else installs your project, they’ll get the same exact versions of libraries as you. 
 
-![alt text](image-80.png)
+![alt text](/JS/Images/js2/image-80.png)
 
 - Then whats difference from `package.json`? `package.json` specifies general dependencies (e.g., `^4.17.1` means "any version 4.x") whereas `package-lock.json` specifies exact versions (e.g., `"4.17.1"`).
 - **You should usually ignore `node_modules` in version control systems like Git.** Here's why:
@@ -3138,20 +3138,20 @@ console.log(globalThis.myGlobalVar); // Outputs: 42
 - To ignore `node_modules` you can create a `.gitignore` file.
 - Along with `npm install --save-dev eslint` you would also need to install `npm install -g eslint-cli`. Now to enable `eslint` in your project, navigate to your project directory and run `eslint --init` (`Ctrl+Shift+P` -> Search for Enable ESLINT Configuration and Click on it). You will get a prompt where you need to fill in details.
 
-![alt text](image-81.png)
+![alt text](/JS/Images/js2/image-81.png)
 
 - We can see a file `eslint.config.mjs` gets created. **The full form of the `.mjs` extension is Module JavaScript**. It signifies that the file contains JavaScript code written using the ECMAScript module (ESM) syntax, as opposed to the older CommonJS (`.cjs`) module format. 
 - `eslint.config.mjs` **stands for "ESLint configuration file using the modern JavaScript module format** - essentially, it's a file named `eslint.config.js` that specifically indicates it should be interpreted as an ECMAScript Module (ESM) using the `.mjs` extension, allowing for more advanced JavaScript features in your ESLint configuration. Using `.mjs` allows you to utilize newer JavaScript features like import/export statements in your ESLint configuration.
 - When we open up `eslint.config.mjs` we get something below.
 
-![alt text](image-82.png)
+![alt text](/JS/Images/js2/image-82.png)
 
 - `languageOptions.globals: globals.browser`:
   - This tells ESLint to recognize global variables that are common in browser environments (like `window`, `document`, etc.).
   - Without this, ESLint might throw errors saying `window is not defined` or similar when you use browser-specific features.
 
 
-![alt text](image-83.png)
+![alt text](/JS/Images/js2/image-83.png)
 
 - `pluginJs.configs.recommended`:
   - This loads the recommended configuration provided by the `@eslint/js` plugin. **It includes a basic set of rules considered best practices for JavaScript**, such as avoiding undefined variables and discouraging the use of eval.
@@ -3235,9 +3235,9 @@ const b = 10 // Error if 'always' is configured
 
 - As soon as we defined these rules, we can see how it gets affected in the current directory including `eslint.config.mjs`
 
-![alt text](image-84.png)
+![alt text](/JS/Images/js2/image-84.png)
 
-![alt text](image-85.png)
+![alt text](/JS/Images/js2/image-85.png)
 
 - To ignore certain files, we can do this way.
 
@@ -3277,14 +3277,14 @@ export default [
 - Lets say you wanna disable rule for a certain line, you get that suggestion 
 
 
-<video controls src="2024-19.mp4" title="Title"></video>
+<video controls src="/JS/Images/js2/2024-19.mp4" title="Title"></video>
 
 - Similarly there are several options provided by `eslint` which can be configured by referring its [doc](https://eslint.org/docs/latest/use/configure/)
 - Now lets do bundling, for bundling we will be using `webpack`. So run the command  `npm install --save-dev webpack webpack-cli`. When we say **bundling our code**, it means that `webpack` gonna combine all the individual code files or script into one large script file. So multiple code files will get merged together so that we don't send all these unnecessary `HttpRequests` for all the imports we do.
 - To use webpack, we typically create a configuration file where we tell webpack from where the bundling needs to be started, and where the large script file needs to be place or merged file needs to be place. For that the configuration file will be `webpack.config.js`, a javascript configuration file.
 - First lets move all the `js` file under an `src` folder.
 
-![alt text](image-86.png)
+![alt text](/JS/Images/js2/image-86.png)
 
 - Now we have to provide a configuration for `webpack` named as `webpack.config.js`. Now this file under the hood uses or is executed by `Node.js`. Now to export the module we will be using default utility provided by `Node.js` which is `module.exports` and write different property to bundle up our code.
 
@@ -3383,14 +3383,14 @@ module.exports={
 - Dev server requires HTML files to be present under `public` folder. So move your `index.html` file under public folder.
 
 
-![alt text](image-87.png)
+![alt text](/JS/Images/js2/image-87.png)
 
 - Now when we run `npm run build:dev` our dev server gets started.
 
-![alt text](image-89.png)
+![alt text](/JS/Images/js2/image-89.png)
 
 
-![alt text](image-88.png)
+![alt text](/JS/Images/js2/image-88.png)
 
 - Now as a final optimization, a "Clean Plugin" is used in webpack, usually it referred to as the `CleanWebpackPlugin`, is a plugin that automatically deletes all files within your designated build output directory before starting a new build, ensuring a fresh build with only the newly generated assets, effectively cleaning up old build artifacts from previous compilations. So first lets install the plugin `npm install --save-dev clean-webpack-plugin`
 - Now inside the `webpack.config.js` we need to add this plugin
@@ -3420,7 +3420,7 @@ module.exports={
 - Lets take an example, suppose you are visiting an online shopping site. So the application hosted must have all the products in their database or server side database. This products are displayed on the browser page and user adds it and keep it in their respective shopping cart. Now you have a dark-light mode feature on your website, this will being varying from user to user, now to store such data you will be using client-side storage or browser storage.
 - Your server can read it, whether user prefers dark-light mode and can use it again when the use revisits the site.
 
-![alt text](image-90.png)
+![alt text](/JS/Images/js2/image-90.png)
 
 ## Types of Browser Storage
 
@@ -3437,7 +3437,7 @@ module.exports={
 - So, to recognize the old user, server adds a cookie in browser at the client-side, in the initial response .
 - Now, **whenever a user sends a request to the server, the cookie is added with that request automatically. Due to the cookie, the server recognizes the users.**
 
-![alt text](image-91.png)
+![alt text](/JS/Images/js2/image-91.png)
 
 #### Implementation
 
@@ -3446,7 +3446,7 @@ module.exports={
 
 - You can all the cookies under `Application` tab of developer console.
 
-![alt text](image-92.png)
+![alt text](/JS/Images/js2/image-92.png)
 
 - To create cookie you can use the `document` object.
 
@@ -3458,7 +3458,7 @@ document.cookie = "username=JohnDoe; max-age=900;";
 - The advantages of cookies are that you can set them to expire and that you can also send them to a server within your requests. If you don't set any expiration date on a cookie, it should expire when your session expires, so when you close the entire browser, though finally it's up to the browser when it wants to delete the cookie. Also keep in mind that the user can always delete all cookies. You can clear cookies no matter if they have an expiration date via your code.
 - To add expiration date, you can use the flag `max-age` and set the value computed in seconds. The expiration of cookie will be visible under the `Expires/` tab.
 
-![alt text](image-93.png)
+![alt text](/JS/Images/js2/image-93.png)
 
 - Alternatively you can also use `expires` key for expiration where you need to set the fixed date as its value.
 - To update the cookie, you can again use the same key like below
@@ -3512,7 +3512,7 @@ const age = sessionStorage.getItem('age');
 - "Browser support" refers to the compatibility of a website or application with different web browsers, meaning whether a particular browser can correctly display and function with all the features of a website without issues.
 - Well consider an application where you're writing some Javascript code and you want to use the `fetch` API, you want to send an `HttpRequest` with that `fetch` API.
 
-![alt text](image-94.png)
+![alt text](/JS/Images/js2/image-94.png)
 
 
 - Now the problem you as a developer have when writing Javascript for the browser is you can't control which browser your users will use, you don't know if people use Internet Explorer, if they use Firefox, if they use Chrome and which version of that browser they use, that's something you can't control.
@@ -3521,7 +3521,7 @@ const age = sessionStorage.getItem('age');
 - It's also important to **differentiate between browser features and Javascript syntax**, sometimes it does not matter but sometimes it does.
 
 
-![alt text](image-95.png)
+![alt text](/JS/Images/js2/image-95.png)
 
 - When we talk about browser features, we talk about the APIs a browser exposes, whereas Javascript syntax really is about all the keywords, all the functionalities and features that are built into the Javascript language, they're of course kind of related but not exactly the same. 
 - For browser features, these browser APIs, the browser decides which features it offers and examples there would be the fetch API, geolocation, the DOM API, so all these objects and functions and methods that are exposed by the browser in Javascript. Of course you worked with these features in Javascript but **they're not part of the core Javascript language**, instead the browser as you learned provides a bridge to these functionalities and exposes APIs in Javascript so that you can conveniently use these features. 
@@ -3531,23 +3531,23 @@ const age = sessionStorage.getItem('age');
 - So it's typically **safer to rely on certain Javascript syntax features to be available at some point than it is for certain browser APIs**, especially if it's very new experimental APIs, then it might take way longer until all browsers support it.
 - Now how can you find out which features are supported where?
 
-![alt text](image-96.png)
+![alt text](/JS/Images/js2/image-96.png)
 
 - So every time when we implement a feature, we need to check compatibility with all browser? **NO**. The naive thought might be that you simply check all these resources and then you need to find a way to make the feature you want to use work in all possible browsers across all browser versions and here, the clear answer is **don't do this**. For one, this will never be entirely possible, there are super older versions of Internet Explorer that don't support anything, you will never be able to make your application with all its features work there.
 - You would just cut so many features that just to support a small fraction of the user base, you pass on some awesome features and awesome improvements you could offer to the vast majority of the user base.
 
-![alt text](image-97.png)
+![alt text](/JS/Images/js2/image-97.png)
 
 
 - So you definitely have a tradeoff there and you want to be careful regarding your decision. Don't build an application for the smallest possible denominator, instead analyze your market, get an idea of who your users will be and then build your application for those users and use the features or make the features you plan on using work for these users and their browsers, not for the global user base.
 
 ### Feature Detection and FallBack
 
-![alt text](image-98.png)
+![alt text](/JS/Images/js2/image-98.png)
 
 - Let's say we want to use the clipboard API, that's a relatively modern browser API that allows us to interact with the user's clipboard, so the thing you use with copy and pasting. If we search for clipboard API and we check the MDN article and we scroll down, we see browser support is not looking that great.
 
-![alt text](image-99.png)
+![alt text](/JS/Images/js2/image-99.png)
 
 - It works on Edge and Chrome, we don't know whether it works in Safari, it internal features does not work in FireFox. We can handle such FallBack by using `try-catch` or feature detection (`if-else`). Lets see an example
 
@@ -3592,13 +3592,13 @@ const age = sessionStorage.getItem('age');
 </html>
 ```
 
-![alt text](image-100.png)
+![alt text](/JS/Images/js2/image-100.png)
 
 ### Polyfill
 
 - Another strategy for making code work in more browsers is to use polyfills. A polyfill is a third-party package that adds a functionality which otherwise might be missing in a browser, let's say you want to use `promises`. `Promises` might not be available in all browsers, for example Internet Explorer does not support `promises` and therefore to still make it work there, you can add such a polyfill which again is just a third-party package that actually teaches the browser how to use that feature.
 
-![alt text](image-101.png)
+![alt text](/JS/Images/js2/image-101.png)
 
 - Now obviously, this is not possible for all features, some features rely on some core mechanics which can't be worked around with Javascript, some features however can be replicated with other Javascript features and therefore an older browser which might not support let's say `promises` but supports other features with which you can rebuild the idea behind promises might be able to utilize such a promise polyfill. So it's a third-party Javascript feature that simply adds something to a browser which otherwise is missing there.
 - So in JavaScript, a polyfill is a piece of code that provides functionality that a browser might not support natively. It "fills in" the gap, allowing you to use modern features even in older browsers. The polyfill first checks if the browser supports the feature you want to use. If the feature is not supported, the polyfill provides its own implementation of the feature using JavaScript code that works in the older browser.
@@ -3659,11 +3659,11 @@ npm install --save-dev @babel/core @babel/cli @babel/preset-env babel-loader
 - `browserslist` is a tool that is used under the hood by `@babel/preset-env`. When `"browserslist": ">2%"`, which means you want to output code that works in browsers that have a market share of greater than 2% and of course every time you build, this is checked and this under the hood taps into a source which is always kept up-to-date so that you build code that works in browsers with greater than 2% market share. 
 - Below is the output when `2%` is used
 
-![alt text](image-102.png)
+![alt text](/JS/Images/js2/image-102.png)
 
 - Now if I change this to let's say we want to support browsers with a market share greater than `0.2` (`"browserslist": ">0.2%"`) which of course includes way older and smaller browsers and now rebuild this, let's check the output again.
 
-![alt text](image-103.png)
+![alt text](/JS/Images/js2/image-103.png)
 
 - Arrow functions are not supported by older browsers, thats why in above image we can see babel is transpiling it into a normal function. 
 - In the `browserslist` we can also target specific browser name.
@@ -3941,3 +3941,178 @@ Output:
 - Using the `next()` Method: The `next()` method moves the generator to the next yield statement, returning an object with value and done properties.
 - `value`: The value yielded by the generator.
 - `done`: A boolean indicating whether the generator has completed execution.
+
+
+## Reflect API 
+
+- The Reflect API in JavaScript is a built-in object introduced in ES6 (ECMAScript 2015). It provides methods to interact with objects and perform operations like creating, modifying, or querying properties. It's like a toolbox that makes working with objects easier and more predictable. The methods in Reflect are similar to existing operations (e.g., setting a property, deleting a property) but are designed to be consistent and reliable.
+- Lets see examples of it
+
+1. `Reflect.get(target, property)` - Purpose: To get the value of a property on an object.
+
+```
+const obj = { name: 'Alice', age: 25 };
+
+console.log(Reflect.get(obj, 'name')); // Output: Alice
+console.log(Reflect.get(obj, 'age'));  // Output: 25
+```
+
+
+2. `Reflect.set(target, property, value)` - Purpose: To set the value of a property on an object.
+
+```
+const obj = { name: 'Alice' };
+
+Reflect.set(obj, 'age', 25); // Adds a new property 'age' with value 25
+console.log(obj); // Output: { name: 'Alice', age: 25 }
+```
+
+
+3. `Reflect.has(target, property)` - Purpose: Checks if a property exists on an object (similar to the in operator).
+
+```
+const obj = { name: 'Alice' };
+
+console.log(Reflect.has(obj, 'name')); // Output: true
+console.log(Reflect.has(obj, 'age'));  // Output: false
+```
+
+4. `Reflect.deleteProperty(target, property)` - Purpose: Deletes a property from an object.
+
+
+```
+const obj = { name: 'Alice', age: 25 };
+
+Reflect.deleteProperty(obj, 'age'); // Deletes the 'age' property
+console.log(obj); // Output: { name: 'Alice' }
+```
+
+5. `Reflect.ownKeys(target)` - Purpose: Returns all keys of the object (including Symbol keys)
+
+```
+const obj = { name: 'Alice' };
+const symbolKey = Symbol('id');
+obj[symbolKey] = 123;
+
+console.log(Reflect.ownKeys(obj)); // Output: ['name', Symbol(id)]
+```
+
+6. `Reflect.defineProperty(target, property, descriptor)` - Purpose: Adds or modifies a property with a given descriptor.
+
+```
+const obj = {};
+
+Reflect.defineProperty(obj, 'name', { value: 'Alice', writable: false });
+console.log(obj.name); // Output: Alice
+
+obj.name = 'Bob'; // Won't change because 'writable' is false
+console.log(obj.name); // Output: Alice
+```
+
+### Why Use Reflect Instead of Traditional Syntax?
+
+- Consistency: Reflect methods are more consistent compared to traditional operators, which sometimes behave unpredictably.
+
+```
+// Traditional
+delete obj.prop; // Returns true even if the property doesn't exist
+
+// Reflect
+Reflect.deleteProperty(obj, 'prop'); // Returns false if the property doesn't exist
+```
+
+- Error Handling: Reflect methods return false instead of throwing errors, making them safer.
+
+```
+const obj = Object.freeze({ name: 'Alice' });
+
+console.log(Reflect.set(obj, 'age', 25)); // Output: false (doesn't throw)
+```
+
+- Reflect provides a consistent way to perform operations on objects, like getting, setting, or defining properties. It improves Code readability.
+- Reflect methods often return a boolean indicating success or failure, instead of throwing an error, making them safer to use.
+
+## Proxy
+
+- A Proxy is an object that wraps another object or function and allows you to customize or control its behavior. It acts as a "middleman" that intercepts operations (like reading or writing properties, calling methods, etc.) and lets you modify how those operations work.
+- Think of a Proxy as a security guard who watches over the object and decides whether to allow or change an action before it happens.
+
+### How Does a Proxy Work?
+
+- You create a Proxy object by passing two things to it:
+  - Target Object: The original object you want to control.
+  - Handler Object: This is where you define the traps (interceptions). Proxy Traps is a method inside the Proxy that intercepts specific operations on the target object. These operations can include things like setting properties, getting properties, and more. Traps let you control what happens when these operations are performed.
+- Example 
+
+```
+// Target object (the real object)
+const target = {
+    name: 'Alice',
+    age: 25
+};
+
+// Handler object (contains the traps)
+const handler = {
+    // Trap for property access (get)
+    get(target, prop) {
+        console.log(`Getting property: ${prop}`);
+        return prop in target ? target[prop] : 'Property not found!';
+    },
+    
+    // Trap for setting a property (set)
+    set(target, prop, value) {
+        console.log(`Setting property: ${prop} to ${value}`);
+        target[prop] = value; // Update the property value
+        return true; // Return true to indicate success
+    }
+};
+
+// Create the Proxy object
+const proxy = new Proxy(target, handler);
+
+// Using the Proxy
+console.log(proxy.name); // Output: Getting property: name ->  Alice
+console.log(proxy.age); // Output: Getting property: age -> 25
+console.log(proxy.address); // Output: Getting property: address -> Property not found!
+
+proxy.name = 'Bob'; // Output: Setting property: name to Bob
+console.log(proxy.name); // Output: Getting property: name  Bob
+
+
+Output:
+Getting property: name
+Alice
+Getting property: age
+25
+Getting property: address
+Property not found!
+Setting property: name to Bob
+Getting property: name
+Bob
+```
+
+- Target Object is the original object (`target`) has properties like `name` and `age`. Handler Object contains the traps
+  - `get` trap: Intercepts attempts to read properties and logs the action.
+  - `set` trap: Intercepts attempts to change properties and logs the action.
+- Proxy Object intercepts operations like reading (`proxy.name`) and writing (`proxy.name = 'Bob'`) and runs the defined traps.
+- Common Proxy Traps:
+
+1. `get(target, prop)`: Intercepts property access (e.g., `proxy.name`).
+
+2. `set(target, prop, value)`: Intercepts setting a property (e.g., `proxy.name = 'Bob'`).
+
+3. `has(target, prop)`: Intercepts in operator (e.g., `prop` in proxy).
+
+4. `deleteProperty(target, prop)`: Intercepts delete operation (e.g., `delete proxy.name`).
+
+5. `apply(target, thisArg, argumentsList)`: Intercepts function calls
+
+### What Can You Do with a Proxy?
+
+1. Validation: You can validate data before allowing it to be added to an object.
+
+2. Logging: You can log every time someone tries to access or change a property of an object.
+
+3. Modification: You can modify the behavior of methods, like changing a function's behavior when it’s called.
+
+4. Automatic Logging: You can automatically log changes to the object whenever a property is read or written.
