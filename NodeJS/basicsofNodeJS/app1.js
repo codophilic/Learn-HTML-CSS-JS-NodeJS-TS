@@ -1,7 +1,9 @@
-export function add(a,b){
-    return a+b;
-}
+module.exports = {
+    add: function (x, y) {
+        return x + y;
+    },
 
-export function sub(a,b){
-    return a-b;
-}
+    sub: function (x, y) {
+        return x - y;
+    },
+};

@@ -88,6 +88,51 @@ Hey, Hello World!
 5
 ```
 
+- Lets see example of `module.export`, so in **app1.js**
+
+```
+// Filename: func.js
+
+function add(x, y) {
+  return x + y;
+}
+
+function sub(x, y) {
+  return x - y;
+}
+
+module.exports = { add, sub};
+
+
+OR
+
+
+module.exports = {
+    add: function (x, y) {
+        return x + y;
+    },
+
+    sub: function (x, y) {
+        return x - y;
+    },
+};
+```
+
+- In **app.js**
+
+```
+const {add,sub} = require('./app1.js');
+console.log(add(10,5));
+console.log(sub(10,5));
+```
+
+- Output
+
+```
+15
+5
+```
+
 - `Node.js` also consist of some built in modules, like for file system we have `fs` module.
 
 ```
