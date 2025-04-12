@@ -20,10 +20,14 @@
 
 - Learn about [NodeJS](/NodeJS/BasicsOfNodeJS.md)
 
-<img align="center" width="50%" height="50%" src="https://github.com/user-attachments/assets/cc51ac82-92e8-4e1e-9556-254412258725" />
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cc51ac82-92e8-4e1e-9556-254412258725" width="70%" height="60%" />
+</p>
 
 
-- Learn about [TypeScript]
+- Learn about [TypeScript](/TS/BasicsOfTypeScript.md)
 
-<img align="center" width="50%" height="50%" src="image.png" />
-
+<p align="center">
+  <img src="image.png" width="70%" height="60%" />
+</p>
