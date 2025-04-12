@@ -1,7 +1,7 @@
 # Learn-HTML-CSS-JS-NodeJS-TS
 
 >[!IMPORTANT]
-> - Make the clone of repository and use visual studio code to preview all the markdown files during the process of learning.
+> - Make the clone of this repository and use visual studio code to preview all the markdown files during the process of learning.
 > - Some videos are length which may not be supported on GitHub Web browser markdown preview.
 
 <br>
