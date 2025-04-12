@@ -1,8 +1,10 @@
 # Learn-HTML-CSS-JS-NodeJS-TS
 
->[!IMPORTANT]
-> - Make the clone of this repository and use visual studio code to preview all the markdown files during the process of learning.
-> - Some videos are length which may not be supported on GitHub Web browser markdown preview.
+> [!IMPORTANT]
+> 📌 **Clone this repository and use [Visual Studio Code](https://code.visualstudio.com/download) to preview all the Markdown files during your learning process.**
+>
+> 📹 **Some videos may be lengthy and might not be supported in the GitHub web version.**
+
 
 <br>
 
@@ -11,7 +13,9 @@
 <br>
 <br>
 
-<img align="center" alt="image" width=1000px height=700px src="HTML/cover.png"/>
+<p align="center">
+  <img src="HTML/cover.png" width="70%" height="60%" />
+</p>
 
 <br>
 <br>
@@ -29,5 +33,5 @@
 - Learn about [TypeScript](/TS/BasicsOfTypeScript.md)
 
 <p align="center">
-  <img src="image.png" width="70%" height="60%" />
+  <img src="image.png" width="50%" height="10%" />
 </p>
