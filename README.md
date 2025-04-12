@@ -1,4 +1,4 @@
-# Learn-HTML-CSS-JS-NodeJS
+# Learn-HTML-CSS-JS-NodeJS-TS
 
 >[!IMPORTANT]
 > - Make the clone of repository and use visual studio code to preview all the markdown files during the process of learning.
@@ -18,9 +18,12 @@
 <br>
 <br>
 
-- Learn about NodeJS
+- Learn about [NodeJS](/NodeJS/BasicsOfNodeJS.md)
 
-![image](https://github.com/user-attachments/assets/cc51ac82-92e8-4e1e-9556-254412258725)
+<img align="center" width="50%" height="50%" src="https://github.com/user-attachments/assets/cc51ac82-92e8-4e1e-9556-254412258725" />
 
 
+- Learn about [TypeScript]
+
+<img align="center" width="50%" height="50%" src="image.png" />
 
