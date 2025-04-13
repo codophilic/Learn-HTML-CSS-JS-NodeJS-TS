@@ -199,5 +199,35 @@ let data:unknown;
 data = 'String value'
 
 
-let symbol: symbol = Symbol("uniqueSymbol");
+// Promise that resolves to a string
+function getStringPromise(): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Hello, world!");
+    }, 1000);
+  });
+}
+
+// Promise that resolves to a number
+function getNumberPromise(): Promise<number> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(42);
+    }, 1500);
+  });
+}
+
+// Promise that does not resolve to any value
+function getVoidPromise(): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    });
+  }
+
+let sym1 = Symbol("desc");
+let sym2 = Symbol("desc");
+  
+console.log(sym1 === sym2); // false (even though same description)
 let bigNumber: bigint = BigInt(1234567890123456789012345678901234567890);

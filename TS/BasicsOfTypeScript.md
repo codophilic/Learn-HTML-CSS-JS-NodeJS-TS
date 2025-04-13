@@ -357,6 +357,41 @@ const numbers = [1, 2, 3] as const;
 const firstNumber = numbers[0]; // Accessing elements is allowed
 ```
 
+### Type Assertion
+
+- You as a developer tells TypeScript *Hey TypeScript, trust me. I know what this is.*.
+- Type assertion in TypeScript allows developers to override the type inferred by the compiler and explicitly specify a different type for a value. It serves as a way to tell the compiler *trust me, I know what I'm doing* when you have more information about the type of a value than TypeScript can infer. 
+- Type assertions can be performed using two syntaxes: `as` syntax or `<>` bracket syntax
+
+```
+let someValue: any = "this is a string";
+let strLength: number = (someValue as string).length;
+
+let someValue: any = "this is a string";
+let strLength: number = (<string>someValue).length;
+```
+
+- Another example
+
+```
+const titleElement = document.getElementById("title") as HTMLHeadingElement;
+
+// Now TypeScript knows it's a heading, so we can do:
+titleElement.innerText = "Hello, TypeScript!";
+titleElement.style.color = "blue";
+
+const boxElement = <HTMLDivElement> document.getElementById("box");
+
+boxElement.style.backgroundColor = "lightgreen";
+boxElement.innerHTML = "<p>This is a box!</p>";
+```
+
+- You're telling TypeScript *Hey, trust me — this element is an HTMLHeadingElement (like `<h1>`)*
+-  What assertion does NOT do:
+    - It doesn’t check anything at runtime.
+    - It won’t throw an error if you’re wrong.
+
+
 ### Tuple Types
 
 - These define arrays with a fixed number of elements, where each element can have a different type. Tuples are fixed number of elements with known types.
@@ -382,9 +417,10 @@ console.log(person); // ["Bob", 35, "extra"]
 - The added element won't be type-checked and will effectively make the tuple behave like a regular array.
 - To maintain the integrity of tuples, it's better to avoid using `.push()`. If you need to add elements, consider creating a new tuple with the desired elements or using an array if the fixed-length constraint is not necessary.
 
-### `type` Type
+### `type` - Type aliases
 
 - In TypeScript, the type keyword serves to define the shape of data, acting as a way to create aliases for data types. The `type` keyword in TypeScript is used to define a custom name for a type. `type` lets you create a reusable label for a complex or frequently used type.
+- Type Aliases allow defining types with a custom name (an Alias).
 - Without `type`, you'd have to rewrite long type annotations everywhere. That gets messy.
 
 ```
@@ -690,6 +726,7 @@ example(3, "Bob", "Pune", "Reading", "Gaming");
 // City: Pune
 // Hobbies: ['Reading', 'Gaming']
 ```
+
 
 #### Type Inference
 
@@ -1238,5 +1275,145 @@ const myDog: Dog = {
 };
 ```
 
-#### When we have Object type, `type` then why `interface` is required?
+#### When we have `type` then why `interface` is required?
+
+- Let's consider `type` examples
+
+```
+// Type Example
+type Person = {
+  name: string;
+  age: number;
+};
+
+type Employee = Person & { employeeId: string };
+```
+
+- `type` can represent object shapes, can do union `type Result = Success | Failure`, can alias primitives `type ID = number`, can use intersections but it cannot do **declaration merging** meaning it means you can define an interface multiple times, and TypeScript will automatically merge them into one like below
+
+```
+interface User {
+  name: string;
+}
+
+interface User {
+  age: number;
+}
+
+const person: User = {
+  name: "Alice",
+  age: 25
+};
+```
+
+- ❌ `type` cannot do this, example with `type` (this will throw an error)
+
+```
+type User = {
+  name: string;
+};
+
+type User = {
+  age: number;
+}; // ❌ Error: Duplicate identifier 'User'
+```
+- A type cannot be changed after being created
+- Type aliases cannot be declared more than once. You can do intersection but with `interface`, it looks cleaner when you're modeling real-world entities, especially when you want to:
+  - Extend multiple interfaces
+  - Use in OOP-style classes
+  - Allow others to extend via declaration merging
+
+
+### `Promise` type
+
+- If you want to annotate the return type of a function which returns a promise, you should use the `Promise` type.
+
+```
+function getDataFromServer(): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Here is your data!");
+    }, 2000);
+  });
+}
+
+// Using the function with .then()
+getDataFromServer().then((data) => {
+  console.log(data); // Output after 2 sec: "Here is your data!"
+});
+```
+
+- With `async/await`
+
+```
+function getDataFromServer(): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Here is your data!");
+    }, 2000);
+  });
+}
+
+async function fetchData() {
+  const result = await getDataFromServer();
+  console.log(result); // "Here is your data!" after 2 seconds
+}
+
+fetchData()
+```
+
+- `Promise<string>` means this function will eventually return a string, not right away.
+- In TypeScript, the return type of a `Promise` is denoted as `Promise<T>`, where `T` represents the type of the value that the `Promise` will resolve to. If a function is expected to return a Promise that resolves to a `string`, its return type annotation would be `Promise<string>`. If the Promise resolves to a `number`, the return type would be `Promise<number>`, and so on. If the Promise does not resolve to any value, the return type is `Promise<void>`.
+
+```
+// Promise that resolves to a string
+function getStringPromise(): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Hello, world!");
+    }, 1000);
+  });
+}
+
+// Promise that resolves to a number
+function getNumberPromise(): Promise<number> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(42);
+    }, 1500);
+  });
+}
+
+// Promise that does not resolve to any value
+function getVoidPromise(): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    });
+  }
+```
+
+-  If the return type is not explicitly defined, TypeScript might infer it as `Promise<unknown>` by default, which can lead to issues when working with the resolved value later on.
+
+### Less Common Primitives
+
+- TypeScript has a few rare but real types besides `string`, `number`, `boolean`.
+
+1. `bigint` – For very large numbers
+
+```
+let bigNumber: bigint = BigInt(1234567890123456789012345678901234567890);
+```
+
+2. `symbol` – Unique and constant values, often for object keys
+
+```
+let sym1 = Symbol("desc");
+let sym2 = Symbol("desc");
+
+console.log(sym1 === sym2); // false (even though same description)
+```
+
+Narrowing, different types of Narrowing
 
