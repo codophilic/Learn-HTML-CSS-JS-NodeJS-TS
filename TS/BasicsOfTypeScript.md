@@ -390,7 +390,25 @@ boxElement.innerHTML = "<p>This is a box!</p>";
 -  What assertion does NOT do:
     - It doesn’t check anything at runtime.
     - It won’t throw an error if you’re wrong.
+- What if type asserted is wrong? 
 
+```
+let value: unknown = 123;
+
+// You're telling TypeScript:
+let str = value as string;
+
+console.log(str.length); // ❌ Works in TypeScript, but at runtime:
+                         // number has no 'length', so it can fail
+
+let someValue: any = null;
+let myString = someValue as string; // TS says OK
+
+console.log(myString.length); // 💥 Runtime crash: Cannot read 'length' of null
+```
+
+- TypeScript is not magical. It doesn’t check at runtime — it only helps at compile-time.
+- If you use wrong assertions, the compiler won’t complain — but the browser might crash when running it.
 
 ### Tuple Types
 
@@ -1415,5 +1433,187 @@ let sym2 = Symbol("desc");
 console.log(sym1 === sym2); // false (even though same description)
 ```
 
-Narrowing, different types of Narrowing
+## Narrowing
+
+- Narrowing means TypeScript figures out the exact type of a variable at a certain point in your code based on checks you do — like `typeof`, `if`, or others.
+- Imagine a variable could be a `string | number`, and inside an `if` statement you check if it's a string — now TypeScript knows it's a string in that block.
+
+```
+function printLength(value: string | number) {
+  if (typeof value === "string") {
+    console.log("Length:", value.length); // ✅ value variable is now treated as string
+  } else {
+    console.log("Value doubled:", value * 2); // ✅ value variable is now treated as number
+  }
+}
+```
+
+- This is type narrowing in action.
+
+###  Different Types of Narrowing
+
+#### 1. `typeof` Narrowing
+
+- Used for primitive types like `string`, `number`, `boolean`, `symbol`.
+
+```
+function handleInput(input: string | number) {
+  if (typeof input === "string") {
+    console.log("Upper:", input.toUpperCase()); // string
+  } else {
+    console.log("Doubled:", input * 2); // number
+  }
+}
+```
+
+#### 2. `instanceof` Narrowing
+
+- Used for classes or object instances.
+
+```
+class Car {
+  drive() {
+    console.log("Driving car");
+  }
+}
+class Bike {
+  ride() {
+    console.log("Riding bike");
+  }
+}
+
+function move(vehicle: Car | Bike) {
+  if (vehicle instanceof Car) {
+    vehicle.drive(); // ✅ narrowed to Car
+  } else {
+    vehicle.ride();  // ✅ narrowed to Bike
+  }
+}
+```
+
+#### 3. `in` Operator Narrowing
+
+- Check if a property exists on an object.
+
+```
+type Dog = { bark: () => void };
+type Cat = { meow: () => void };
+
+function speak(animal: Dog | Cat) {
+  if ("bark" in animal) {
+    animal.bark(); // ✅ must be a Dog
+  } else {
+    animal.meow(); // ✅ must be a Cat
+  }
+}
+```
+
+#### 4. Truthiness narrowing
+
+- Based on the value is truthy or falsy
+
+```
+function getUsersOnlineMessage(numUsersOnline: number) {
+  if (numUsersOnline) {
+    return `There are ${numUsersOnline} online now!`;
+  }
+  return "Nobody's here. :(";
+}
+```
+
+#### 5. Type Guards (Custom Narrowing)
+
+- A Type Guard is a function or condition that tells TypeScript what a variable’s type is within a certain block of code.
+- TypeScript then "narrows" the type — so you don’t have to manually cast or assert it.
+
+```
+function isString(val: unknown): val is string {
+  return typeof val === "string";
+}
+
+function handle(val: unknown) {
+  if (isString(val)) {
+    console.log("It's a string:", val.toUpperCase());
+  } else {
+    console.log("Not a string:", val);
+  }
+}
+```
+
+- val is string is a type predicate — it tells TypeScript *trust me, it's a string here.*
+
+### 6. Equality Checks
+
+- TypeScript can narrow types based on comparison operations, like `===`, `!==`, etc.
+
+```
+function processInput(input: "yes" | "no" | boolean) {
+  if (input === "yes") {
+    console.log("User said YES");
+  } else if (input === true) {
+    console.log("Boolean TRUE");
+  } else {
+    console.log("Other:", input);
+  }
+}
+```
+
+- Even though input is a `union` of strings and boolean, TypeScript narrows the type based on your if checks.
+
+### 7. Discriminated Unions
+
+- A Discriminated Union is a pattern where different types in a union share a common property (usually a `kind` or `type` string field). TypeScript uses this field to discriminate between types and narrow accordingly.
+
+```
+type Circle = {
+  kind: "circle";
+  radius: number;
+};
+
+type Square = {
+  kind: "square";
+  side: number;
+};
+
+type Shape = Circle | Square;
+
+function getArea(shape: Shape) {
+  if (shape.kind === "circle") {
+    return Math.PI * shape.radius ** 2; // TypeScript knows it's a Circle
+  } else {
+    return shape.side * shape.side; // TypeScript knows it's a Square
+  }
+}
+```
+
+- The `kind` property helps TypeScript narrow down the type automatically — no need for `instanceof` or extra checks. Instead of `kind` you can have your own property to check
+
+```
+type Circle = {
+  property: "circle";
+  radius: number;
+};
+
+type Square = {
+  property: "square";
+  side: number;
+};
+
+type Shape = Circle | Square;
+
+function getArea(shape: Shape) {
+  if (shape.property === "circle") {
+    return Math.PI * shape.radius ** 2; // TypeScript knows it's a Circle
+  } else {
+    return shape.side * shape.side; // TypeScript knows it's a Square
+  }
+}
+
+
+let obj: Shape = {
+  property: "square",
+  side: 4
+}
+console.log(getArea(obj)) //16
+```
 

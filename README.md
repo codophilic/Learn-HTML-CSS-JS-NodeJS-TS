@@ -33,5 +33,5 @@
 - Learn about [TypeScript](/TS/BasicsOfTypeScript.md)
 
 <p align="center">
-  <img src="logo.png" width="50%" height="10%" />
+  <img src="TS/Images/logo.png" width="50%" height="10%" />
 </p>
