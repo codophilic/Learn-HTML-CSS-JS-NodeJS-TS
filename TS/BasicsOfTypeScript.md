@@ -1433,6 +1433,283 @@ let sym2 = Symbol("desc");
 console.log(sym1 === sym2); // false (even though same description)
 ```
 
+### Generic Types
+
+- Generics in TypeScript enable the creation of reusable components that can work with a variety of data types while maintaining type safety. They allow you to define functions, classes, or interfaces with placeholder types, which are then specified when the component is used. This eliminates the need to write multiple versions of the same code for different types, reducing code duplication and improving maintainability. 
+
+```
+// Generic function
+function identity<T>(arg: T): T {
+  return arg;
+}
+
+let myString: string = identity<string>("hello");
+let myNumber: number = identity<number>(123);
+
+// Generic interface
+interface KeyValuePair<K, V> {
+  key: K;
+  value: V;
+}
+
+let pair1: KeyValuePair<string, number> = { key: "one", value: 1 };
+let pair2: KeyValuePair<number, string> = { key: 2, value: "two" };
+
+function firstElement<T>(arr: T[]): T {
+  return arr[0];
+}
+
+firstElement<string>(["a", "b"]); // returns "a"
+```
+
+- It is helpful to write reusable functions, types, or classes and keeps type safety without hardcoding types
+
+### `KeyOf` type - Get Object Keys
+
+- In TypeScript, `keyof` is a keyword that extracts the key type from an object type, producing a union of string or number literal types representing the keys of that object. It enables compile-time type checking for property access, ensuring that you only access valid properties. 
+
+```
+interface Person {
+  name: string;
+  age: number;
+}
+
+type PersonKeys = keyof Person; // "name" | "age"
+
+const person: Person = {
+  name: "John Doe",
+  age: 30,
+};
+
+function getProp<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+
+getProp({ name: "Alice", age: 25 }, "name"); // returns "Alice"
+```
+
+### Indexed Access Types – Get Property Type from Object
+
+- Indexed access types in TypeScript allow the lookup of a specific property's type on another type. This mechanism uses the syntax similar to accessing object properties in JavaScript, but instead of retrieving a value, it retrieves the type of that value. 
+
+```
+interface Person {
+  name: string;
+  age: number;
+}
+
+type PersonName = Person["name"]; // string
+type PersonAge = Person["age"];   // number
+```
+
+- Indexed access types can also be used with unions, `keyof`, or other types to access properties dynamically or conditionally.
+
+```
+type Keys = keyof Person; // "name" | "age"
+type ValueByName = Person[Keys]; // string | number
+
+type Accessor = "name" | "age";
+type ValueByAccessor = Person[Accessor]; // string | number
+```
+
+- Indexed access types can be used to extract types from arrays and tuples as well.
+
+```
+type Numbers = number[];
+type FirstNumber = Numbers[0]; // number
+
+type Tuple = [string, number, boolean];
+type SecondElement = Tuple[1]; // number
+```
+
+### Conditional Types – Type Based on a Condition
+
+- Conditional types in TypeScript enable the definition of type transformations based on conditions, operating similarly to a ternary operator at the type level. The syntax follows the structure `T extends U ? X : Y`, where if type `T` is assignable to type `U`, the resulting type is `X`; otherwise, it's `Y`. These types facilitate enforcing constraints, extracting properties' types, and writing reusable code.
+- Syntax
+
+```
+T extends U ? X : Y
+```
+
+- Example
+
+```
+type IsString<T> = T extends string ? "Yes" : "No";
+
+type A = IsString<string>; // "Yes"
+type B = IsString<number>; // "No"
+
+type NonNullable<T> = T extends null | undefined ? never : T;
+
+type StringOrNumber = string | number;
+type OnlyString = Extract<StringOrNumber, string>; // string
+```
+
+- In the `NonNullable` example, if `T` extends `null` or `undefined`, the type resolves to `never`; otherwise, it retains the original type `T`.
+- Now consider below code
+
+```
+type ElementType<T> = T extends (infer U)[] ? U : T
+
+type A = ElementType<number[]>; // number ✅ (because it's an array of number)
+type B = ElementType<string>;   // string ✅ (not an array, so just string)
+```
+
+- It says that ` type ElementType<T> = T extends (infer U)[] ? U : T` - *If `T` is an array of something, give me that something (element type). Otherwise, just give me `T`.*
+- The `infer` keyword in TypeScript is used within conditional types to deduce types. It allows the extraction of a type from a related type structure. `infer` can only be used inside the `extends` clause of a conditional type and is commonly used to extract return types of functions, element types of arrays, or parameter types of constructors.
+- Consider another example
+
+```
+type Flatten<T> = T extends Array<infer Item> ? Item : T
+
+type A = Flatten<string[]>;     // string
+type B = Flatten<number[][]>;   // number[]
+type C = Flatten<boolean>;      // boolean
+```
+
+- `type Flatten<T> = T extends Array<infer Item> ? Item : T`, this is exactly the same idea - *If `T` is an array, give me the item type, else just give `T`.*
+
+- Consider another example
+
+```
+type ToArray<T> = T extends any ? T[] : never
+
+type StringOrNumberArray = ToArray<string | number>;
+// type StringOrNumberArray = string[] | number[];
+```
+
+- `T = string | number`. TypeScript checks - `string extends any ? string[] : never` , then - `number extends any ? number[] : never`. Similarly for `string` as well
+
+### Classes
+
+- Let's create a simple class
+
+```
+class Person {
+  name: string;
+  age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet(): void {
+    console.log(`Hi, my name is ${this.name} and I'm ${this.age} years old.`);
+  }
+}
+
+const p = new Person("Alice", 30);
+p.greet();
+```
+
+- `constructor` runs when you create a new object. `this` refers to the current instance. You must declare property types (e.g., `name: string`) in TypeScript.
+- TypeScript adds access control to class members:
+
+| **Modifier**  | **Description**                                |
+|---------------|------------------------------------------------|
+| **public**    | (default) Accessible anywhere                  |
+| **private**   | Only accessible within the class               |
+| **protected** | Accessible within the class and its subclasses |
+
+- Example
+
+```
+class Animal {
+  public name: string;
+  private age: number;
+  protected type: string;
+
+  constructor(name: string, age: number, type: string) {
+    this.name = name;
+    this.age = age;
+    this.type = type;
+  }
+
+  describe() {
+    console.log(`${this.name} is a ${this.type}`);
+  }
+}
+
+const a = new Animal("Dog", 5, "Mammal");
+// a.age -> ❌ Error (private)
+// a.type -> ❌ Error (protected)
+```
+
+- A class can extend another class and inherit its properties and methods.
+
+```
+class Employee extends Person {
+  jobTitle: string;
+
+  constructor(name: string, age: number, jobTitle: string) {
+    super(name, age); // call parent constructor
+    this.jobTitle = jobTitle;
+  }
+
+  work() {
+    console.log(`${this.name} works as a ${this.jobTitle}`);
+  }
+}
+
+const e = new Employee("Bob", 28, "Developer");
+e.greet(); // Inherited from Person
+e.work();  // Defined in Employee
+```
+
+- You can make properties `read-only` so they can't be changed after initialization.
+
+```
+class Book {
+  readonly title: string;
+
+  constructor(title: string) {
+    this.title = title;
+  }
+
+  print() {
+    console.log(this.title);
+  }
+}
+
+const book = new Book("TypeScript Handbook");
+// book.title = "New Title"; ❌ Error
+```
+
+- You can control access to properties using `get` and `set`.
+
+```
+class Temperature {
+  private _celsius: number = 0;
+
+  get fahrenheit(): number {
+    return this._celsius * 1.8 + 32;
+  }
+
+  set fahrenheit(value: number) {
+    this._celsius = (value - 32) / 1.8;
+  }
+}
+
+const temp = new Temperature();
+temp.fahrenheit = 98.6;
+console.log(temp.fahrenheit); // 98.6
+```
+
+- Use `interface` to define the shape of objects. Use `class` to implement behavior.
+
+```
+interface Logger {
+  log(msg: string): void;
+}
+
+class ConsoleLogger implements Logger {
+  log(msg: string) {
+    console.log(msg);
+  }
+}
+```
+
 ## Narrowing
 
 - Narrowing means TypeScript figures out the exact type of a variable at a certain point in your code based on checks you do — like `typeof`, `if`, or others.
@@ -1617,3 +1894,6 @@ let obj: Shape = {
 console.log(getArea(obj)) //16
 ```
 
+
+
+What are Create Generic Types, KeyOf Type Operator, Indexes access type , Conditional types,mapped types, Classes in typescript is the same like javascript or it has some enhanced thing? 

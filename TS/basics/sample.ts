@@ -71,7 +71,7 @@ const readonly_numbers: ReadonlyArray<number> = [1, 2, 3];
 // readonly_numbers.push(4); // Error: Property 'push' does not exist on type 'readonly number[]'
 
 
-function greet(name: string): string {
+// function greet(name: string): string {
     return "Hello " + name;
   }
   
@@ -230,4 +230,3 @@ let sym1 = Symbol("desc");
 let sym2 = Symbol("desc");
   
 console.log(sym1 === sym2); // false (even though same description)
-let bigNumber: bigint = BigInt(1234567890123456789012345678901234567890);
