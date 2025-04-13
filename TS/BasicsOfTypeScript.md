@@ -1238,5 +1238,5 @@ const myDog: Dog = {
 };
 ```
 
-https://chatgpt.com/c/67fa61ed-9614-8009-a9f5-1a691d12e8f0
+#### When we have Object type, `type` then why `interface` is required?
 
