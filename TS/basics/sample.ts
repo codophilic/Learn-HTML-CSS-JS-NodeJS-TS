@@ -71,7 +71,7 @@ const readonly_numbers: ReadonlyArray<number> = [1, 2, 3];
 // readonly_numbers.push(4); // Error: Property 'push' does not exist on type 'readonly number[]'
 
 
-// function greet(name: string): string {
+function greet(name: string): string {
     return "Hello " + name;
   }
   

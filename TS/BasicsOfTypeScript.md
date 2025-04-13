@@ -1895,5 +1895,6 @@ console.log(getArea(obj)) //16
 ```
 
 
+## Internal Working of TypeScript
 
-What are Create Generic Types, KeyOf Type Operator, Indexes access type , Conditional types,mapped types, Classes in typescript is the same like javascript or it has some enhanced thing? 
+
