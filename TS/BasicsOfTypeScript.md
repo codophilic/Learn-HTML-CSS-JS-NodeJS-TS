@@ -1897,4 +1897,81 @@ console.log(getArea(obj)) //16
 
 ## Internal Working of TypeScript
 
+- Let's dive deep into how TypeScript works under the hood, step by step, with a complete example. We’ll explore how TypeScript compiles (or more precisely, transpiles) to JavaScript, and what really happens when your `.ts` code runs.
+- TypeScript is a superset of JavaScript — it adds types and modern features (like enums, interfaces, generics) to plain JS.
+- It is not executed directly by the browser or Node.js.
+- TypeScript must be compiled/transpiled to regular JavaScript before it can run.
+- TypeScript is a superset of JavaScript. It adds static typing, interfaces, enums, generics, and type checking, but in the end, all TypeScript code must be transformed into JavaScript — because browsers and Node.js don’t understand `.ts` files.
+- Transpiler means **transform + compiler**. TypeScript is technically a transpiler because it transforms TypeScript code to JavaScript. It also does compilation because it checks types at compile time, and reports errors before the code runs.
+- It uses the TypeScript Compiler (`tsc`), which:
+  - Checks types
+  - Removes type annotations
+  - Converts modern features into compatible JavaScript
+- TypeScript does not interpret or execute code directly — the output JavaScript is what gets executed.
+- Let's take a code example, `greet.ts`
+
+```
+function greet(name: string): string {
+  return `Hello, ${name}`;
+}
+
+const result = greet("Alice");
+console.log(result);
+```
+
+### What Happens When You Compile `greet.ts`?
+
+- You run `tsc greet.ts`
+- TypeScript:
+  - Checks the types (name must be a `string`, etc.) and checks for type errors (like if you try to assign a string to a number).
+  - Removes type annotations (`: string`). Ignores type annotations when generating JS (they don’t exist at runtime).
+  - Outputs JavaScript `greet.js`
+
+```
+"use strict";
+function greet(name) {
+  return "Hello, " + name;
+}
+
+var result = greet("Alice");
+console.log(result);
+```
+
+- As you can see:
+  - The types are gone (they’re only for development safety).
+  - TypeScript transforms syntax where necessary to match the configured JS version (like ES5, ES6, etc.).
+  - All type annotations are removed (like `name: string`).
+  - The result is pure, valid JavaScript.
+- The resulting JavaScript (`greet.js`) is run by a JS runtime engine, like:
+  - Chrome's V8
+  - Node.js - `node greet.js`
+
+### Under the hood
+
+- Your `.ts` file is parsed into an AST (Abstract Syntax Tree). This structure allows TypeScript to understand code structure.
+- Then it does **type checking** based on your type annotations (or inferred types), TypeScript checks:
+  - Are the function parameters valid?
+  - Are the variable types consistent?
+  - Do return types match?
+- If errors exist, they’re shown at compile time, not at runtime.
+- Once type checks pass, TypeScript generates JS code by stripping out type information.
+
+### What Happens to Features Not in JavaScript?
+
+- TypeScript can handle modern features that JavaScript engines might not support yet (based on your `tsconfig.json` config file)
+- It means:
+  - JavaScript keeps evolving—new features (like optional `chaining ?., nullish coalescing ??,` etc.) get added over time.
+  - But older browsers or JavaScript engines might not support those features yet.
+  - TypeScript can understand those new features and then convert (or "transpile") them into older JavaScript code so they work everywhere.
+- This is controlled by your TypeScript config file `tsconfig.json`.
+- `tsconfig.json` configuration file that tells the TypeScript compiler how to compile your .ts files.
+
+
+>[!NOTE]
+> - If you don't see `tsconfig.json` file you can generate it using `tsc --init`.
+
+
+
+
+
 
